@@ -3,11 +3,18 @@
 /// <summary>
 /// 
 /// </summary>
-class record Engineer
-{
-    string Id,
+/// <param name="Id"></param>
+/// <param name="Name"></param>
+/// <param name="Email"></param>
+/// <param name="Level"></param>
+/// <param name="Cost"></param>
+public record Engineer
+(
+    int Id,
     string Name,
-    string? Email,
-    EngineerExperience level,
-    double? cost
+    string? Email = null,
+    EngineerExperience Level = EngineerExperience.Expert,
+    double? Cost = null
+)
+{
 }
