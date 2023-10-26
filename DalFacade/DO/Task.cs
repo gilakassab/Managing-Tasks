@@ -1,40 +1,38 @@
-﻿
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace DO;
+
 /// <summary>
 /// Task management
 /// </summary>
-/// <param name="uniqueId">Unique ID number</param>
-/// <param name="description">Description of the task</param>
-/// <param name="nickname">nickname's task</param>
-/// <param name="milestone"></param>
-/// <param name="productionDate">the production date</param>
-/// <param name="startDate">the start date</param>
-/// <param name="estimatedCompletionDate">the estimated completion date</param>
-/// <param name="finalDateForCompletion">the final date for completion</param>
-/// <param name="actualEndDate">the actual end date</param>
-/// <param name="product">description of the product </param>
-/// <param name="remarks">remarks</param>
-/// <param name="engineerIdAssignedToTheTask">The engineer ID assigned to the task</param>
-/// <param name="difficulty">difficulty</param>
+/// <param name="Id"></param>
+/// <param name="Description"></param>
+/// <param name="Alias"></param>
+/// <param name="Milestone"></param>
+/// <param name="CreateAt"></param>
+/// <param name="Start"></param>
+/// <param name="ForecastDate"></param>
+/// <param name="Deadline"></param>
+/// <param name="Complete"></param>
+/// <param name="Deliverables"></param>
+/// <param name="Remarks"></param>
+/// <param name="EngineerId"></param>
+/// <param name="Level"></param>
 public record Task
     (
-    int uniqueId,
-    string description,
-    string nickname,
-    bool? milestone ,
-    DateTime? productionDate = null,
-    DateTime? startDate = null,
-    DateTime? estimatedCompletionDate = null,
-    DateTime? finalDateForCompletion = null,
-    DateTime? actualEndDate = null,
-    string product,
-    string? remarks = null,
-    int engineerIdAssignedToTheTask,
-    string difficulty
+    int Id,
+    string Description,
+    string Alias,
+    bool? Milestone,
+    DateTime? CreateAt = null,
+    DateTime? Start = null,
+    DateTime? ForecastDate = null,
+    DateTime? Deadline = null,
+    DateTime? Complete = null,
+    string? Deliverables = null,
+    string? Remarks = null,
+    int? EngineerId = null,
+    EngineerExperience Level = EngineerExperience.Expert
     )
 {
 }
