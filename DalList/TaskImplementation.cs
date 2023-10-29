@@ -15,7 +15,9 @@ public class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        if (Read(id) is not null)
+            throw new Exception($"Task with ID={id} does not exist");
+        DataSource.Tasks.Remove(Read(id));
     }
 
     public Task? Read(int id)
@@ -34,8 +36,8 @@ public class TaskImplementation : ITask
     public void Update(Task item)
     {
         if (Read(item.Id) is not null)
-            throw new Exception($"Engineer with ID={item.Id} does not exist");
+            throw new Exception($"Task with ID={item.Id} does not exist");
         Delete(item.Id);
-        DataSource.Engineers.Add(item);
+        DataSource.Tasks.Add(item);
     }
 }
