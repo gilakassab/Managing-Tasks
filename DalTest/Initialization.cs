@@ -9,5 +9,5 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; //stage 1
     private static ITask? s_dalTask; //stage 1
 
-    private static readonly Random s_rand = new();
+    private static readonly Random s_rand = new();jhguhgjhhjjhjhg
 }
