@@ -15,16 +15,20 @@ public class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        if (Read(id) is not null)
+        if (Read(id) is null)
             throw new Exception($"Engineer with ID={id} does not exist");
+        if (DataSource.Tasks.Find(t => t.EngineerId == id) is not null)
+            throw new Exception($"Engineer with ID={id} has a task to do");
         DataSource.Engineers.Remove(Read(id));
     }
 
     public Engineer? Read(int id)
     {
-        Engineer? engineer = DataSource.Engineers.FirstOrDefault(e => e.Id == id);
-        if(engineer is not null)
+        if (DataSource.Engineers.Exists(e => e.Id == id))
+        {
+            Engineer? engineer = DataSource.Engineers.Find(e => e.Id == id);
             return engineer;
+        }
         return null;
     }
 

@@ -15,16 +15,20 @@ public class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        if (Read(id) is not null)
+        if (Read(id) is null)
             throw new Exception($"Task with ID={id} does not exist");
-        DataSource.Tasks.Remove(Read(id));
+        if (DataSource.Dependencies.Find(d => d.DependsOnTask == id) is not null)
+            DataSource.Tasks.Remove(Read(id));
+        throw new Exception($"Task with ID={id} has a depends task");
     }
 
     public Task? Read(int id)
     {
-        Task? task = DataSource.Tasks.FirstOrDefault(t => t.Id == id);
-        if (task is not null)
+        if (DataSource.Tasks.Exists(t => t.Id == id))
+        {
+            Task? task = DataSource.Tasks.Find(t => t.Id == id);
             return task;
+        }
         return null;
     }
 

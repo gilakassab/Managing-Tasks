@@ -15,16 +15,18 @@ public class DependnecyImplementation : IDependency
 
     public void Delete(int id)
     {
-        if (Read(id) is not null)
+        if (Read(id) is null)
             throw new Exception($"Dependency with ID={id} does not exist");
         DataSource.Dependencies.Remove(Read(id));
     }
 
     public Dependency? Read(int id)
     {
-        Dependency? dependency = DataSource.Dependencies.FirstOrDefault(d => d.Id == id);
-        if (dependency is not null)
+        if (DataSource.Dependencies.Exists(d => d.Id == id))
+        {
+            Dependency? dependency = DataSource.Dependencies.Find(d => d.Id == id);
             return dependency;
+        }
         return null;
     }
 

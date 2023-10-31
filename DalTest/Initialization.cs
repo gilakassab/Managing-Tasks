@@ -1,6 +1,4 @@
-﻿
-
-namespace DalTest;
+﻿namespace DalTest;
 using DalApi;
 using DO;
 using System.Runtime.CompilerServices;
