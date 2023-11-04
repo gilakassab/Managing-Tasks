@@ -53,7 +53,7 @@ public static class Initialization
             }
         }
     }
-}
+
     private static void createDependencies()
     {        
     //for (int i = 0;i < 250;i++) {
@@ -76,7 +76,7 @@ public static class Initialization
         "Ariela Levin",
         "Dina Klein",
         "Shira Israelof"
-    };
+        };
 
         foreach (var _Taskname in TasksNames)
         { 
