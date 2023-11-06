@@ -9,6 +9,7 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; //stage 1
     private static ITask? s_dalTask; //stage 1
     private static readonly Random s_rand = new();
+
     public static void Do()
     {
         IDependency? dalDependency=null;
@@ -19,9 +20,9 @@ public static class Initialization
         s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
         createEngineers();
         createTasks();
-        //createDependences();
-        
+        //createDependences();       
     }
+
     private static void createEngineers()
     {
         int min_id = 200000000, max_id = 400000000;
