@@ -11,7 +11,12 @@ namespace DalTest
         enum MainMenu{ }
         static void Main(string[] args)
         {
-            //Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+            try
+            {
+                Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+            }
+          catch (Exception ex) { 
+            }
 
         }
     }
