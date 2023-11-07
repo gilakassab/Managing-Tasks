@@ -103,26 +103,4 @@ public static class Initialization
             s_dalDependency!.Create(neWDependency);
         }
     }
-
 }
-
-
-/* int Id,
-    string Description,
-    string Alias,
-    bool? Milestone,
-    DateTime? CreateAt = null,
-    DateTime? Start = null,
-    DateTime? ForecastDate = null,
-    DateTime? Deadline = null,
-    DateTime? Complete = null,
-    string? Deliverables = null,
-    string? Remarks = null,
-    int? EngineerId = null,
-    EngineerExperience Level = EngineerExperience.Expert*/
-//bool? _b = (_id % 2) == 0 ? true : false;
-//Year _year = (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
-
-//DateTime start = new DateTime(1995, 1, 1);
-//int range = (DateTime.Today - start).Days;
-//DateTime _bdt = start.AddDays(s_rand.Next(range));
