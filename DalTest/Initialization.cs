@@ -10,17 +10,14 @@ public static class Initialization
     private static ITask? s_dalTask; //stage 1
     private static readonly Random s_rand = new();
 
-    public static void Do()
+    public static void Do(IDependency? s_dalDependency, IEngineer? s_dalEngineer, ITask? s_dalTask)
     {
-        IDependency? dalDependency=null;
-        IEngineer? dalEngineer=null;
-        ITask? dalTask = null;
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalEngineer = s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
         createEngineers();
         createTasks();
-        //createDependences();       
+        createDependencies();
     }
 
     private static void createEngineers()
@@ -76,43 +73,40 @@ public static class Initialization
         _levels[2] = EngineerExperience.Junior;
         int _id = 0;
         bool _milestone = false;
-        string[] TasksNames =
+        List<Engineer?> myEngineers = s_dalEngineer.ReadAll();
+        int maxEngineer = myEngineers.Count();
+        for (int i = 0; i < 100; i++)
         {
-     "Dani Levi",
-     "Eli Amar",
-     "Yair Cohen",
-     "Ariela Levin",
-     "Dina Klein",
-     "Shira Israelof"
-     };
-
-        foreach (var _Taskname in TasksNames)
-        {
-            string _description = _Taskname;
-            string _alias = "";
+            string _description = "Task " + (i + 1).ToString();
+            string _alias = (i + 1).ToString();
             _level = _levels[s_rand.Next(0, 3)];
+            int currentEngineerId = myEngineers[s_rand.Next(0, maxEngineer)].Id;
             //Year _year = (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
 
             //    DateTime start = new DateTime(1995, 1, 1);
             //    int range = (DateTime.Today - start).Days;
             //    DateTime _bdt = start.AddDays(s_rand.Next(range));
 
-            Task newTask = new(_id, _description, _alias, _milestone,/* _createAt*/ null,/* _start=*/null, /*_forecastDate*/ null, /*_deadline*/ null, /*_complete*/ null, /*_deliverables*/ null,/*_remarks*/ null, /*_engineerId*/ null, _level);
+            Task newTask = new(_id, _description, _alias, _milestone,/* _createAt*/ DateTime.Today,/* _start=*/null, /*_forecastDate*/ null, /*_deadline*/ null, /*_complete*/ null, /*_deliverables*/ null,/*_remarks*/ null, currentEngineerId, _level);
             s_dalTask!.Create(newTask);
+        }   
+    }
+
+    private static void createDependencies()
+    {
+        List<Task?> myTasks = s_dalTask.ReadAll();
+        int maxTask = myTasks.Count(), _dependentTask, _DependsOnTask;
+        for (int i = 0; i < 250; i++)
+        {
+            _dependentTask = myTasks[s_rand.Next(0, maxTask)].Id;
+            _DependsOnTask = myTasks[s_rand.Next(0, maxTask)].Id;
+            Dependency neWDependency = new(0, _dependentTask, _DependsOnTask);
+            s_dalDependency!.Create(neWDependency);
         }
     }
 
-    //private static void createDependencies()
-    //{        
-    ////for (int i = 0;i < 250;i++) {
-    ////    _dependentTask=ReaderWriterLock()
-    ////    Dependency neWDependency = new( _dependentTask, _DependsOnTask);
-
-    //////    s_dalDependency!.Create(neWDependency);
-    ////    }}
-
-    //}
 }
+
 
 /* int Id,
     string Description,

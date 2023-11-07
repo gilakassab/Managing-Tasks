@@ -22,7 +22,7 @@ public record Task
     int Id,
     string Description,
     string Alias,
-    bool? Milestone,
+    bool Milestone,
     DateTime? CreateAt = null,
     DateTime? Start = null,
     DateTime? ForecastDate = null,

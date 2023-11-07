@@ -15,9 +15,7 @@ public class DependnecyImplementation : IDependency
 
     public void Delete(int id)
     {
-        if (Read(id) is null)
-            throw new Exception($"Dependency with ID={id} does not exist");
-        DataSource.Dependencies.Remove(Read(id));
+            throw new Exception($"Dependency is indelible entity");
     }
 
     public Dependency? Read(int id)
@@ -30,9 +28,9 @@ public class DependnecyImplementation : IDependency
         return null;
     }
 
-    public List<Dependency> ReadAll()
+    public List<Dependency?> ReadAll()
     {
-        return new List<Dependency>(DataSource.Dependencies);
+        return new List<Dependency?>(DataSource.Dependencies);
     }
 
     public void Update(Dependency item)
