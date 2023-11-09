@@ -9,11 +9,11 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; //stage 1
     private static ITask? s_dalTask; //stage 1
     private static readonly Random s_rand = new();
-    public static void Do(IDependency? s_dalDependency, IEngineer? s_dalEngineer, ITask? s_dalTask)
+    public static void Do(IDependency? _s_dalDependency, IEngineer? _s_dalEngineer, ITask? _s_dalTask)
     {
-        s_dalDependency = s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = _s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalEngineer = _s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = _s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
         createEngineers();
         createTasks();
         createDependencies();
@@ -52,7 +52,7 @@ public static class Initialization
                 {
                     _id = s_rand.Next(min_id, max_id);
                 }
-                while (s_dalEngineer!.Read(_id) != null);
+                while (s_dalEngineer!.Read(_id) is not null) ;
                 _name = _details.Item1;
                 _email = _details.Item2;
                 _level = _levels[s_rand.Next(0, 3)];

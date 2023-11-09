@@ -28,9 +28,9 @@ public class DependnecyImplementation : IDependency
         return null;
     }
 
-    public List<Dependency?> ReadAll()
+    public List<Dependency> ReadAll()
     {
-        return new List<Dependency?>(DataSource.Dependencies);
+        return new List<Dependency>(DataSource.Dependencies!);
     }
 
     public void Update(Dependency item)
