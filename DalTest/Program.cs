@@ -108,7 +108,7 @@ namespace DalTest
                                 {
                                     case 1: levelEngineerUpdate = EngineerExperience.Expert; break;
                                     case 2: levelEngineerUpdate = EngineerExperience.Junior; break;
-                                    case 3: levelEngineerUpdate = EngineerExperience.Rokkie; break;
+                                    case 3: levelEngineerUpdate = EngineerExperience.Rookie; break;
                                 }
                                 Engineer newEngineerUpdate = new(idEngineerUpdate, nameEngineerUpdate, emailEngineerUpdate,levelEngineerUpdate,costEngineerUpdate);
                                 s_dalEngineer!.Update(newEngineerUpdate); break;
