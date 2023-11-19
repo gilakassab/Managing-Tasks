@@ -1,0 +1,24 @@
+The hash algoritm is md5 for both tasks.
+
+1)Instead of 2) 10 points
+You have found a passwd file containing salted passwords.
+An unprotected configuration file has revealed a salt of 2793(just example).
+The hashed password for the 'admin' user appears to be 7d5f4266cb346ef2c2d9bfc6c9a7574b
+(just example, don't try it will not work), try to brute force this password. John can't do the job.
+Don't really try to brute forse it, only describe how to change or change the code from par. 5
+to make the job. You don,t reaaly need to run it or to take care of imports.
+Submit the changed code or the description.
+
+2) 40 points
+Use the template from targil 5 par. 3.5 , pass it through notepad to avoid errors.
+Read "How to.docx" to understand how to use it(it still CTF!) or use Goggle search.
+Create a file with the correct data and crack the password by John.
+Submut solution(user, cracked password, exersise number, like ctf5-1).
+
+Choose one from below for each group.  
+
+ctf5-1: salt: 3760 ; pass hash: OEgFykzxepn/T2DrP8iPA0 
+ctf5-2: salt: 7654 ; pass hash: xM2yTJ6k1s0lQBMfKLryX1
+ctf5-3: salt: 9734 ; pass hash: DKUhQ0.ZZMD81EKdXdunc/
+ctf5-4: salt: 1763 ; pass hash: bjcCkK3RnS6.MLVKYS4Yb/
+ctf5-5: salt: 2332 ; pass hash: nFgP4NFdYbx7GVIjLGSOQ0
