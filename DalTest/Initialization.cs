@@ -5,15 +5,17 @@ using System.Runtime.CompilerServices;
 
 public static class Initialization
 {
-    private static IDependency? s_dalDependency; //stage 1
-    private static IEngineer? s_dalEngineer; //stage 1
-    private static ITask? s_dalTask; //stage 1
+    //private static IDependency? s_dalDependency; //stage 1
+    //private static IEngineer? s_dalEngineer; //stage 1
+    //private static ITask? s_dalTask; //stage 1
+    private static IDal? s_dal; //stage 2
     private static readonly Random s_rand = new();
-    public static void Do(IDependency? _s_dalDependency, IEngineer? _s_dalEngineer, ITask? _s_dalTask)
+    public static void Do(IDal dal)
     {
-        s_dalDependency = _s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = _s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = _s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalDependency = _s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalEngineer = _s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalTask = _s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
         createEngineers();
         createTasks();
         createDependencies();
@@ -52,12 +54,12 @@ public static class Initialization
                 {
                     _id = s_rand.Next(min_id, max_id);
                 }
-                while (s_dalEngineer!.Read(_id) is not null) ;
+                while (s_dal!.Engineer.Read(_id) is not null) ;
                 _name = _details.Item1;
                 _email = _details.Item2;
                 _level = _levels[s_rand.Next(0, 3)];
                 Engineer newEngineer = new(_id, _name, _email, _level, s_rand.Next(2000, 9000));
-                s_dalEngineer!.Create(newEngineer);
+                s_dal!.Engineer.Create(newEngineer);
             }
         }
 
@@ -72,7 +74,7 @@ public static class Initialization
         _levels[2] = EngineerExperience.Junior;
         int _id = 0;
         bool _milestone = false;
-        List<Engineer?> myEngineers = s_dalEngineer.ReadAll();
+        List<Engineer?> myEngineers = s_dal!.Engineer.ReadAll();
         int maxEngineer = myEngineers.Count();
         for (int i = 0; i < 100; i++)
         {
@@ -87,20 +89,20 @@ public static class Initialization
             //    DateTime _bdt = start.AddDays(s_rand.Next(range));
 
             Task newTask = new(_id, _description, _alias, _milestone,/* _createAt*/ DateTime.Today,/* _start=*/null, /*_forecastDate*/ null, /*_deadline*/ null, /*_complete*/ null, /*_deliverables*/ null,/*_remarks*/ null, currentEngineerId, _level);
-            s_dalTask!.Create(newTask);
+            s_dal!.Task.Create(newTask);
         }   
     }
 
     private static void createDependencies()
     {
-        List<Task?> myTasks = s_dalTask.ReadAll();
+        List<Task?> myTasks = s_dal!.Task.ReadAll();
         int maxTask = myTasks.Count(), _dependentTask, _DependsOnTask;
         for (int i = 0; i < 250; i++)
         {
             _dependentTask = myTasks[s_rand.Next(0, maxTask)].Id;
             _DependsOnTask = myTasks[s_rand.Next(0, maxTask)].Id;
             Dependency neWDependency = new(0, _dependentTask, _DependsOnTask);
-            s_dalDependency!.Create(neWDependency);
+            s_dal!.Dependency.Create(neWDependency);
         }
     }
 }

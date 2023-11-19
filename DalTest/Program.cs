@@ -1,4 +1,5 @@
 ﻿using DalApi;
+
 using Dal;
 using DO;
 using Microsoft.VisualBasic.FileIO;
@@ -9,9 +10,10 @@ namespace DalTest
 {
     internal class Program
     {
-        private static IDependency? s_dalDependency = new DependnecyImplementation(); //stage 1
-        private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
-        private static ITask? s_dalTask = new TaskImplementation(); //stage 1
+         static readonly IDal s_dal = new Dal.DalList(); //stage 2
+        //private static IDependency? s_dalDependency = new DependnecyImplementation(); //stage 1
+        //private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
+        //private static ITask? s_dalTask = new TaskImplementation(); //stage 1
 
         enum MainMenu { EXIT, DEPENDENCY, ENGINEER, TASK }
         enum SubMenu { EXIT, CREATE, READ, READALL, UPDATE, DELETE }
@@ -45,7 +47,7 @@ namespace DalTest
                             case 3: levelEngineer = EngineerExperience.Rookie; break;
                             default: levelEngineer = EngineerExperience.Expert; break;
                         }
-                        s_dalEngineer = new EngineerImplementation();
+                        s_dal.Engineer = new EngineerImplementation() ?? throw new Exception("Enter a number please");
                         Engineer newEngineer = new(idEngineer, nameEngineer, emailEngineer, levelEngineer, costEngineer);
                         s_dalEngineer!.Create(newEngineer);
                         break;
@@ -250,7 +252,8 @@ namespace DalTest
         {
             try
             {
-                Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+                //Initialization.Do(s_dalStudent, s_dalCourse, s_dalLink); //stage 1
+                Initialization.Do(s_dal); //stage 2
 
                 int chooseEntity;
                 do
