@@ -54,7 +54,7 @@ public static class Initialization
                 {
                     _id = s_rand.Next(min_id, max_id);
                 }
-                while (s_dal!.Engineer.Read(_id) is not null) ;
+                while (s_dal!.Engineer.Read(e => e.Id == _id) is not null) ;
                 _name = _details.Item1;
                 _email = _details.Item2;
                 _level = _levels[s_rand.Next(0, 3)];
@@ -74,14 +74,16 @@ public static class Initialization
         _levels[2] = EngineerExperience.Junior;
         int _id = 0;
         bool _milestone = false;
-        List<Engineer?> myEngineers = s_dal!.Engineer.ReadAll();
+        IEnumerable<Engineer?> myEngineers = s_dal!.Engineer.ReadAll();
         int maxEngineer = myEngineers.Count();
         for (int i = 0; i < 100; i++)
         {
             string _description = "Task " + (i + 1).ToString();
             string _alias = (i + 1).ToString();
             _level = _levels[s_rand.Next(0, 3)];
-            int currentEngineerId = myEngineers[s_rand.Next(0, maxEngineer)].Id;
+            var nonNullEngineers = myEngineers.Where(e => e != null).ToList();
+            int currentEngineerId = nonNullEngineers[s_rand.Next(0, nonNullEngineers.Count)].Id;
+            
             //Year _year = (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
 
             //    DateTime start = new DateTime(1995, 1, 1);
@@ -95,12 +97,13 @@ public static class Initialization
 
     private static void createDependencies()
     {
-        List<Task?> myTasks = s_dal!.Task.ReadAll();
+        IEnumerable<Task?> myTasks = s_dal!.Task.ReadAll();
         int maxTask = myTasks.Count(), _dependentTask, _DependsOnTask;
         for (int i = 0; i < 250; i++)
         {
-            _dependentTask = myTasks[s_rand.Next(0, maxTask)].Id;
-            _DependsOnTask = myTasks[s_rand.Next(0, maxTask)].Id;
+            var nonNullTasks = myTasks.Where(e => e != null).ToList();
+            _dependentTask = nonNullTasks[s_rand.Next(0, nonNullTasks.Count)].Id;
+            _DependsOnTask = nonNullTasks[s_rand.Next(0, nonNullTasks.Count)].Id;
             Dependency neWDependency = new(0, _dependentTask, _DependsOnTask);
             s_dal!.Dependency.Create(neWDependency);
         }

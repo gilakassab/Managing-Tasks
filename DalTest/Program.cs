@@ -53,9 +53,9 @@ namespace DalTest
                         int id;
                         Console.WriteLine("Enter id for reading");
                         id = int.Parse(Console.ReadLine());
-                        if (s_dal.Engineer!.Read(id) is null)
+                        if (s_dal.Engineer!.Read(e => e.Id == id) is null)
                             Console.WriteLine("no engineer found");
-                        Console.WriteLine(s_dal.Engineer!.Read(id).ToString());
+                        Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
                         break;
                     case 3:
                         foreach (var engineer in s_dal.Engineer!.ReadAll())
@@ -68,7 +68,7 @@ namespace DalTest
                         double costEngineerUpdate;
                         Console.WriteLine("Enter id for reading");
                         idEngineerUpdate = int.Parse(Console.ReadLine());
-                        Console.WriteLine(s_dal.Engineer!.Read(idEngineerUpdate).ToString());
+                        Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == idEngineerUpdate).ToString());
                         Console.WriteLine("Enter details to update");//if null to put the same details
                         nameEngineerUpdate = (Console.ReadLine());
                         emailEngineerUpdate = Console.ReadLine();
@@ -117,9 +117,9 @@ namespace DalTest
                         int id;
                         Console.WriteLine("Enter id for reading");
                         id = int.Parse(Console.ReadLine());
-                        if (s_dal.Dependency!.Read(id) is null)
+                        if (s_dal.Dependency!.Read(d => d.Id == id) is null)
                             Console.WriteLine("no dependency found");
-                        Console.WriteLine(s_dal.Dependency!.Read(id).ToString());
+                        Console.WriteLine(s_dal.Dependency!.Read(d => d.Id == id).ToString());
                         break;
                     case 3:
                         foreach (var dependency in s_dal.Dependency!.ReadAll())
@@ -129,7 +129,7 @@ namespace DalTest
                         int idUpdate, dependentTaskUpdate, dependsOnTaskUpdate;
                         Console.WriteLine("Enter id for reading");
                         idUpdate = int.Parse(Console.ReadLine());
-                        Console.WriteLine(s_dal.Dependency!.Read(idUpdate).ToString());
+                        Console.WriteLine(s_dal.Dependency!.Read(d => d.Id == idUpdate).ToString());
                         Console.WriteLine("Enter details to update");
                         dependentTaskUpdate = int.Parse(Console.ReadLine());
                         dependsOnTaskUpdate = int.Parse(Console.ReadLine());
@@ -189,9 +189,9 @@ namespace DalTest
                         int id;
                         Console.WriteLine("Enter id for reading");
                         id = int.Parse(Console.ReadLine());
-                        if(s_dal.Task!.Read(id) is null)
+                        if(s_dal.Task!.Read(t => t.Id == id) is null)
                             Console.WriteLine("no task found");
-                        Console.WriteLine(s_dal.Task!.Read(id).ToString());
+                        Console.WriteLine(s_dal.Task!.Read(t => t.Id == id).ToString());
                         break;
                     case 3:
                         foreach (var task in s_dal.Task!.ReadAll())
@@ -205,7 +205,7 @@ namespace DalTest
                         EngineerExperience taskLevelUpdate;
                         Console.WriteLine("Enter id for reading");
                         idTaskUpdate = int.Parse(Console.ReadLine());
-                        Console.WriteLine(s_dal.Task!.Read(idTaskUpdate).ToString());
+                        Console.WriteLine(s_dal.Task!.Read(t => t.Id == idTaskUpdate).ToString());
                         Console.WriteLine("Enter details to update");//if null to put the same details
                         taskMilestoneUpdate = bool.Parse(Console.ReadLine());
                         taskEngineerIdUpdate = int.Parse(Console.ReadLine());
