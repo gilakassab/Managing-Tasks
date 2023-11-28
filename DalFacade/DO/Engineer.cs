@@ -14,7 +14,8 @@ public record Engineer
     string Name,
     string? Email = null,
     EngineerExperience Level = EngineerExperience.Expert,
-    double? Cost = null
+    double? Cost = null,
+    bool isActive = false
 )
 {
 }

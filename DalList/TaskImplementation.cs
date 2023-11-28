@@ -18,14 +18,7 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        var taskToDelete = Read(t => t.Id == id);
-        if (taskToDelete is null)
-            throw new DalDoesNotExistException($"Task with ID={id} does not exist");
-
-        if (DataSource.Dependencies.Any(d => d.DependsOnTask == id))
-            throw new DalDeletionImpossible($"Task with ID={id} has a depends task");
-
-        DataSource.Tasks.Remove(taskToDelete);
+        throw new DalDeletionImpossible($"Task is indelible entity");
     }
 
     public Task? Read(Func<Task, bool> filter)

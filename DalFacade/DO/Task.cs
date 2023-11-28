@@ -30,7 +30,8 @@ public record Task
     string? Deliverables = null,
     string? Remarks = null,
     int? EngineerId = null,
-    EngineerExperience Level = EngineerExperience.Expert
-    )
+    EngineerExperience Level = EngineerExperience.Expert,
+       bool isActive = false
+ )
 {
 }

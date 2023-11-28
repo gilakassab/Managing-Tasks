@@ -18,7 +18,7 @@ internal class DependencyImplementation : IDependency
 
     public void Delete(int id)
     {
-        throw new DalDeletionImpossible($"Dependency is indelible entity");
+        DataSource.Dependencies.Remove(Read(e => e.Id == id));
     }
 
     public Dependency? Read(Func<Dependency, bool> filter)
