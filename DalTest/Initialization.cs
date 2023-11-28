@@ -54,7 +54,7 @@ public static class Initialization
                 {
                     _id = s_rand.Next(min_id, max_id);
                 }
-                while (s_dal!.Engineer.Read(e => e.Id == _id) is not null) ;
+                while (s_dal!.Engineer.Read(e => e.Id == _id) is not null);
                 _name = _details.Item1;
                 _email = _details.Item2;
                 _level = _levels[s_rand.Next(0, 3)];
@@ -83,7 +83,7 @@ public static class Initialization
             _level = _levels[s_rand.Next(0, 3)];
             var nonNullEngineers = myEngineers.Where(e => e != null).ToList();
             int currentEngineerId = nonNullEngineers[s_rand.Next(0, nonNullEngineers.Count)].Id;
-            
+
             //Year _year = (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
 
             //    DateTime start = new DateTime(1995, 1, 1);
@@ -92,7 +92,7 @@ public static class Initialization
 
             Task newTask = new(_id, _description, _alias, _milestone,/* _createAt*/ DateTime.Today,/* _start=*/null, /*_forecastDate*/ null, /*_deadline*/ null, /*_complete*/ null, /*_deliverables*/ null,/*_remarks*/ null, currentEngineerId, _level);
             s_dal!.Task.Create(newTask);
-        }   
+        }
     }
 
     private static void createDependencies()
@@ -109,3 +109,7 @@ public static class Initialization
         }
     }
 }
+
+
+
+
