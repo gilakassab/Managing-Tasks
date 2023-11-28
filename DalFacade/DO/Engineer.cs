@@ -1,13 +1,14 @@
 ﻿namespace DO;
 
 /// <summary>
-/// 
+/// Engineers
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Name"></param>
 /// <param name="Email"></param>
 /// <param name="Level"></param>
 /// <param name="Cost"></param>
+/// <param name="isActive"></param>
 public record Engineer
 (
     int Id,

@@ -1,12 +1,13 @@
 ﻿namespace DO;
 
 /// <summary>
-/// Task management
+/// Tasks
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Description"></param>
 /// <param name="Alias"></param>
 /// <param name="Milestone"></param>
+/// <param name="requiredEffortTime"></param>
 /// <param name="CreateAt"></param>
 /// <param name="Start"></param>
 /// <param name="ForecastDate"></param>
@@ -16,12 +17,14 @@
 /// <param name="Remarks"></param>
 /// <param name="EngineerId"></param>
 /// <param name="Level"></param>
+/// <param name="isActive"></param>
 public record Task
     (
     int Id,
     string Description,
     string Alias,
     bool Milestone,
+    TimeSpan requiredEffortTime,
     DateTime? CreateAt = null,
     DateTime? Start = null,
     DateTime? ForecastDate = null,
@@ -31,7 +34,7 @@ public record Task
     string? Remarks = null,
     int? EngineerId = null,
     EngineerExperience Level = EngineerExperience.Expert,
-       bool isActive = false
+    bool isActive = false
  )
 {
 }

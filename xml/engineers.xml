@@ -1,3 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer>
+  <Engineer>
+    <Id>123456789</Id>
+    <Name>Engineer1</Name>
+    <Email>engineer1@example.com</Email>
+    <Level>Intermediate</Level>
+    <Cost>150.5</Cost>
+    <IsActive>true</IsActive>
+  </Engineer>
+  <Engineer>
+    <Id>987654321</Id>
+    <Name>Engineer2</Name>
+    <Email>engineer2@example.com</Email>
+    <Level>Advanced</Level>
+    <Cost>200.0</Cost>
+    <IsActive>true</IsActive>
+  </Engineer>
+  <Engineer>
+    <Id>456789123</Id>
+    <Name>Engineer3</Name>
+    <Email>engineer3@example.com</Email>
+    <Level>Beginner</Level>
+    <Cost>100.75</Cost>
+    <IsActive>true</IsActive>
+  </Engineer>
+  <Engineer>
+    <Id>789123456</Id>
+    <Name>Engineer4</Name>
+    <Level>Expert</Level>
+    <Cost>300.25</Cost>
+    <IsActive>true</IsActive>
+  </Engineer>
+  <Engineer>
+    <Id>321654987</Id>
+    <Name>Engineer5</Name>
+    <Level>AdvancedBeginner</Level>
+    <Cost>175.0</Cost>
+    <IsActive>true</IsActive>
+  </Engineer>
 </ArrayOfEngineer>
