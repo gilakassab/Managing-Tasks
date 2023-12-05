@@ -1,4 +1,6 @@
-﻿namespace DO;
+﻿using System.Runtime.CompilerServices;
+
+namespace DO;
 
 /// <summary>
 /// Engineers
@@ -13,10 +15,12 @@ public record Engineer
 (
     int Id,
     string Name,
+     bool IsActive = false,
     string? Email = null,
     EngineerExperience Level = EngineerExperience.Expert,
-    double? Cost = null,
-    bool isActive = false
+    double? Cost = null
+   
 )
 {
+    public Engineer() : this(0, "", false) { }
 }
