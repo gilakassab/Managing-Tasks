@@ -47,7 +47,7 @@ namespace DalTest
                             case 3: levelEngineer = EngineerExperience.Rookie; break;
                             default: levelEngineer = EngineerExperience.Expert; break;
                         }
-                        s_dal.Engineer = new EngineerImplementation() ?? throw new Exception("Enter a number please");
+                        s_dal.Engineer.Create= new EngineerImplementation() ?? throw new Exception("Enter a number please");
                         Engineer newEngineer = new(idEngineer, nameEngineer, emailEngineer, levelEngineer, costEngineer);
                         s_dalEngineer!.Create(newEngineer);
                         break;
