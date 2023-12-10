@@ -4,11 +4,11 @@ internal static class DataSource
 {
     internal static class Config
     {
-        internal const int startDependencyId = 1;
+        internal const int startDependencyId = 40;
         private static int nextDependencyId = startDependencyId;
         internal static int NextDependencyId { get => nextDependencyId++; }
-        
-        internal const int startTaskId = 1;
+
+        internal const int startTaskId = 20;
         private static int nextTaskId = startTaskId;
         internal static int NextTaskId { get => nextTaskId++; }
     }

@@ -1,7 +1,10 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 internal class TaskImplementation : ITask
 {
@@ -15,33 +18,26 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        if (Read(id) is null)
-            throw new Exception($"Task with ID={id} does not exist");
-        if (DataSource.Dependencies.Find(d => d.DependsOnTask == id) is not null)
-            DataSource.Tasks.Remove(Read(id));
-        throw new Exception($"Task with ID={id} has a depends task");
+        throw new DalDeletionImpossible($"Task is indelible entity");
     }
 
-    public Task? Read(int id)
+    public Task? Read(Func<Task, bool> filter)
     {
-        if (DataSource.Tasks.Exists(t => t.Id == id))
-        {
-            Task? task = DataSource.Tasks.Find(t => t.Id == id);
-            return task;
-        }
-        return null;
+        return DataSource.Tasks.FirstOrDefault(filter!);
     }
 
-    public List<Task> ReadAll()
+    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
     {
-        return new List<Task>(DataSource.Tasks!);
+        return filter == null ? DataSource.Tasks.Select(item => item) : DataSource.Tasks.Where(filter!);
     }
 
     public void Update(Task item)
     {
-        if (Read(item.Id) is not null)
-            throw new Exception($"Task with ID={item.Id} does not exist");
-        Delete(item.Id);
+        var existingTask = Read(t => t.Id == item.Id);
+        if (existingTask is null)
+            throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
+
+        DataSource.Tasks.Remove(existingTask);
         DataSource.Tasks.Add(item);
     }
 }
