@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 
@@ -12,22 +13,13 @@ internal class EngineerImplementation : IEngineer
     {
         int id = item.Id;
 
-        XElement engineersElement = XElement.Load(filePath);
+        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(filePath);
 
-        if (engineersElement.Elements("Engineer").Any(e => (int)e.Element("Id") == id))
+        if (engineers.Any(e => e.Id == id))
             throw new DalAlreadyExistsException($"Engineer with ID={id} already exists");
 
-        XElement newEngineerElement = new XElement("Engineer",
-            new XElement("Id", item.Id),
-            new XElement("Name", item.Name),
-            new XElement("Email", item.Email),
-            new XElement("Level", item.Level),
-            new XElement("Cost", item.Cost),
-            new XElement("IsActive", item.IsActive)
-        );
-
-        engineersElement.Add(newEngineerElement);
-        engineersElement.Save(filePath);
+        engineers.Add(item);
+        XMLTools.SaveListToXMLSerializer<Engineer>(engineers,filePath);
         return id;
     }
 
@@ -52,7 +44,9 @@ internal class EngineerImplementation : IEngineer
         if (existingEngineer is null)
             throw new DalDoesNotExistException($"Engineer with ID={item.Id} does not exist");
 
-        DataSource.Engineers.Remove(existingEngineer);
-        DataSource.Engineers.Add(item);
+        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(filePath);
+        engineers.Remove(existingEngineer);
+        engineers.Add(item);
+        XMLTools.SaveListToXMLSerializer<Engineer>(engineers, filePath);
     }
 }

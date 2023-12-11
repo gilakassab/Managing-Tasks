@@ -4,53 +4,108 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 internal class DependencyImplementation : IDependency
 {
-    public int Create(DO.Task item)
+    const string filePath = @"../xml/depensencies.xml";
+
+    public int Create(Dependency item)
     {
-        // הגדרת אוביקט= מכונה שיודעת להמיר אוביקטים מ ואל מחרוזת
-        XmlSerializer serializer = new XmlSerializer(typeof(List<DO.Task>));
-        // מצביע לקובץ שיודע לקרוא
-        TextReader textReader = new StringReader(@"../xml/dependencies.xml");
-        // 
-        List<DO.Task> lst = (List<Task>?)serializer.Deserialize(textReader) ?? throw new Exception();
-        // הוספת הפריט החדש
-        lst.Add(item);
+        int id = Config.NextDependencyId;
 
-        using (TextWriter writer = new StreamWriter(@"../xml/dependencies.xml"))
-        {
-            serializer.Serialize(writer, lst);
-        }
+        XElement dependenciesElement = XMLTools.LoadListFromXMLElement(filePath);
 
-        return item.Id;
+        XElement newDependencyElement = new XElement("Dependency",
+             new XElement("Id", item.Id),
+             new XElement("DependentTask", item.DependentTask),
+             new XElement("DependsOnTask", item.DependsOnTask)
+         );
+
+        dependenciesElement.Add(newDependencyElement);
+        XMLTools.SaveListToXMLElement(dependenciesElement, filePath);
+        return id;
     }
-
-
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        XElement dependenciesElement = XMLTools.LoadListFromXMLElement(filePath);
+
+        var dependencyToDelete = dependenciesElement.Elements("Dependency")
+            .FirstOrDefault(d => (int)d.Element("Id") == id);
+
+        if (dependencyToDelete != null)
+        {
+            dependencyToDelete.Remove();
+            XMLTools.SaveListToXMLElement(dependenciesElement, filePath);
+        }
     }
 
-    public Task? Read(int id)
+    public Dependency? Read(int id)
     {
-        throw new NotImplementedException();
+        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
+
+        var query = from depElement in rootElement.Elements("Dependency")
+                    where (int)depElement.Element("Id") == id
+                    select new Dependency
+                    {
+                        Id = (int)depElement.Element("Id"),
+                        DependentTask = (int)depElement.Element("DependentTask"),
+                        DependsOnTask = (int)depElement.Element("DependsOnTask")
+                    };
+
+        return query.SingleOrDefault();
     }
 
-    public Task? Read(Func<DO.Task, bool> filter)
+    public Dependency? Read(Func<Dependency, bool> filter)
     {
-        throw new NotImplementedException();
+        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
+
+        var query = from depElement in rootElement.Elements("Dependency")
+                    let dependency = new Dependency
+                    {
+                        Id = (int)depElement.Element("Id"),
+                        DependentTask = (int)depElement.Element("DependentTask"),
+                        DependsOnTask = (int)depElement.Element("DependsOnTask")
+                    }
+                    where filter(dependency)
+                    select dependency;
+
+        return query.SingleOrDefault();
     }
 
-    public IEnumerable<Task?> ReadAll(Func<DO.Task, bool>? filter = null)
+    public IEnumerable<Dependency?> ReadAll(Func<DO.Dependency, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
+
+        var query = from depElement in rootElement.Elements("Dependency")
+                    let dependency = new Dependency
+                    {
+                        Id = (int)depElement.Element("Id"),
+                        DependentTask = (int)depElement.Element("DependentTask"),
+                        DependsOnTask = (int)depElement.Element("DependsOnTask")
+                    }
+                    where filter == null || filter(dependency)
+                    select dependency;
+
+        return query.ToList();
     }
 
-    public void Update(Task item)
+    public void Update(Dependency item)
     {
-        throw new NotImplementedException();
+        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
+
+        XElement depElement = (from d in rootElement.Elements("Dependency")
+                               where (int)d.Element("Id") == item.Id
+                               select d).SingleOrDefault()!;
+
+        if (depElement != null)
+        {
+            depElement.Element("DependentTask").SetValue(item.DependentTask);
+            depElement.Element("DependsOnTask").SetValue(item.DependsOnTask);
+        }
+
+        XMLTools.SaveListToXMLElement(rootElement, filePath);
     }
 }
