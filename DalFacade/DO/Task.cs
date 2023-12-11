@@ -25,6 +25,8 @@ public record Task
     string Alias,
     bool Milestone,
     TimeSpan requiredEffortTime,
+    EngineerExperience Level = EngineerExperience.Expert,
+    bool isActive = false,
     DateTime? CreateAt = null,
     DateTime? Start = null,
     DateTime? ForecastDate = null,
@@ -32,9 +34,9 @@ public record Task
     DateTime? Complete = null,
     string? Deliverables = null,
     string? Remarks = null,
-    int? EngineerId = null,
-    EngineerExperience Level = EngineerExperience.Expert,
-    bool isActive = false
+    int? EngineerId = null 
  )
 {
+    public Task() : this(0, "", "", true, "PT0S") { }
 }
+ 
