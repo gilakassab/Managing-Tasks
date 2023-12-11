@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Xml.Serialization;
 
 namespace Dal;
 
@@ -6,7 +7,9 @@ internal class TaskImplementation : ITask
 {
     public int Create(DO.Task item)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        const string tasksFile = @"..\xml\tasks.xml";
+        XmlSerializer serializer = new XmlSerializer(typeof(List<Task>));
     }
 
     public void Delete(int id)
