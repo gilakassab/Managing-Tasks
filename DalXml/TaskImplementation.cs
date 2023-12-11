@@ -1,51 +1,46 @@
 ﻿using DalApi;
-using System.Xml.Serialization;
+using DO;
 
 namespace Dal;
 
 internal class TaskImplementation : ITask
-{ 
-    public int Create(Task item)
+{
+    const string filePath = @"../xml/tasks.xml";
+
+    public int Create(DO.Task item)
     {
-        // הגדרת אוביקט= מכונה שיודעת להמיר אוביקטים מ ואל מחרוזת
-        XmlSerializer serializer = new XmlSerializer(typeof(List<DO.Task>));
-        // מצביע לקובץ שיודע לקרוא
-        TextReader textReader = new StringReader(@"../xml/tasks.xml");
-        // 
-        List<Task> lst = (List<Task>?)serializer.Deserialize(textReader) ?? throw new Exception();
-        // הוספת הפריט החדש
-        lst.Add(item);
-
-        using (TextWriter writer = new StreamWriter(@"../xml/tasks.xml"))
-        {
-            serializer.Serialize(writer, lst);
-        }
-
-        return item.Id;
+        int id = Config.NextTaskId;
+        DO.Task copy = item with { Id = id };
+        List<DO.Task> tasks = XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath);
+        tasks.Add(copy);
+        XMLTools.SaveListToXMLSerializer<DO.Task>(tasks, filePath);
+        return id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        throw new DalDeletionImpossible($"Task is indelible entity");
     }
 
-    public Task? Read(int id)
+    public DO.Task? Read(Func<DO.Task, bool> filter)
     {
-        throw new NotImplementedException();
+        return XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath).FirstOrDefault(filter!);
     }
 
-    public Task? Read(Func<DO.Task, bool> filter)
+    public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        return filter == null ? XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath).Select(item => item) : XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath).Where(filter!);
     }
 
-    public IEnumerable<Task?> ReadAll(Func<DO.Task, bool>? filter = null)
+    public void Update(DO.Task item)
     {
-        throw new NotImplementedException();
-    }
+        var existingTask = Read(t => t.Id == item.Id);
+        if (existingTask is null)
+            throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
 
-    public void Update(Task item)
-    {
-        throw new NotImplementedException();
+        List<DO.Task> tasks = XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath);
+        tasks.Remove(existingTask);
+        tasks.Add(item);
+        XMLTools.SaveListToXMLSerializer<DO.Task>(tasks, filePath);
     }
 }

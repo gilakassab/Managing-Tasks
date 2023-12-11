@@ -19,7 +19,6 @@ public record Engineer
     string? Email = null,
     EngineerExperience Level = EngineerExperience.Expert,
     double? Cost = null
-   
 )
 {
     public Engineer() : this(0, "", false) { }
