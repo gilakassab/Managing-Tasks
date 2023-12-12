@@ -1,4 +1,3 @@
-﻿
 using DalApi;
 namespace Dal
 {
