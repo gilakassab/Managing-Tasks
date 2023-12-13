@@ -2,14 +2,14 @@
 using DO;
 using DalApi;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Reflection.Emit;
-using System.Threading.Channels;
-
-namespace DalTest 
+using System.Xml.Linq;
+using System.Data.SqlTypes;
+using System;
+using DalXml;
+namespace DalTest
 {
     internal class Program
-    {
+{
     //static readonly IDal s_dal = new Dal.DalList(); //stage 2
     static readonly IDal s_dal = new Dal.DalXml(); //stage 3
 
@@ -31,71 +31,68 @@ namespace DalTest
             Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, READALL ,UPDATE,DELETE }");
             int.TryParse(Console.ReadLine() ?? throw new Exception("Enter a number please"), out chooseSubMenu);
 
-            switch (chooseSubMenu)
-            {
-                case 1:
-                    Console.WriteLine("Enter id, name, email, cost and a number to choose experience");
-                    int idEngineer, currentNum;
-                    string nameEngineer, emailEngineer, input;
-                    EngineerExperience levelEngineer;
-                    bool isActive;
-                    double costEngineer;
-                    idEngineer = int.Parse(Console.ReadLine());
-                    nameEngineer = (Console.ReadLine());
-                    isActive = Console.ReadLine() == "false" ? false : true;
-                    emailEngineer = Console.ReadLine();
-                    input = Console.ReadLine();
-                    levelEngineer = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), input);
-                    costEngineer = double.Parse(Console.ReadLine());
+                switch (chooseSubMenu)
+                {
+                    case 1:
+                        Console.WriteLine("Enter id, name, email, cost and a number to choose experience");
+                        int idEngineer, currentNum;
+                        string nameEngineer, emailEngineer, input;
+                        EngineerExperience levelEngineer;
+                        bool isActive;
+                        double costEngineer;
+                        idEngineer = int.Parse(Console.ReadLine());
+                        nameEngineer = (Console.ReadLine());
+                        isActive = Console.ReadLine() == "false" ? false : true;
+                        emailEngineer = Console.ReadLine();
+                        input = Console.ReadLine();
+                        levelEngineer = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), input);
+                        costEngineer = double.Parse(Console.ReadLine());
+                        s_dal.Engineer.Create(new Engineer(idEngineer, nameEngineer, isActive, emailEngineer, levelEngineer, costEngineer));
+                        break;
+                    case 2:
+                        int id;
+                        Console.WriteLine("Enter id for reading");
+                        id = int.Parse(Console.ReadLine());
+                        if (s_dal.Engineer!.Read(e => e.Id == id) is null)
+                            Console.WriteLine("no engineer found");
+                        Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
+                        break;
+                    case 3:
+                        s_dal.Engineer!.ReadAll()
+.ToList()
+.ForEach(engineer => Console.WriteLine(engineer.ToString()));
+                        break;
+                    case 4:
+                        int idEngineerUpdate, currentNumUpdate;
+                        string nameEngineerUpdate, emailEngineerUpdate, inputUpdate;
+                        EngineerExperience levelEngineerUpdate;
+                        double costEngineerUpdate;
+                        bool isActiveUpdate;
+                        Console.WriteLine("Enter id for reading");
+                        idEngineerUpdate = int.Parse(Console.ReadLine());
+                        Engineer updatedEngineer = s_dal.Engineer.Read(e => e.Id == idEngineerUpdate);
+                        Console.WriteLine(updatedEngineer.ToString());
+                        Console.WriteLine("Enter details to update");//if null to put the same details
+                        nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer?.Name;
+                        isActiveUpdate = Console.ReadLine() == "false" ? false : true;
+                        emailEngineerUpdate = Console.ReadLine() ?? updatedEngineer?.Email;
+                        inputUpdate = Console.ReadLine();
+                        levelEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedEngineer.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdate);
+                        costEngineerUpdate = double.Parse(Console.ReadLine());
 
 
-
-                    s_dal.Engineer.Create(new Engineer(idEngineer, nameEngineer, isActive, emailEngineer, levelEngineer, costEngineer));
-                    break;
-                case 2:
-                    int id;
-                    Console.WriteLine("Enter id for reading");
-                    id = int.Parse(Console.ReadLine());
-                    if (s_dal.Engineer!.Read(e => e.Id == id) is null)
-                        Console.WriteLine("no engineer found");
-                    Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
-                    break;
-                case 3:
-                    foreach (var engineer in s_dal.Engineer!.ReadAll())
-                        Console.WriteLine(engineer.ToString());
-                    break;
-                case 4:
-                    int idEngineerUpdate, currentNumUpdate;
-                    string nameEngineerUpdate, emailEngineerUpdate, inputUpdate;
-                    EngineerExperience levelEngineerUpdate;
-                    double costEngineerUpdate;
-                    bool isActiveUpdate;
-                    Console.WriteLine("Enter id for reading");
-                    idEngineerUpdate = int.Parse(Console.ReadLine());
-                    Engineer updatedEngineer = s_dal.Engineer.Read(e => e.Id == idEngineerUpdate);
-                    Console.WriteLine(updatedEngineer.ToString());
-                    Console.WriteLine("Enter details to update");//if null to put the same details
-                    nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer?.Name;
-                    isActiveUpdate = Console.ReadLine() == "false" ? false : true;
-                    emailEngineerUpdate = Console.ReadLine() ?? updatedEngineer?.Email;
-                    inputUpdate = Console.ReadLine();
-                    levelEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedEngineer.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdate);
-                    costEngineerUpdate = double.Parse(Console.ReadLine());
-
-
-                    s_dal.Engineer.Update(new Engineer(idEngineerUpdate, nameEngineerUpdate, isActiveUpdate, emailEngineerUpdate, levelEngineerUpdate, costEngineerUpdate));
-                    break;
-                case 5:
-                    int idDelete;
-                    Console.WriteLine("Enter id for deleting");
-                    idDelete = int.Parse(Console.ReadLine());
-                    s_dal.Engineer!.Delete(idDelete);
-                    break;
-                default: return;
-            }
+                        s_dal.Engineer.Update(new Engineer(idEngineerUpdate, nameEngineerUpdate, isActiveUpdate, emailEngineerUpdate, levelEngineerUpdate, costEngineerUpdate));
+                        break;
+                    case 5:
+                        int idDelete;
+                        Console.WriteLine("Enter id for deleting");
+                        idDelete = int.Parse(Console.ReadLine());
+                        s_dal.Engineer!.Delete(idDelete);
+                        break;
+                    default: return;
+                }
         } while (chooseSubMenu > 0 && chooseSubMenu < 6);
     }
-
 
     private static void DependencyMenu()
     {
@@ -124,9 +121,10 @@ namespace DalTest
                     Console.WriteLine(s_dal.Dependency!.Read(d => d.Id == id).ToString());
                     break;
                 case 3:
-                    foreach (var dependency in s_dal.Dependency!.ReadAll())
-                        Console.WriteLine(dependency.ToString());
-                    break;
+                        s_dal.Dependency!.ReadAll()
+       .ToList()
+       .ForEach(dependency => Console.WriteLine(dependency.ToString()));
+                        break;
                 case 4:
                     int idUpdate, dependentTaskUpdate, dependsOnTaskUpdate;
                     Console.WriteLine("Enter id for reading");
@@ -194,9 +192,10 @@ namespace DalTest
                     Console.WriteLine(s_dal.Task!.Read(t => t.Id == id).ToString());
                     break;
                 case 3:
-                    foreach (var task in s_dal.Task!.ReadAll())
-                        Console.WriteLine(task.ToString());
-                    break;
+                        s_dal.Task!.ReadAll()
+        .ToList()
+        .ForEach(task => Console.WriteLine(task.ToString()));
+                        break;
                 case 4:
                     int idTaskUpdate, currentTaskNumUpdate, taskEngineerIdUpdate;
                     string taskDescriptionUpdate, taskAliasUpdate, taskDeliverablesUpdate, taskRemarksUpdate, inputUpdate;
@@ -241,12 +240,10 @@ namespace DalTest
     {
         try
         {
-
-
             int chooseEntity;
             do
             {
-                Console.WriteLine("enum MainMenu { EXIT, DEPENDENCY, ENGINEER, TASK }");
+                Console.WriteLine("enum MainMenu { INITIALIZATION, EXIT, DEPENDENCY, ENGINEER, TASK }");
                 chooseEntity = int.Parse(Console.ReadLine());
 
                 switch (chooseEntity)
@@ -257,7 +254,6 @@ namespace DalTest
                         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                         if (ans == "Y") //stage 3
                             Initialization.Do(s_dal); //stage 2
-
                         break;
                     case 2:
                         DependencyMenu();

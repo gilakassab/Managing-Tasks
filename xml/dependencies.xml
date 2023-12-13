@@ -1,4 +1,5 @@
-﻿<ArrayOfDependency>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDependency>
   <Dependency>
     <Id>0</Id>
     <DependentTask>6</DependentTask>
@@ -195,8 +196,23 @@
     <DependsOnTask>38</DependsOnTask>
   </Dependency>
   <Dependency>
-    <Id>39</Id>
-    <DependentTask>34</DependentTask>
-    <DependsOnTask>39</DependsOnTask>
+    <Id>0</Id>
+    <DependentTask>39</DependentTask>
+    <DependsOnTask>34</DependsOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>0</Id>
+    <DependentTask>56</DependentTask>
+    <DependsOnTask>67</DependsOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>0</Id>
+    <DependentTask>68</DependentTask>
+    <DependsOnTask>78</DependsOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>42</Id>
+    <DependentTask>89</DependentTask>
+    <DependsOnTask>89</DependsOnTask>
   </Dependency>
 </ArrayOfDependency>

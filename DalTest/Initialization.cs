@@ -1,7 +1,10 @@
 ﻿namespace DalTest;
 using DalApi;
 using DO;
+using System.Numerics;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 public static class Initialization
 {
@@ -16,100 +19,128 @@ public static class Initialization
         //s_dalEngineer = _s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
         //s_dalTask = _s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
         s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-        //createEngineers();
-        //createTasks();
-        //createDependencies();
+        createEngineers();
+        createTasks();
+        createDependencies();
     }
 
-    //    private static void createEngineers()
-    //    {
-    //        int min_id = 200000000, max_id = 400000000;
-    //        int _id;
-    //        string _name, _email;
-    //        EngineerExperience _level;
-    //        EngineerExperience[] _levels = new EngineerExperience[3];
-    //        _levels[0] = EngineerExperience.Expert;
-    //        _levels[1] = EngineerExperience.Rookie;
-    //        _levels[2] = EngineerExperience.Junior;
+    private static void createEngineers()
+    {
+        //int min_id = 200000000, max_id = 400000000;
+        //int _id;
+        //string _name, _email;
+        //EngineerExperience _level;
+        //EngineerExperience[] _levels = new EngineerExperience[3];
+        //_levels[0] = EngineerExperience.Expert;
+        //_levels[1] = EngineerExperience.Rookie;
+        //_levels[2] = EngineerExperience.Junior;
 
-    //        (string, string)[] EngineersDetails =
-    //        {
-    //        ("Dani Levi","danil2290@gmail.com"),
-    //        ("Eli Amar","eliamar@gmail.com"),
-    //        ("Yair Cohen","yaircohen2004@gmail.com"),
-    //        ("Ariela Levin","arielalevin@gmail.com"),
-    //        ("Dina Klein","dk229012@gmail.com"),
-    //        ("Shira Israelof ","israelof22@gmail.com"),
-    //        ("Dan Totach","dan678@gmail.com"),
-    //        ("Avital Wolden","aviwol@gmail.com"),
-    //        ("Michal Shir","mic543@gmail.com"),
-    //        ("Shir Yakov","shir92348@gmail.com")
-    //        };
+        //(string, string)[] EngineersDetails =
+        //{
+        //("Dani Levi","danil2290@gmail.com"),
+        //("Eli Amar","eliamar@gmail.com"),
+        //("Yair Cohen","yaircohen2004@gmail.com"),
+        //("Ariela Levin","arielalevin@gmail.com"),
+        //("Dina Klein","dk229012@gmail.com"),
+        //("Shira Israelof ","israelof22@gmail.com"),
+        //("Dan Totach","dan678@gmail.com"),
+        //("Avital Wolden","aviwol@gmail.com"),
+        //("Michal Shir","mic543@gmail.com"),
+        //("Shir Yakov","shir92348@gmail.com")
+        //};
 
-    //        for (int i = 0; i < 4; i++)
-    //        {
-    //            foreach (var _details in EngineersDetails)
-    //            {
-    //                do
-    //                {
-    //                    _id = s_rand.Next(min_id, max_id);
-    //                }
-    //                while (s_dal!.Engineer.Read(e => e.Id == _id) is not null);
-    //                _name = _details.Item1;
-    //                _email = _details.Item2;
-    //                _level = _levels[s_rand.Next(0, 3)];
-    //                Engineer newEngineer = new(_id, _name, _email, _level, s_rand.Next(2000, 9000));
-    //                s_dal!.Engineer.Create(newEngineer);
-    //            }
-    //        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    foreach (var _details in EngineersDetails)
+        //    {
+        //        do
+        //        {
+        //            _id = s_rand.Next(min_id, max_id);
+        //        }
+        //        while (s_dal!.Engineer.Read(e => e.Id == _id) is not null);
+        //        _name = _details.Item1;
+        //        _email = _details.Item2;
+        //        _level = _levels[s_rand.Next(0, 3)];
+        //        Engineer newEngineer = new(_id, _name, _email, _level, s_rand.Next(2000, 9000));
+        //        s_dal!.Engineer.Create(newEngineer);
+        //    }
+        //}
 
-    //    }
+        //Stage 3
+        s_dal.Engineer!.ReadAll()
+      .Select(engineer => engineer.Id)
+      .ToList()
+      .ForEach(id => s_dal.Engineer.Delete(id));
 
-    //    private static void createTasks()
-    //    {
-    //        EngineerExperience _level;
-    //        EngineerExperience[] _levels = new EngineerExperience[3];
-    //        _levels[0] = EngineerExperience.Expert;
-    //        _levels[1] = EngineerExperience.Rookie;
-    //        _levels[2] = EngineerExperience.Junior;
-    //        int _id = 0;
-    //        bool _milestone = false;
-    //        IEnumerable<Engineer?> myEngineers = s_dal!.Engineer.ReadAll();
-    //        int maxEngineer = myEngineers.Count();
-    //        for (int i = 0; i < 100; i++)
-    //        {
-    //            string _description = "Task " + (i + 1).ToString();
-    //            string _alias = (i + 1).ToString();
-    //            _level = _levels[s_rand.Next(0, 3)];
-    //            var nonNullEngineers = myEngineers.Where(e => e != null).ToList();
-    //            int currentEngineerId = nonNullEngineers[s_rand.Next(0, nonNullEngineers.Count)].Id;
+        s_dal.Engineer.Create(new Engineer(123456789, "Engineer1", true, "engineer1@example.com", EngineerExperience.Expert, 150.5));
+        //צריך עוד 4 וגם לסדר אותו לאמיתי
+    }
 
-    //            //Year _year = (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
+    private static void createTasks()
+    {
+        //EngineerExperience _level;
+        //EngineerExperience[] _levels = new EngineerExperience[3];
+        //_levels[0] = EngineerExperience.Expert;
+        //_levels[1] = EngineerExperience.Rookie;
+        //_levels[2] = EngineerExperience.Junior;
+        //int _id = 0;
+        //bool _milestone = false;
+        //IEnumerable<Engineer?> myEngineers = s_dal!.Engineer.ReadAll();
+        //int maxEngineer = myEngineers.Count();
+        //for (int i = 0; i < 100; i++)
+        //{
+        //    string _description = "Task " + (i + 1).ToString();
+        //    string _alias = (i + 1).ToString();
+        //    _level = _levels[s_rand.Next(0, 3)];
+        //    var nonNullEngineers = myEngineers.Where(e => e != null).ToList();
+        //    int currentEngineerId = nonNullEngineers[s_rand.Next(0, nonNullEngineers.Count)].Id;
 
-    //            //    DateTime start = new DateTime(1995, 1, 1);
-    //            //    int range = (DateTime.Today - start).Days;
-    //            //    DateTime _bdt = start.AddDays(s_rand.Next(range));
+        //    //Year _year = (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
 
-    //            Task newTask = new(_id, _description, _alias, _milestone,/* _createAt*/ DateTime.Today,/* _start=*/null, /*_forecastDate*/ null, /*_deadline*/ null, /*_complete*/ null, /*_deliverables*/ null,/*_remarks*/ null, currentEngineerId, _level);
-    //            s_dal!.Task.Create(newTask);
-    //        }
-    //    }
+        //    //    DateTime start = new DateTime(1995, 1, 1);
+        //    //    int range = (DateTime.Today - start).Days;
+        //    //    DateTime _bdt = start.AddDays(s_rand.Next(range));
 
-    //    private static void createDependencies()
-    //    {
-    //        IEnumerable<Task?> myTasks = s_dal!.Task.ReadAll();
-    //        int maxTask = myTasks.Count(), _dependentTask, _DependsOnTask;
-    //        for (int i = 0; i < 250; i++)
-    //        {
-    //            var nonNullTasks = myTasks.Where(e => e != null).ToList();
-    //            _dependentTask = nonNullTasks[s_rand.Next(0, nonNullTasks.Count)].Id;
-    //            _DependsOnTask = nonNullTasks[s_rand.Next(0, nonNullTasks.Count)].Id;
-    //            Dependency neWDependency = new(0, _dependentTask, _DependsOnTask);
-    //            s_dal!.Dependency.Create(neWDependency);
-    //        }
-    //    }
-    
+        //    Task newTask = new(_id, _description, _alias, _milestone,/* _createAt*/ DateTime.Today,/* _start=*/null, /*_forecastDate*/ null, /*_deadline*/ null, /*_complete*/ null, /*_deliverables*/ null,/*_remarks*/ null, currentEngineerId, _level);
+        //    s_dal!.Task.Create(newTask);
+        //}
+
+        //Stage 3
+        s_dal.Task!.ReadAll()
+      .Select(task => task.Id)
+      .ToList()
+      .ForEach(id => s_dal.Task.Delete(id)); 
+
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias0", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        //צריך עוד 19 וגם לסדר אותו לאמיתי
+       
+    }
+
+    private static void createDependencies()
+    {
+        //IEnumerable<Task?> myTasks = s_dal!.Task.ReadAll();
+        //int maxTask = myTasks.Count(), _dependentTask, _DependsOnTask;
+        //for (int i = 0; i < 250; i++)
+        //{
+        //    var nonNullTasks = myTasks.Where(e => e != null).ToList();
+        //    _dependentTask = nonNullTasks[s_rand.Next(0, nonNullTasks.Count)].Id;
+        //    _DependsOnTask = nonNullTasks[s_rand.Next(0, nonNullTasks.Count)].Id;
+        //    Dependency neWDependency = new(0, _dependentTask, _DependsOnTask);
+        //    s_dal!.Dependency.Create(neWDependency);
+        //}
+
+        //Stage 3
+        s_dal.Dependency!.ReadAll()
+      .Select(dependency => dependency.Id)
+      .ToList()
+      .ForEach(id => s_dal.Dependency.Delete(id));
+
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        //צריך עוד 39 וגם לסדר אותו לאמיתי
+
+    }
 }
+
 
 
 

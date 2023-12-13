@@ -19,3 +19,8 @@ public class DalXMLFileLoadCreateException : Exception
 {
     public DalXMLFileLoadCreateException(string? message) : base(message) { }
 }
+
+//public class FormatException : Exception
+//{
+//    public FormatException(string? message) : base(message) { }
+//}
