@@ -8,7 +8,7 @@ namespace Dal;
 
 internal class EngineerImplementation : IEngineer
 {
-    const string filePath = @"../xml/engineers.xml";
+    const string filePath = @"engineers";
     public int Create(Engineer item)
     {
         int id = item.Id;

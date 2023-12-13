@@ -1,11 +1,10 @@
 ﻿using DalApi;
 using DO;
-
 namespace Dal;
 
 internal class TaskImplementation : ITask
 {
-    const string filePath = @"../xml/tasks.xml";
+    const string filePath = @"tasks";
 
     public int Create(DO.Task item)
     {

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 internal class DependencyImplementation : IDependency
 {
-    const string filePath = @"../xml/depensencies.xml";
+    const string filePath = @"dependencies";
 
     public int Create(Dependency item)
     {
@@ -18,7 +18,7 @@ internal class DependencyImplementation : IDependency
         XElement dependenciesElement = XMLTools.LoadListFromXMLElement(filePath);
 
         XElement newDependencyElement = new XElement("Dependency",
-             new XElement("Id", item.Id),
+             new XElement("Id", id),
              new XElement("DependentTask", item.DependentTask),
              new XElement("DependsOnTask", item.DependsOnTask)
          );
