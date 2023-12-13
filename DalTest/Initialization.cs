@@ -67,8 +67,10 @@ public static class Initialization
         //}
 
         //Stage 3
-        foreach (var engineer in s_dal.Engineer!.ReadAll())
-            s_dal.Engineer.Delete(engineer.Id);
+        s_dal.Engineer!.ReadAll()
+      .Select(engineer => engineer.Id)
+      .ToList()
+      .ForEach(id => s_dal.Engineer.Delete(id));
 
         s_dal.Engineer.Create(new Engineer(123456789, "Engineer1", true, "engineer1@example.com", EngineerExperience.Expert, 150.5));
         //צריך עוד 4 וגם לסדר אותו לאמיתי
@@ -104,8 +106,10 @@ public static class Initialization
         //}
 
         //Stage 3
-        foreach (var task in s_dal.Task!.ReadAll())
-            s_dal.Task.Delete(task.Id);
+        s_dal.Task!.ReadAll()
+      .Select(task => task.Id)
+      .ToList()
+      .ForEach(id => s_dal.Task.Delete(id)); 
 
         s_dal.Task.Create(new Task(0, "Task 0", "Alias0", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
         //צריך עוד 19 וגם לסדר אותו לאמיתי
@@ -126,11 +130,13 @@ public static class Initialization
         //}
 
         //Stage 3
-        foreach (var dependency in s_dal.Dependency!.ReadAll())
-            s_dal.Dependency.Delete(dependency.Id);
+        s_dal.Dependency!.ReadAll()
+      .Select(dependency => dependency.Id)
+      .ToList()
+      .ForEach(id => s_dal.Dependency.Delete(id));
 
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
-        //צריך עוד 19 וגם לסדר אותו לאמיתי
+        //צריך עוד 39 וגם לסדר אותו לאמיתי
 
     }
 }
