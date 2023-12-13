@@ -37,6 +37,6 @@ public record Task
     int? EngineerId = null 
  )
 {
-    public Task() : this(0, "", "", true, "PT0S") { }
+    public Task() : this(0, "", "", true, TimeSpan.Zero) { }
 }
  
