@@ -1,14 +1,11 @@
-using DalApi;
-namespace Dal
+﻿using DalApi;
+namespace Dal;
+
+sealed public class DalXml : IDal
 {
-    sealed public class DalXml : IDal
-    {
+    public IDependency Dependency =>  new DependencyImplementation();
 
-        public IDependency Dependency => new DependencyImplementation();
+    public IEngineer Engineer =>  new EngineerImplementation();
 
-        public IEngineer Engineer => new EngineerImplementation();
-
-        public ITask Task => new TaskImplementation();
-
-    }
+    public ITask Task =>  new TaskImplementation();
 }
