@@ -56,12 +56,13 @@ namespace DalTest
                         id = int.Parse(Console.ReadLine());
                         if (s_dal.Engineer!.Read(e => e.Id == id) is null)
                             Console.WriteLine("no engineer found");
-                        Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
+                        else
+                            Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
                         break;
                     case 3:
                         s_dal.Engineer!.ReadAll()
-.ToList()
-.ForEach(engineer => Console.WriteLine(engineer.ToString()));
+         .ToList()
+         .ForEach(engineer => Console.WriteLine(engineer.ToString()));
                         break;
                     case 4:
                         int idEngineerUpdate, currentNumUpdate;
@@ -256,7 +257,6 @@ namespace DalTest
                         if (ans == "Y") //stage 3
                             //Initialization.Do(s_dal); //stage 2
                             Initialization.Do(); //stage 4
-
                         break;
                     case 2:
                         DependencyMenu();

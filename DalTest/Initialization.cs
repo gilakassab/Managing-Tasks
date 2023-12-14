@@ -1,6 +1,7 @@
 ﻿namespace DalTest;
 using DalApi;
 using DO;
+using DalFacade;
 using System.Numerics;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
@@ -16,13 +17,12 @@ public static class Initialization
     
     //public static void Do(IDal dal) //stage 2
     public static void Do() //stage 4
-
     {
         //s_dalDependency = _s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
         //s_dalEngineer = _s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
         //s_dalTask = _s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
         //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-        s_dal = DalApi.Factory.Get; //stage 4
+        s_dal = Factory.Get; //stage 4
 
         createEngineers();
         createTasks();
@@ -72,17 +72,25 @@ public static class Initialization
         //}
 
         //Stage 3
+        if (File.Exists(@"..\xml\dependencies.xml"))
+        {
+            File.Delete(@"..\xml\dependencies.xml");
+        }
+
         s_dal.Engineer!.ReadAll()
-      .Select(engineer => engineer.Id)
-      .ToList()
-      .ForEach(id => s_dal.Engineer.Delete(id));
+        .ToList()
+        .ForEach(engineer => Console.WriteLine(engineer.ToString()));
 
         s_dal.Engineer.Create(new Engineer(248728764, "Rony Gilbert", true, "ronygil64@exam.com", EngineerExperience.Expert, 150.5));
         s_dal.Engineer.Create(new Engineer(982485477, "Meir Fuks", true, "meirfuks@exam.com", EngineerExperience.AdvancedBeginner, 130.5));
         s_dal.Engineer.Create(new Engineer(165324683, "Edi Green", true, "edi24683@exam.com", EngineerExperience.Advanced, 140.5));
         s_dal.Engineer.Create(new Engineer(934759393, "Shimmy Lipsin", true, "sl934759393@exam.com", EngineerExperience.Beginner, 100.5));
         s_dal.Engineer.Create(new Engineer(113634844, "Dudi Dlin", true, "dudidlin844@exam.com", EngineerExperience.Beginner, 100.5));
-        //צריך עוד 4 וגם לסדר אותו לאמיתי
+
+        Console.WriteLine("\n*************************\n");
+        s_dal.Engineer!.ReadAll()
+        .ToList()
+        .ForEach(engineer => Console.WriteLine(engineer.ToString()));
     }
 
     private static void createTasks()
@@ -115,31 +123,40 @@ public static class Initialization
         //}
 
         //Stage 3
-        s_dal.Task!.ReadAll()
-      .Select(task => task.Id)
-      .ToList()
-      .ForEach(id => s_dal.Task.Delete(id)); 
+        if (File.Exists(@"..\xml\tasks.xml"))
+        {
+            File.Delete(@"..\xml\tasks.xml");
+        }
 
-        s_dal.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, TimeSpan.Zero, EngineerExperience.Expert, true,,,,,,, "248728764"));
-        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
-        s_dal.Task.Create(new Task(0, "Choose the most convenient way", "Alias3", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));//צריך עוד 19 וגם לסדר אותו לאמיתי
-        s_dal.Task.Create(new Task(0, "Decide on the location of the feature", "Alias4", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
-        s_dal.Task.Create(new Task(0, "Decide on the shape of the feature", "Alias5", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
-        s_dal.Task.Create(new Task(0, "Work on the design", "Alias6", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
-        s_dal.Task.Create(new Task(0, "stage 0 in the programming", "Alias7", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 1 in the programming", "Alias8", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 2 in the programming", "Alias9", false, TimeSpan.Zero, EngineerExperience.Advanced, true , "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 3 in the programming", "Alias10", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 4 in the programming", "Alias11", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 5 in the programming", "Alias12", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 6 in the programming", "Alias13", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "stage 7 in the programming", "Alias14", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "Run the code", "Alias15", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393"));
-        s_dal.Task.Create(new Task(0, "Find errors in the code ", "Alias16", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393"));
-        s_dal.Task.Create(new Task(0, "Get permission from the programmer and pass the code on", "Alias17", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393"));
-        s_dal.Task.Create(new Task(0, "Bring confirmation to the software tester that the code is correct", "Alias18", false, TimeSpan.Zero, EngineerExperience.934759393, true, "165324683"));
-        s_dal.Task.Create(new Task(0, "Send the feature to the advertising team", "Alias19", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393");
-        s_dal.Task.Create(new Task(0, "Update all platforms", "Alias20", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "113634844"));
+        s_dal.Task!.ReadAll()
+.ToList()
+.ForEach(engineer => Console.WriteLine(engineer.ToString()));
+
+        s_dal.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, TimeSpan.Zero, EngineerExperience.Expert, true,null,null,null,null,null,null,null,248728764));
+        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, null, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Choose the most convenient way", "Alias3", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, null, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Decide on the location of the feature", "Alias4", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, null, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Decide on the shape of the feature", "Alias5", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, null, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Work on the design", "Alias6", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, null, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "stage 0 in the programming", "Alias7", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 1 in the programming", "Alias8", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 2 in the programming", "Alias9", false, TimeSpan.Zero, EngineerExperience.Advanced, true , null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 3 in the programming", "Alias10", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 4 in the programming", "Alias11", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 5 in the programming", "Alias12", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 6 in the programming", "Alias13", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 7 in the programming", "Alias14", false, TimeSpan.Zero, EngineerExperience.Advanced, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "Run the code", "Alias15", false, TimeSpan.Zero, EngineerExperience.Beginner, true, null, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Find errors in the code ", "Alias16", false, TimeSpan.Zero, EngineerExperience.Beginner, true, null, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Get permission from the programmer and pass the code on", "Alias17", false, TimeSpan.Zero, EngineerExperience.Beginner, true, null, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Bring confirmation to the software tester that the code is correct", "Alias18", false, TimeSpan.Zero, EngineerExperience.Beginner, true, null, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "Send the feature to the advertising team", "Alias19", false, TimeSpan.Zero, EngineerExperience.Beginner, true, null, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Update all platforms", "Alias20", false, TimeSpan.Zero, EngineerExperience.Beginner, true, null, null, null, null, null, null, null, 113634844));
+        Console.WriteLine("\n*************************\n");
+
+        s_dal.Task!.ReadAll()
+    .ToList()
+    .ForEach(engineer => Console.WriteLine(engineer.ToString()));
     }
 
     private static void createDependencies()
@@ -156,10 +173,14 @@ public static class Initialization
         //}
 
         //Stage 3
+        if (File.Exists(@"..\xml\engineers.xml"))
+        {
+            File.Delete(@"..\xml\engineers.xml");
+        }
+
         s_dal.Dependency!.ReadAll()
-      .Select(dependency => dependency.Id)
-      .ToList()
-      .ForEach(id => s_dal.Dependency.Delete(id));
+.ToList()
+.ForEach(engineer => Console.WriteLine(engineer.ToString()));
 
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
@@ -205,8 +226,11 @@ public static class Initialization
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        Console.WriteLine("\n*************************\n");
 
-
+        s_dal.Dependency!.ReadAll()
+.ToList()
+.ForEach(engineer => Console.WriteLine(engineer.ToString()));
     }
 }
 
