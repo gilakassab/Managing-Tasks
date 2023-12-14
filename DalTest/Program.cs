@@ -268,7 +268,7 @@ namespace DalTest
                         TaskMenu();
                         break;
                 }
-            } while (chooseEntity > 0 && chooseEntity < 4);
+            } while (chooseEntity >= 0 && chooseEntity < 4);
         }
 
         catch (Exception ex)

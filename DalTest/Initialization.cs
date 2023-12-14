@@ -72,9 +72,9 @@ public static class Initialization
         //}
 
         //Stage 3
-        if (File.Exists(@"..\xml\dependencies.xml"))
+        if (File.Exists(@"..\xml\engineers.xml"))
         {
-            File.Delete(@"..\xml\dependencies.xml");
+            File.Delete(@"..\xml\engineers.xml");
         }
 
         s_dal.Engineer!.ReadAll()
@@ -173,9 +173,9 @@ public static class Initialization
         //}
 
         //Stage 3
-        if (File.Exists(@"..\xml\engineers.xml"))
+        if (File.Exists(@"..\xml\dependencies.xml"))
         {
-            File.Delete(@"..\xml\engineers.xml");
+            File.Delete(@"..\xml\dependencies.xml");
         }
 
         s_dal.Dependency!.ReadAll()
