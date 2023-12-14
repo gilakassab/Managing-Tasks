@@ -116,25 +116,25 @@ public static class Initialization
       .ForEach(id => s_dal.Task.Delete(id)); 
 
         s_dal.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, TimeSpan.Zero, EngineerExperience.Expert, true,,,,,,, "248728764"));
-        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, TimeSpan.Zero, EngineerExperience.Beginner, true, ));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias2", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true,"982485477"));//צריך עוד 19 וגם לסדר אותו לאמיתי
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias3", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias4", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias5", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias6", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias7", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias8", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias9", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias10", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias11", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias12", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias13", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias14", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias15", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias16", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias17", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias18", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias19", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
+        s_dal.Task.Create(new Task(0, "Choose the most convenient way", "Alias3", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));//צריך עוד 19 וגם לסדר אותו לאמיתי
+        s_dal.Task.Create(new Task(0, "Decide on the location of the feature", "Alias4", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
+        s_dal.Task.Create(new Task(0, "Decide on the shape of the feature", "Alias5", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
+        s_dal.Task.Create(new Task(0, "Work on the design", "Alias6", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, "982485477"));
+        s_dal.Task.Create(new Task(0, "stage 0 in the programming", "Alias7", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 1 in the programming", "Alias8", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 2 in the programming", "Alias9", false, TimeSpan.Zero, EngineerExperience.Advanced, true , "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 3 in the programming", "Alias10", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 4 in the programming", "Alias11", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 5 in the programming", "Alias12", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 6 in the programming", "Alias13", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "stage 7 in the programming", "Alias14", false, TimeSpan.Zero, EngineerExperience.Advanced, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "Run the code", "Alias15", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393"));
+        s_dal.Task.Create(new Task(0, "Find errors in the code ", "Alias16", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393"));
+        s_dal.Task.Create(new Task(0, "Get permission from the programmer and pass the code on", "Alias17", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393"));
+        s_dal.Task.Create(new Task(0, "Bring confirmation to the software tester that the code is correct", "Alias18", false, TimeSpan.Zero, EngineerExperience.934759393, true, "165324683"));
+        s_dal.Task.Create(new Task(0, "Send the feature to the advertising team", "Alias19", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "934759393");
+        s_dal.Task.Create(new Task(0, "Update all platforms", "Alias20", false, TimeSpan.Zero, EngineerExperience.Beginner, true, "113634844"));
     }
 
     private static void createDependencies()
@@ -157,7 +157,50 @@ public static class Initialization
       .ForEach(id => s_dal.Dependency.Delete(id));
 
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
-        //צריך עוד 39 וגם לסדר אותו לאמיתי
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+
 
     }
 }
