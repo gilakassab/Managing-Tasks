@@ -120,6 +120,7 @@ namespace DalTest
                     id = int.Parse(Console.ReadLine());
                     if (s_dal.Dependency!.Read(d => d.Id == id) is null)
                         Console.WriteLine("no dependency found");
+                    else
                     Console.WriteLine(s_dal.Dependency!.Read(d => d.Id == id).ToString());
                     break;
                 case 3:
@@ -191,7 +192,8 @@ namespace DalTest
                     id = int.Parse(Console.ReadLine());
                     if (s_dal.Task!.Read(t => t.Id == id) is null)
                         Console.WriteLine("no task found");
-                    Console.WriteLine(s_dal.Task!.Read(t => t.Id == id).ToString());
+                   else
+                            Console.WriteLine(s_dal.Task!.Read(t => t.Id == id).ToString());
                     break;
                 case 3:
                         s_dal.Task!.ReadAll()
