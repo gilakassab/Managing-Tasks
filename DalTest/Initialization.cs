@@ -72,7 +72,11 @@ public static class Initialization
       .ToList()
       .ForEach(id => s_dal.Engineer.Delete(id));
 
-        s_dal.Engineer.Create(new Engineer(123456789, "Engineer1", true, "engineer1@example.com", EngineerExperience.Expert, 150.5));
+        s_dal.Engineer.Create(new Engineer(248728764, "Rony Gilbert", true, "ronygil64@exam.com", EngineerExperience.Expert, 150.5));
+        s_dal.Engineer.Create(new Engineer(982485477, "Meir Fuks", true, "meirfuks@exam.com", EngineerExperience.AdvancedBeginner, 130.5));
+        s_dal.Engineer.Create(new Engineer(165324683, "Edi Green", true, "edi24683@exam.com", EngineerExperience.Advanced, 140.5));
+        s_dal.Engineer.Create(new Engineer(934759393, "Shimmy Lipsin", true, "sl934759393@exam.com", EngineerExperience.Beginner, 100.5));
+        s_dal.Engineer.Create(new Engineer(113634844, "Dudi Dlin", true, "dudidlin844@exam.com", EngineerExperience.Beginner, 100.5));
         //צריך עוד 4 וגם לסדר אותו לאמיתי
     }
 
@@ -111,9 +115,26 @@ public static class Initialization
       .ToList()
       .ForEach(id => s_dal.Task.Delete(id)); 
 
-        s_dal.Task.Create(new Task(0, "Task 0", "Alias0", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
-        //צריך עוד 19 וגם לסדר אותו לאמיתי
-       
+        s_dal.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, TimeSpan.Zero, EngineerExperience.Expert, true,,,,,,, "248728764"));
+        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, TimeSpan.Zero, EngineerExperience.Beginner, true, ));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias2", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true,"982485477"));//צריך עוד 19 וגם לסדר אותו לאמיתי
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias3", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias4", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias5", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias6", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias7", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias8", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias9", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias10", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias11", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias12", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias13", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias14", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias15", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias16", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias17", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias18", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
+        s_dal.Task.Create(new Task(0, "Task 0", "Alias19", false, TimeSpan.Zero, EngineerExperience.Beginner, true));
     }
 
     private static void createDependencies()
