@@ -15,11 +15,6 @@ namespace DalApi
         DateTime? startProject { get; }
         DateTime? deadlineProject { get; }
 
-        public void Reset()
-        {
-            Task.Reset();
-            Engineer.Reset();
-            Dependency.Reset();
-        }
+        public void Reset();
     }
 }

@@ -52,6 +52,9 @@ internal class EngineerImplementation : IEngineer
 
     public void Reset()
     {
+        //List<Engineer> engineers = new List<Engineer>();
+        //XMLTools.SaveListToXMLSerializer(engineers, filePath);
+
         if (File.Exists(@"..\xml\engineers.xml"))
         {
             File.Delete(@"..\xml\engineers.xml");

@@ -14,7 +14,7 @@ namespace Dal
         internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
 
 
-        internal static DateTime? startProject = XMLTools.LoadListFromXMLElement(@"..\xml\data-config.xml").ToDateTimeNullable("startProject");
-        internal static DateTime? deadlineProject = XMLTools.LoadListFromXMLElement(@"..\xml\data-config.xml").ToDateTimeNullable("deadlineProject");
+        internal static DateTime? startProject = XMLTools.LoadListFromXMLElement(@"data-config").ToDateTimeNullable("startProject");
+        internal static DateTime? deadlineProject = XMLTools.LoadListFromXMLElement(@"data-config").ToDateTimeNullable("deadlineProject");
     }
 }

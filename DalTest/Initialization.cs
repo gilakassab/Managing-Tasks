@@ -24,10 +24,10 @@ public static class Initialization
         //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
         s_dal = Factory.Get; //stage 4
 
+        s_dal.Reset();
         createEngineers();
         createTasks();
         createDependencies();
-        s_dal.Reset();
     }
 
     private static void createEngineers()
@@ -117,10 +117,10 @@ public static class Initialization
         //    s_dal!.Task.Create(newTask);
         //}
 
-       
-        //        s_dal.Task!.ReadAll()
-        //.ToList()
-        //.ForEach(engineer => Console.WriteLine(engineer.ToString()));
+
+//        s_dal.Task!.ReadAll()
+//.ToList()
+//.ForEach(engineer => Console.WriteLine(engineer.ToString()));
 
         s_dal.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, TimeSpan.Zero, EngineerExperience.Expert, true,null,null,null,null,null,null,null,248728764));
         s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, TimeSpan.Zero, EngineerExperience.AdvancedBeginner, true, null, null, null, null, null, null, null, 982485477));
@@ -162,10 +162,10 @@ public static class Initialization
         //    s_dal!.Dependency.Create(neWDependency);
         //}
 
-       
-        //        s_dal.Dependency!.ReadAll()
-        //.ToList()
-        //.ForEach(engineer => Console.WriteLine(engineer.ToString()));
+
+//        s_dal.Dependency!.ReadAll()
+//.ToList()
+//.ForEach(engineer => Console.WriteLine(engineer.ToString()));
 
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
@@ -211,7 +211,7 @@ public static class Initialization
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
-        //Console.WriteLine("\n*************************\n");
+//        Console.WriteLine("\n*************************\n");
 
 //        s_dal.Dependency!.ReadAll()
 //.ToList()

@@ -111,9 +111,16 @@ internal class DependencyImplementation : IDependency
 
     public void Reset()
     {
+        //List<Dependency> dependencies = new List<Dependency>();
+        //XMLTools.SaveListToXMLSerializer(dependencies, filePath);
+
+        XElement arrayOfDependency = new XElement("ArrayOfDependency");
+
         if (File.Exists(@"..\xml\dependencies.xml"))
         {
             File.Delete(@"..\xml\dependencies.xml");
         }
+
+        arrayOfDependency.Save(@"..\xml\dependencies.xml");
     }
 }

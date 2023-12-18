@@ -27,9 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{864C22FD-04A
 		xml\tasks.xml = xml\tasks.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{24024DEA-F8EA-4538-8D0F-EB23554FE48E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{24024DEA-F8EA-4538-8D0F-EB23554FE48E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlTest", "BlTest\BlTest.csproj", "{50ABA8B4-4F11-4DCB-AC6D-BF3860737480}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{50ABA8B4-4F11-4DCB-AC6D-BF3860737480}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -35,4 +35,11 @@ sealed internal class DalXml : IDal
     public DateTime? deadlineProject => Config.deadlineProject;
 
     private DalXml() { }
+
+    public void Reset()
+    {
+        Task.Reset();
+        Engineer.Reset();
+        Dependency.Reset();
+    }
 }
