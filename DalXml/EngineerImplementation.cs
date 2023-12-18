@@ -49,4 +49,12 @@ internal class EngineerImplementation : IEngineer
         engineers.Add(item);
         XMLTools.SaveListToXMLSerializer<Engineer>(engineers, filePath);
     }
+
+    public void Reset()
+    {
+        if (File.Exists(@"..\xml\engineers.xml"))
+        {
+            File.Delete(@"..\xml\engineers.xml");
+        }
+    }
 }

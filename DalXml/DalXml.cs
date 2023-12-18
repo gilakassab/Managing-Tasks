@@ -30,5 +30,9 @@ sealed internal class DalXml : IDal
 
     public static IDal Instance => lazyInstance.Value;
 
+    public DateTime? startProject => Config.startProject;
+ 
+    public DateTime? deadlineProject => Config.deadlineProject;
+
     private DalXml() { }
 }

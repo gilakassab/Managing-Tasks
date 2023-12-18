@@ -108,4 +108,12 @@ internal class DependencyImplementation : IDependency
 
         XMLTools.SaveListToXMLElement(rootElement, filePath);
     }
+
+    public void Reset()
+    {
+        if (File.Exists(@"..\xml\dependencies.xml"))
+        {
+            File.Delete(@"..\xml\dependencies.xml");
+        }
+    }
 }

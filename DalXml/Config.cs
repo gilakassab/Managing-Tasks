@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal
 {
@@ -12,5 +13,8 @@ namespace Dal
         internal static int NextDependencyId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependencyId"); }
         internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
 
+
+        internal static DateTime? startProject = XMLTools.LoadListFromXMLElement(@"..\xml\data-config.xml").ToDateTimeNullable("startProject");
+        internal static DateTime? deadlineProject = XMLTools.LoadListFromXMLElement(@"..\xml\data-config.xml").ToDateTimeNullable("deadlineProject");
     }
 }

@@ -25,13 +25,18 @@ sealed internal class DalList : IDal
     private static readonly IDependency dependencyInstance = new DependencyImplementation();
     private static readonly IEngineer engineerInstance = new EngineerImplementation();
     private static readonly ITask taskInstance = new TaskImplementation();
+    
 
-    static DalList() { }
+    static DalList()
+    {
+        
+    }
 
     public IDependency Dependency => dependencyInstance;
     public IEngineer Engineer => engineerInstance;
     public ITask Task => taskInstance;
-
+    public DateTime startProject => DataSource.Config.startProject;
+    public DateTime deadlineProject => DataSource.Config.deadlineProject;
     public static IDal Instance => lazyInstance.Value;
 
     private DalList() { }
