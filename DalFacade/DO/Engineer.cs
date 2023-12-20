@@ -18,7 +18,8 @@ public record Engineer
     bool IsActive = false,
     string? Email = null,
     EngineerExperience Level = EngineerExperience.Expert,
-    double? Cost = null
+    double? Cost = null,
+    Roles Role = Roles.Programmer
 )
 {
     public Engineer() : this(0, "", false) { }
