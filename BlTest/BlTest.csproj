@@ -14,9 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
-    <ProjectReference Include="..\DalList\DalList.csproj" />
-    <ProjectReference Include="..\DalXml\DalXml.csproj" />
+    <ProjectReference Include="..\BL\BL.csproj" />
+    <ProjectReference Include="..\DalTest\DalTest.csproj" />
   </ItemGroup>
 
 </Project>

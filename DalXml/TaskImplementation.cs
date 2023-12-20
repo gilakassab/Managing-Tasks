@@ -42,4 +42,15 @@ internal class TaskImplementation : ITask
         tasks.Add(item);
         XMLTools.SaveListToXMLSerializer<DO.Task>(tasks, filePath);
     }
+
+    public void Reset()
+    {
+        //List<DO.Task> tasks = new List<DO.Task>();
+        //XMLTools.SaveListToXMLSerializer(tasks, filePath);
+
+        if (File.Exists(@"..\xml\tasks.xml"))
+        {
+            File.Delete(@"..\xml\tasks.xml");
+        }
+    }
 }

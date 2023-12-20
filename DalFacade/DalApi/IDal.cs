@@ -10,6 +10,11 @@ namespace DalApi
     {
         IDependency Dependency { get; }
         IEngineer Engineer { get; }
-        ITask  Task { get; }
+        ITask Task { get; }
+
+        DateTime? startProject { get; }
+        DateTime? deadlineProject { get; }
+
+        public void Reset();
     }
 }

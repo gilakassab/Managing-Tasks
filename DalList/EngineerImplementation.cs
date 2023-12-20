@@ -42,4 +42,9 @@ internal class EngineerImplementation : IEngineer
         DataSource.Engineers.Remove(existingEngineer);
         DataSource.Engineers.Add(item);
     }
+
+    public void Reset()
+    {
+        DataSource.Engineers.Clear();
+    }
 }

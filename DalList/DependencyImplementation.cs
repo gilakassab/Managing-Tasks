@@ -9,29 +9,6 @@ using System.Xml.Linq;
 
 internal class DependencyImplementation : IDependency
 {
-    //public int Create(Engineer item)
-    //{
-    //    int id = item.Id;
-
-    //    XElement engineersElement = XElement.Load(filePath);
-
-    //    if (engineersElement.Elements("Engineer").Any(e => (int)e.Element("Id") == id))
-    //        throw new DalAlreadyExistsException($"Engineer with ID={id} already exists");
-
-    //    XElement newEngineerElement = new XElement("Engineer",
-    //        new XElement("Id", item.Id),
-    //        new XElement("Name", item.Name),
-    //        new XElement("Email", item.Email),
-    //        new XElement("Level", item.Level),
-    //        new XElement("Cost", item.Cost),
-    //        new XElement("IsActive", item.IsActive)
-    //    );
-
-    //    engineersElement.Add(newEngineerElement);
-    //    engineersElement.Save(filePath);
-    //    return id;
-    //}
-
     public int Create(Dependency item)
     {
         int id = DataSource.Config.NextDependencyId;
@@ -66,5 +43,10 @@ internal class DependencyImplementation : IDependency
 
         DataSource.Dependencies.Remove(existingDependency);
         DataSource.Dependencies.Add(item);
+    }
+
+    public void Reset()
+    {
+        DataSource.Dependencies.Clear();
     }
 }

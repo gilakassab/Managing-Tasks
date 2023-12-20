@@ -56,12 +56,13 @@ namespace DalTest
                         id = int.Parse(Console.ReadLine());
                         if (s_dal.Engineer!.Read(e => e.Id == id) is null)
                             Console.WriteLine("no engineer found");
-                        Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
+                        else
+                            Console.WriteLine(s_dal.Engineer!.Read(e => e.Id == id).ToString());
                         break;
                     case 3:
                         s_dal.Engineer!.ReadAll()
-.ToList()
-.ForEach(engineer => Console.WriteLine(engineer.ToString()));
+         .ToList()
+         .ForEach(engineer => Console.WriteLine(engineer.ToString()));
                         break;
                     case 4:
                         int idEngineerUpdate, currentNumUpdate;
@@ -119,6 +120,7 @@ namespace DalTest
                     id = int.Parse(Console.ReadLine());
                     if (s_dal.Dependency!.Read(d => d.Id == id) is null)
                         Console.WriteLine("no dependency found");
+                    else
                     Console.WriteLine(s_dal.Dependency!.Read(d => d.Id == id).ToString());
                     break;
                 case 3:
@@ -190,7 +192,8 @@ namespace DalTest
                     id = int.Parse(Console.ReadLine());
                     if (s_dal.Task!.Read(t => t.Id == id) is null)
                         Console.WriteLine("no task found");
-                    Console.WriteLine(s_dal.Task!.Read(t => t.Id == id).ToString());
+                   else
+                            Console.WriteLine(s_dal.Task!.Read(t => t.Id == id).ToString());
                     break;
                 case 3:
                         s_dal.Task!.ReadAll()
@@ -256,7 +259,6 @@ namespace DalTest
                         if (ans == "Y") //stage 3
                             //Initialization.Do(s_dal); //stage 2
                             Initialization.Do(); //stage 4
-
                         break;
                     case 2:
                         DependencyMenu();
@@ -268,7 +270,7 @@ namespace DalTest
                         TaskMenu();
                         break;
                 }
-            } while (chooseEntity > 0 && chooseEntity < 4);
+            } while (chooseEntity >= 0 && chooseEntity < 4);
         }
 
         catch (Exception ex)

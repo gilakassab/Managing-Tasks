@@ -40,4 +40,9 @@ internal class TaskImplementation : ITask
         DataSource.Tasks.Remove(existingTask);
         DataSource.Tasks.Add(item);
     }
+
+    public void Reset()
+    {
+        DataSource.Tasks.Clear();
+    }
 }

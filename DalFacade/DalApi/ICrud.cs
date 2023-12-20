@@ -14,5 +14,6 @@ namespace DalApi
         IEnumerable<T?> ReadAll(Func<T, bool>? filter = null); // stage 2
         void Update(T item); //Updates entity object
         void Delete(int id); //Deletes an object by its Id
+        void Reset(); //Deletes all objects
     }
 }
