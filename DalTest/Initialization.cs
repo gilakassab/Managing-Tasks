@@ -22,7 +22,7 @@ public static class Initialization
         //s_dalEngineer = _s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
         //s_dalTask = _s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
         //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-        s_dal = DalApi.Factory.Get; //stage 4
+        s_dal = Factory.Get; //stage 4
 
         createEngineers();
         createTasks();
