@@ -24,10 +24,10 @@ public record Task
     string Description,
     string Alias,
     bool Milestone,
+    DateTime CreateAt,
     TimeSpan? RequiredEffortTime,
     EngineerExperience Level = EngineerExperience.Expert,
     bool IsActive = false,
-    DateTime? CreateAt = null,
     DateTime? Start = null,
     DateTime? ForecastDate = null,
     DateTime? Deadline = null,
@@ -37,6 +37,6 @@ public record Task
     int? EngineerId = null 
  )
 {
-    public Task() : this(0, "", "", true, TimeSpan.Zero) { }
+    public Task() : this(0, "", "", true, new DateTime(2024,1,1) ,TimeSpan.Zero) { }
 }
  

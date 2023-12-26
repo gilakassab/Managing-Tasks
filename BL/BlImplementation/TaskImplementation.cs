@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using DalApi;
+using DO;
 using System.Collections.Generic;
 namespace BlImplementation;
 
@@ -99,14 +100,26 @@ internal class TaskImplementation : ITask
                     Remarks = doTask.Remarks
                 }).Where(filter1);
     }
+    public void Update(BO.Task boTask)
+    {
+        DO.Task doTask = _dal.Task.Read(e => e.Id == boTask.Id);
+        if (doTask is null)
+            throw new DalDoesNotExistException($"Task with ID={boTask.Id} does not exist");
 
+
+        try
+        {
+            _dal.Task.Update(doTask);
+        }
+        catch (DO.DalAlreadyExistsException ex)
+        {
+            throw new BO.BlAlreadyExistsException($"Engineer with ID={boTask.Id} not exists", ex);
+        }
+    }
 }
 
-public void Update(Task item)
-{
-    throw new NotImplementedException();
-}
 
-}
+
+
 
 
