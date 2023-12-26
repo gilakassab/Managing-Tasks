@@ -12,8 +12,8 @@ namespace DalApi
         IEngineer Engineer { get; }
         ITask Task { get; }
 
-        DateTime? startProject { get; }
-        DateTime? deadlineProject { get; }
+        DateTime? startProject { get; set; }
+        DateTime? deadlineProject { get; set; }
 
         public void Reset();
     }
