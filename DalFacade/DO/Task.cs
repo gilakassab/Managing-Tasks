@@ -24,7 +24,7 @@ public record Task
     string Description,
     string Alias,
     bool Milestone,
-    TimeSpan RequiredEffortTime,
+    TimeSpan? RequiredEffortTime,
     EngineerExperience Level = EngineerExperience.Expert,
     bool IsActive = false,
     DateTime? CreateAt = null,
