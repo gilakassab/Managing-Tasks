@@ -7,7 +7,7 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = Factory.Get;
-    public int Create(BO.Task boTask)
+    public int Create(int id,string description,)
     {
         DO.Task doTask = new DO.Task
         (boTask.Id,
@@ -33,7 +33,6 @@ internal class TaskImplementation : ITask
         {
             throw new BO.BlAlreadyExistsException($"Engineer with ID={boTask.Id} already exists", ex);
         }
-
     }
 
     public void Delete(int id)

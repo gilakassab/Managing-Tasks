@@ -104,5 +104,19 @@ internal class MilestoneImplementation : IMilestone
             return Status.InJeopardy;
 
         return Status.Unscheduled;
+
+        //if (startDate == null && baselineStartDate == null)
+        //    return Status.Unscheduled;
+
+        //if (startDate != null && baselineStartDate != null && scheduledStartDate != null)
+        //    return Status.Scheduled;
+
+        //if (startDate != null && completeDate != null && completeDate <= forecastDate)
+        //    return Status.OnTrack;
+
+        //if (startDate != null && completeDate != null && deadlineDate != null && completeDate <= forecastDate)
+        //    return Status.InJeopardy;
+
+        //return Status.Unscheduled;
     }
 }

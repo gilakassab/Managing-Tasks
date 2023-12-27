@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
 using System;
-using DalXml;
 
 
 namespace DalTest
@@ -186,7 +185,7 @@ namespace DalTest
                     taskRemarks = Console.ReadLine();
                     taskEngineerId = int.Parse(Console.ReadLine());
 
-                    s_dal.Task.Create(new DO.Task(0, taskDescription, taskAlias, taskMilestone, requiredEffortTime, taskLevel, isActive, taskCreateAt, taskStart, taskForecastDate, taskDeadline, taskComplete, taskDeliverables, taskRemarks, taskEngineerId));
+                    s_dal.Task.Create(new DO.Task(0, taskDescription, taskAlias, taskMilestone, taskCreateAt, requiredEffortTime, taskLevel, isActive, taskStart, taskForecastDate, taskDeadline, taskComplete, taskDeliverables, taskRemarks, taskEngineerId));
                     break;
                 case 2:
                     int id;
@@ -230,7 +229,7 @@ namespace DalTest
                     taskRemarksUpdate = Console.ReadLine();
                     taskEngineerIdUpdate = int.Parse(Console.ReadLine());
 
-                    s_dal.Task.Update(new DO.Task(idTaskUpdate, taskDescriptionUpdate, taskAliasUpdate, taskMilestoneUpdate, requiredEffortTimeUpdate, taskLevelUpdate, isActiveUpdate, taskCreateAtUpdate, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate, taskDeliverablesUpdate, taskRemarksUpdate, taskEngineerIdUpdate)); break;
+                    s_dal.Task.Update(new DO.Task(idTaskUpdate, taskDescriptionUpdate, taskAliasUpdate, taskMilestoneUpdate,taskCreateAtUpdate, requiredEffortTimeUpdate, taskLevelUpdate, isActiveUpdate,  taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate, taskDeliverablesUpdate, taskRemarksUpdate, taskEngineerIdUpdate)); break;
                 case 5:
                     int idDelete;
                     Console.WriteLine("Enter id for deleting");

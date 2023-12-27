@@ -29,6 +29,8 @@ public record Task
     EngineerExperience Level = EngineerExperience.Expert,
     bool IsActive = false,
     DateTime? Start = null,
+    //DateTime? ScheduledDate = null,
+    //DateTime? BaselineStartDate = null,
     DateTime? ForecastDate = null,
     DateTime? Deadline = null,
     DateTime? Complete = null,
