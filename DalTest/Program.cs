@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
 using System;
-using DalXml;
+
 
 
 namespace DalTest
