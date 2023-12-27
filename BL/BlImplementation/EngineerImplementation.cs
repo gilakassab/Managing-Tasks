@@ -1,7 +1,5 @@
 ﻿
 using BlApi;
-using BO;
-using DO;
 using System.Data;
 using System.Collections.Generic;
 namespace BlImplementation;
@@ -32,7 +30,7 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        throw new DalDeletionImpossible($"Engineer is indelible entity");
+        throw new BO.BlDeletionImpossible($"Engineer is indelible entity");
     }
 
     public BO.Engineer? Read(int id)
@@ -72,7 +70,7 @@ internal class EngineerImplementation : IEngineer
     {
         DO.Engineer doEngineer = _dal.Engineer.Read(e => e.Id == boEngineer.Id);
         if (doEngineer is null)
-            throw new DalDoesNotExistException($"Engineer with ID={boEngineer.Id} does not exist");
+            throw new BO.BlDoesNotExistException($"Engineer with ID={boEngineer.Id} does not exist");
 
 
         try

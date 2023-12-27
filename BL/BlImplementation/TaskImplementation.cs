@@ -1,7 +1,4 @@
 ﻿using BlApi;
-using BO;
-using DalApi;
-using DO;
 using System.Collections.Generic;
 namespace BlImplementation;
 
@@ -104,7 +101,7 @@ internal class TaskImplementation : ITask
     {
         DO.Task doTask = _dal.Task.Read(e => e.Id == boTask.Id);
         if (doTask is null)
-            throw new DalDoesNotExistException($"Task with ID={boTask.Id} does not exist");
+            throw new BO.BlDoesNotExistException($"Task with ID={boTask.Id} does not exist");
 
 
         try

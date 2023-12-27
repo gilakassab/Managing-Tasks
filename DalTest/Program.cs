@@ -1,11 +1,14 @@
 ﻿using Dal;
 using DO;
+
 using DalApi;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
 using System;
 using DalXml;
+
+
 namespace DalTest
 {
     internal class Program
@@ -13,12 +16,11 @@ namespace DalTest
     //static readonly IDal s_dal = new Dal.DalList(); //stage 2
     //static readonly IDal s_dal = new Dal.DalXml(); //stage 3
     static readonly IDal s_dal = Factory.Get; //stage 4
+        //private static IDependency? s_dalDependency = new DependnecyImplementation(); //stage 1
+        //private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
+        //private static ITask? s_dalTask = new TaskImplementation(); //stage 1
 
-    //private static IDependency? s_dalDependency = new DependnecyImplementation(); //stage 1
-    //private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
-    //private static ITask? s_dalTask = new TaskImplementation(); //stage 1
-
-    enum MainMenu { INITIALIZATION, EXIT, DEPENDENCY, ENGINEER, TASK }
+        enum MainMenu { INITIALIZATION, EXIT, DEPENDENCY, ENGINEER, TASK }
     enum SubMenu { EXIT, CREATE, READ, READALL, UPDATE, DELETE }
     Random random = new Random();
 
