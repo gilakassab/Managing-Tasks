@@ -7,31 +7,22 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = Factory.Get;
-    public int Create(int id,string description,)
+    
+    public int Create(BO.Task item)
     {
+        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
+
         DO.Task doTask = new DO.Task
-        (boTask.Id,
-        boTask.Description,
-        boTask.Alias,
-        false,
-        boTask.RequiredEffortTime,
-        (DO.EngineerExperience)boTask.Level,
-        boTask.IsActive,
-        boTask.CreateAt,
-        boTask.Start,
-        boTask.ForecastDate,
-        boTask.Deadline,
-        boTask.Complete,
-        boTask.Deliverables,
-        boTask.Remarks);
+        (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
         try
         {
-            int id = _dal.Task.Create(doTask);
-            return id;
+            int newId = _dal.Task.Create(doTask);
+            return newId;
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Engineer with ID={boTask.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID={id} already exists", ex);
         }
     }
 

@@ -15,36 +15,43 @@ internal class MilestoneImplementation : IMilestone
 
     public Milestone? Read(int id)
     {
-        DO.Task? doTaskMilestone = _dal.Task.Read(t => t.Id == id && t.Milestone);
-        if (doTaskMilestone == null)
-            throw new BO.BlDoesNotExistException($"Milstone with ID={id} does Not exist");
-
-        var tasksId = _dal.Dependency.ReadAll(d => d.DependsOnTask == doTaskMilestone.Id)
-                                     .Select(d => d.DependentTask);
-        var tasks = _dal.Task.ReadAll(t => tasksId.Contains(t.Id)).ToList();
-
-        var tasksInList = tasks.Select(t => new BO.TaskInList
+        try
         {
-            Id = t.Id,
-            Description = t.Description,
-            Alias = t.Alias,
-            Status = CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete)
-        }).ToList();
+            DO.Task? doTaskMilestone = _dal.Task.Read(t => t.Id == id && t.Milestone);
+            if (doTaskMilestone == null)
+                throw new BO.BlDoesNotExistException($"Milstone with ID={id} does Not exist");
 
-        return new BO.Milestone()
+            var tasksId = _dal.Dependency.ReadAll(d => d.DependsOnTask == doTaskMilestone.Id)
+                                         .Select(d => d.DependentTask);
+            var tasks = _dal.Task.ReadAll(t => tasksId.Contains(t.Id)).ToList();
+
+            var tasksInList = tasks.Select(t => new BO.TaskInList
+            {
+                Id = t.Id,
+                Description = t.Description,
+                Alias = t.Alias,
+                Status = Helper.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete)
+            }).ToList();
+
+            return new BO.Milestone()
+            {
+                Id = doTaskMilestone.Id,
+                Description = doTaskMilestone.Description,
+                Alias = doTaskMilestone.Alias,
+                CreateAt = doTaskMilestone.CreateAt,
+                Status = Helper.CalculateStatus(doTaskMilestone.Start, doTaskMilestone.ForecastDate, doTaskMilestone.Deadline, doTaskMilestone.Complete),
+                ForecastDate = doTaskMilestone.ForecastDate,
+                Deadline = doTaskMilestone.Deadline,
+                Complete = doTaskMilestone.Complete,
+                CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / (double)tasksInList.Count) * 100,
+                Remarks = doTaskMilestone.Remarks,
+                Dependencies = tasksInList
+            };
+        }
+        catch (Exception ex)
         {
-            Id = doTaskMilestone.Id,
-            Description = doTaskMilestone.Description,
-            Alias = doTaskMilestone.Alias,
-            CreateAt = doTaskMilestone.CreateAt,
-            Status = CalculateStatus(doTaskMilestone.Start, doTaskMilestone.ForecastDate, doTaskMilestone.Deadline, doTaskMilestone.Complete),
-            ForecastDate = doTaskMilestone.ForecastDate,
-            Deadline = doTaskMilestone.Deadline,
-            Complete = doTaskMilestone.Complete,
-            CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / (double)tasksInList.Count) * 100,
-            Remarks = doTaskMilestone.Remarks,
-            Dependencies = tasksInList
-        };
+            throw new BlFailedToReadMilestone("Failed to build milestone ", ex);
+        }
     }
 
     public void Update(BO.Milestone boMilestone)
@@ -87,36 +94,5 @@ internal class MilestoneImplementation : IMilestone
         };
 
         return updatedBoMilestone;
-    }
-
-    public Status CalculateStatus(DateTime? start, DateTime? forecastDate, DateTime? deadline, DateTime? complete)
-    {
-        if (start == null && deadline == null)
-            return Status.Unscheduled;
-
-        if (start != null && deadline != null && complete == null)
-            return Status.Scheduled;
-
-        if (start != null && complete != null && complete <= forecastDate)
-            return Status.OnTrack;
-
-        if (start != null && complete != null && complete > forecastDate)
-            return Status.InJeopardy;
-
-        return Status.Unscheduled;
-
-        //if (startDate == null && baselineStartDate == null)
-        //    return Status.Unscheduled;
-
-        //if (startDate != null && baselineStartDate != null && scheduledStartDate != null)
-        //    return Status.Scheduled;
-
-        //if (startDate != null && completeDate != null && completeDate <= forecastDate)
-        //    return Status.OnTrack;
-
-        //if (startDate != null && completeDate != null && deadlineDate != null && completeDate <= forecastDate)
-        //    return Status.InJeopardy;
-
-        //return Status.Unscheduled;
     }
 }

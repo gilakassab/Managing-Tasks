@@ -37,3 +37,19 @@ public class BlXMLFileLoadCreateException : Exception
 {
     public BlXMLFileLoadCreateException(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlFailedToReadMilestone : Exception
+{
+    public BlFailedToReadMilestone(string? message) : base(message) { }
+    public BlFailedToReadMilestone(string message, Exception innerException)
+              : base(message, innerException) { }
+}
+
+[Serializable]
+public class BlInvalidDataException : Exception
+{
+    public BlInvalidDataException(string? message) : base(message) { }
+    public BlInvalidDataException(string message, Exception innerException)
+              : base(message, innerException) { }
+}
