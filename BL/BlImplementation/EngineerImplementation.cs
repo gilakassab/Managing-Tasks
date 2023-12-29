@@ -14,7 +14,6 @@ internal class EngineerImplementation : IEngineer
 
     public int Create(BO.Engineer boEngineer)
     {
-
         Helper.ValidatePositiveId(boEngineer.Id, nameof(boEngineer.Id));
         Helper.ValidateNonEmptyString(boEngineer.Name, nameof(boEngineer.Name));
         Helper.ValidateEmail(boEngineer.Name, nameof(boEngineer.Name));
@@ -71,12 +70,12 @@ internal class EngineerImplementation : IEngineer
 
         DO.Engineer newDoEngineer = new DO.Engineer
            (boEngineer.Id,
-           boEngineer.Name,
-        boEngineer.IsActive,
-        boEngineer.Email,
-           (DO.EngineerExperience)boEngineer.Level,
-           boEngineer.Cost,
-           (DO.Roles)boEngineer.Role);
+            boEngineer.Name,
+            boEngineer.IsActive,
+            boEngineer.Email,
+            (DO.EngineerExperience)boEngineer.Level,
+            boEngineer.Cost,
+            (DO.Roles)boEngineer.Role);
 
         try
         {
@@ -88,7 +87,7 @@ internal class EngineerImplementation : IEngineer
         }
     }
 
-    private BO.Engineer CreateBOFromDO(DO.Engineer doEngineer)
+    private BO.Engineer? CreateBOFromDO(DO.Engineer doEngineer)
     {
         var doTasks = _dal.Task.ReadAll(t => t.EngineerId == doEngineer.Id && Helper.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete) == BO.Status.OnTrack).FirstOrDefault();
         TaskInEngineer taskInEngineer = null;
@@ -100,7 +99,7 @@ internal class EngineerImplementation : IEngineer
                 Alias = doTasks.Alias
             };
         }
-        
+
         return new BO.Engineer()
         {
             Id = doEngineer.Id,
@@ -111,6 +110,6 @@ internal class EngineerImplementation : IEngineer
             Cost = doEngineer.Cost ?? 0,
             Role = (BO.Roles)doEngineer.Role,
             Task = taskInEngineer
-        }; ;
+        };
     }
 }

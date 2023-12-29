@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using System.Collections.Generic;
 namespace BlImplementation;
 
@@ -7,7 +8,7 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = Factory.Get;
-    
+
     public int Create(BO.Task item)
     {
         Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
@@ -18,11 +19,21 @@ internal class TaskImplementation : ITask
         try
         {
             int newId = _dal.Task.Create(doTask);
+
+            var dependenciesToCreate = item.Dependencies
+            .Select(task => new DO.Dependency
+            {
+                DependentTask = item.Id,
+                DependsOnTask = task.Id
+            })
+            .ToList();
+            dependenciesToCreate.ForEach(dependency => _dal.Dependency.Create(dependency));
+
             return newId;
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Task with ID={id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID={item.Id} already exists", ex);
         }
     }
 
@@ -31,40 +42,49 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public Task? Read(int id)
+    public BO.Task? Read(int id)
     {
         DO.Task? doTask = _dal.Task.Read(t => t.Id == id);
         if (doTask == null)
-            throw new BO.BlDoesNotExistException($"Student with ID={id} does Not exist");
+            throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
 
-        Milestone? milstone = null;
-
-        var dependencies = (_dal.Dependency.ReadAll(d => d.DependentTask == doTask.Id));
-        foreach (var d in dependencies) {
-            if (_dal.Task.Read(t => t.Id == d.DependsOnTask).Milestone)
+        int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
+        DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
+        BO.MilestoneInTask? milestone = null;
+        if (milestoneAsATask != null)
+        {
+            string aliasOfMilestone = milestoneAsATask.Alias;
+            milestone = new BO.MilestoneInTask()
             {
-                //לקרא אבן דרך ולשים באבן דרך שלי
-            }
+                Id = milestoneId,
+                Alias = aliasOfMilestone
+            };
+        }
+        else
+        {
+            var aaa=
         }
 
         return new BO.Task()
-        {   
-            Id=doTask.Id,
+        {
+            Id = doTask.Id,
             Description = doTask.Description,
             Alias = doTask.Alias,
-            Milestone = milstone,
+            Milestone = milestone,
             RequiredEffortTime = doTask.RequiredEffortTime,
             Level = (BO.EngineerExperience)doTask.Level,
             IsActive = doTask.IsActive,
-            CreateAt = doTask.CreateAt,// לשנות בDO לבלי סימן שאלה
+            CreateAt = doTask.CreateAt,
             Start = doTask.Start,
             ForecastDate = doTask.ForecastDate,
             Deadline = doTask.Deadline,
             Complete = doTask.Complete,
             Deliverables = doTask.Deliverables,
-            Remarks = doTask.Remarks
+            Remarks = doTask.Remarks,
+            Dependencies = null
         };
     }
+
     public IEnumerable<Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         Func<BO.Task, bool> filter1 = filter != null ? filter! : item => true;

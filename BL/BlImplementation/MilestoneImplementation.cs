@@ -50,7 +50,7 @@ internal class MilestoneImplementation : IMilestone
         }
         catch (Exception ex)
         {
-            throw new BlFailedToReadMilestone("Failed to build milestone ", ex);
+            throw new BlFailedToRead("Failed to build milestone ", ex);
         }
     }
 
