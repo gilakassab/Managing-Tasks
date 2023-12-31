@@ -37,9 +37,39 @@ public class BlXMLFileLoadCreateException : Exception
 
 public class BlFailedToRead : Exception
 {
-    public BlFailedToReadMilestone(string? message) : base(message) { }
-    public BlFailedToReadMilestone(string message, Exception innerException)
+    public BlFailedToRead(string? message) : base(message) { }
+    public BlFailedToRead(string message, Exception innerException)
               : base(message, innerException) { }
+}
+public class BlFailedToUpdate : Exception
+{
+    public BlFailedToUpdate(string? message) : base(message) { }
+    public BlFailedToUpdate(string message, Exception innerException)
+              : base(message, innerException) { }
+
+}
+public class BlFailedToDelete : Exception
+{
+    public BlFailedToDelete(string? message) : base(message) { }
+    public BlFailedToDelete(string message, Exception innerException)
+              : base(message, innerException) { }
+
+}
+
+public class BlFailedToCreate : Exception
+{
+    public BlFailedToCreate(string? message) : base(message) { }
+    public BlFailedToCreate(string message, Exception innerException)
+              : base(message, innerException) { }
+
+}
+
+public class BlFailedToReadAll : Exception
+{
+    public BlFailedToReadAll(string? message) : base(message) { }
+    public BlFailedToReadAll(string message, Exception innerException)
+              : base(message, innerException) { }
+
 }
 
 public class BlInvalidDataException : Exception

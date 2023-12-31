@@ -1,25 +1,23 @@
-﻿using BO;
-
-namespace BlImplementation;
+﻿namespace BO;
 
 internal static class Helper
 {
     public static void ValidatePositiveId(int? id, string paramName)
     {
         if (id <= 0)
-            throw new BO.BlInvalidDataException($"Invalid {paramName} ID. Must be a positive number.");
+            throw new BlInvalidDataException($"Invalid {paramName} ID. Must be a positive number.");
     }
 
     public static void ValidateNonEmptyString(string? value, string paramName)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new BO.BlInvalidDataException($"{paramName} cannot be empty.");
+            throw new BlInvalidDataException($"{paramName} cannot be empty.");
     }
 
     public static void ValidatePositiveNumber(double? number, string paramName)
     {
         if (number <= 0)
-            throw new BO.BlInvalidDataException($"Invalid {paramName}. Must be a positive number.");
+            throw new BlInvalidDataException($"Invalid {paramName}. Must be a positive number.");
     }
 
     public static void ValidateEmail(string email?, string paramName)
@@ -28,11 +26,11 @@ internal static class Helper
         {
             var addr = new System.Net.Mail.MailAddress(email);
             if (addr.Address != email)
-                throw new BO.BlInvalidDataException($"Invalid email address for {paramName}.");
+                throw new BlInvalidDataException($"Invalid email address for {paramName}.");
         }
         catch
         {
-            throw new BO.BlInvalidDataException($"Invalid email address for {paramName}.");
+            throw new BlInvalidDataException($"Invalid email address for {paramName}.");
         }
     }
 
