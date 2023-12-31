@@ -27,7 +27,7 @@ internal class TaskImplementation : ITask
                 .ToList();
             dependenciesToCreate.ForEach(dependency => _dal.Dependency.Create(dependency));
 
-            return newId;
+            return item.Id;
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -85,13 +85,14 @@ internal class TaskImplementation : ITask
         };
     }
 
-    public IEnumerable<Task> ReadAll(Func<BO.Task, bool>? filter = null)
+    public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
-        Func<BO.Task, bool> filter1 = filter != null ? filter! : item => true;
+        Func<BO.Task, bool>? filter1 = filter != null ? filter! : item => true;
         List<BO.Task> boTasks = null;
-        foreach (DO.Task doTask in _dal.Task.ReadAll(filter1))
+
+        foreach (DO.Task? doTask in _dal.Task.ReadAll())
         {
-            List<BO.TaskInList> tasksList = null;
+            List<BO.TaskInList>? tasksList = null;
             BO.MilestoneInTask? milestone = null;
 
             int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
@@ -107,7 +108,7 @@ internal class TaskImplementation : ITask
             }
             else
             {
-                tasksList = Helper.CalculateList(id);
+                tasksList = Helper.CalculateList(doTask.Id);
             }
             boTasks.Add(new BO.Task()
             {
@@ -128,7 +129,7 @@ internal class TaskImplementation : ITask
                 Dependencies = tasksList
             });
         }
-        return boTasks;
+        return boTasks.Where(filter1).ToList();
     }
 
     public void Update(BO.Task item)
@@ -143,7 +144,7 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Engineer with ID={boTask.Id} not exists", ex);
+            throw new BO.BlAlreadyExistsException($"Engineer with ID={item.Id} not exists", ex);
         }
     }
 }

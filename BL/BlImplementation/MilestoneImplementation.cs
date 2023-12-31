@@ -62,6 +62,7 @@ internal class MilestoneImplementation : IMilestone
 
         try
         {
+            DO.Task oldDoTask = _dal.Task.Read(t=>t.Id== item.Id);
             DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, (TimeSpan)(item.ForecastDate - item.Deadline), null, true, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
             _dal.Task.Update(doTask);
         }
