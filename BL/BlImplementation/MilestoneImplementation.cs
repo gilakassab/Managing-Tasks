@@ -8,6 +8,7 @@ namespace BlImplementation;
 internal class MilestoneImplementation : IMilestone
 {
     private DalApi.IDal _dal = Factory.Get;
+    
     public int Create()
     {
         throw new NotImplementedException();
@@ -54,45 +55,19 @@ internal class MilestoneImplementation : IMilestone
         }
     }
 
-    public void Update(BO.Milestone boMilestone)
+    public void Update(BO.Milestone item)
     {
-        // קריאה לאבן דרך ממקור הנתונים
-        DO.Milestone doMilestone = _dal.Milestone.Read(boMilestone.Id);
-        if (doMilestone == null)
-        {
-            throw new BO.BlDoesNotExistException($"Milestone with ID={boMilestone.Id} does not exist");
-        }
+        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
-        // ביצוע העדכון על האבן דרך
-        // (בדוגמה זו, העדכון מתבצע רק על השדות שניתן לעדכן: כינוי, תיאור, הערות)
-        doMilestone.Alias = boMilestone.Alias;
-        doMilestone.Description = boMilestone.Description;
-        doMilestone.Remarks = boMilestone.Remarks;
-
-        // ביצוע ניסיון לעדכון בשכבת הנתונים
         try
         {
-            _dal.Milestone.Update(doMilestone);
+            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, (TimeSpan)(item.ForecastDate - item.Deadline), null, true, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
+            _dal.Task.Update(doTask);
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Milestone with ID={boMilestone.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"Milsetone with ID={item.Id} not exists", ex);
         }
-
-        // שליפת הגרסה העדכנית של האבן דרך ממקור הנתונים
-        DO.Milestone updatedDoMilestone = _dal.Milestone.Read(boMilestone.Id);
-
-        // יצירת אובייקט מסוג Milestone מעודכן לפי המידע ששולף ממקור הנתונים
-        BO.Milestone updatedBoMilestone = new BO.Milestone
-        {
-            Id = updatedDoMilestone.Id,
-            Description = updatedDoMilestone.Description,
-            Alias = updatedDoMilestone.Alias,
-            CreateAt = updatedDoMilestone.CreateAt,
-            // וכן הלאה - שאר השדות של Milestone
-            // ...
-        };
-
-        return updatedBoMilestone;
     }
 }

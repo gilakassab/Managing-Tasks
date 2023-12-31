@@ -1,4 +1,5 @@
-﻿using BlApi;
+﻿
+using BlApi;
 using System.Data;
 using System.Collections.Generic;
 using BO;
@@ -58,7 +59,7 @@ internal class EngineerImplementation : IEngineer
         Func<BO.Engineer, bool> filter1 = filter != null ? filter! : item => true;
         return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
                 let boEngineer = CreateBOFromDO(doEngineer)
-                select boEngineer).Where(filter1);
+                select boEngineer).Where(filter1).ToList();
     }
 
     public void Update(BO.Engineer boEngineer)
