@@ -167,11 +167,11 @@ public static class Initialization
 //.ToList()
 //.ForEach(engineer => Console.WriteLine(engineer.ToString()));
 
-        s_dal!.Dependency.Create(new Dependency(0, 1, 2));
-        s_dal.Dependency.Create(new Dependency(0, 1, 2));
-        s_dal.Dependency.Create(new Dependency(0, 1, 2));
-        s_dal.Dependency.Create(new Dependency(0, 1, 2));
-        s_dal.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 1, 0));
+        s_dal.Dependency.Create(new Dependency(0, 2,1));
+        s_dal.Dependency.Create(new Dependency(0, 3, 2));
+        s_dal.Dependency.Create(new Dependency(0, 4, 3));
+        s_dal.Dependency.Create(new Dependency(0, 6, 4));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));
         s_dal.Dependency.Create(new Dependency(0, 1, 2));

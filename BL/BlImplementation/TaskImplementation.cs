@@ -71,10 +71,11 @@ internal class TaskImplementation : ITask
             Description = doTask.Description,
             Alias = doTask.Alias,
             Milestone = milestone,
+            CreateAt = doTask.CreateAt,
             RequiredEffortTime = doTask.RequiredEffortTime,
             Level = (BO.EngineerExperience)doTask.Level,
             IsActive = doTask.IsActive,
-            CreateAt = doTask.CreateAt,
+           
             Start = doTask.Start,
             ForecastDate = doTask.ForecastDate,
             Deadline = doTask.Deadline,

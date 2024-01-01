@@ -37,7 +37,7 @@ namespace DalTest
                 {
                     case 1:
                         Console.WriteLine("Enter id, name, email, cost and a number to choose experience");
-                        int idEngineer, currentNum;
+                        int idEngineer;
                         string nameEngineer, emailEngineer, input;
                         EngineerExperience levelEngineer;
                         bool isActive;
