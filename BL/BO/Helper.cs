@@ -1,10 +1,11 @@
 ﻿
-using DO;
+using BO;
 
 namespace BlImplementation;
 
 internal static class Helper
 {
+
     public static void ValidatePositiveId(int? id, string paramName)
     {
         if (id <= 0)
@@ -70,9 +71,11 @@ internal static class Helper
 
     public static List<BO.TaskInList>? CalculateList(int taskId)
     {
+        DalApi.IDal _dal = Factory.Get;
+
         List<BO.TaskInList> tasksList = null;
         _dal.Dependency.ReadAll(d => d.DependentTask == taskId)
-                           .Select(d => _dal.Task.Read(d.DependsOnTask))
+                           .Select(d => _dal.Task.Read(d1 => d1.Id == d.DependsOnTask))
                            .ToList()
                            .ForEach(task =>
                            {
@@ -83,7 +86,8 @@ internal static class Helper
                                    Description = task.Description,
                                    Status = Helper.CalculateStatus(task.Start, task.ForecastDate, task.Deadline, task.Complete)
                                });
-                           }
+
+                           });
        return tasksList;
     }
 }

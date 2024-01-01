@@ -19,6 +19,82 @@ namespace BlTest
          
         public static void MilestoneMenu()
         {
+            int chooseSubMenu;
+            do
+            {
+                Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, ,UPDATE }");
+                int.TryParse(Console.ReadLine() ?? throw new Exception("Enter a number please"), out chooseSubMenu);
+
+                switch (chooseSubMenu)
+                {
+                    case 1:
+                         
+                        break;
+                    case 2:
+                        int id;
+                        Console.WriteLine("Enter id for reading");
+                        id = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            if (s_bl.Milestone!.Read(id) is null)
+                                Console.WriteLine("no milestone's task found");
+                            else
+                            {
+                                Console.WriteLine(s_bl.Milestone!.Read(id).ToString());
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new BlFailedToRead("Failed to read milestone ", ex);
+                        }
+                        break;
+                    case 3:
+                        int idMilestoneUpdate;
+                        string milestoneDescriptionUpdate,
+                            milestoneAliasUpdate,
+                            milestoneRemarksUpdate;
+                        Console.WriteLine("Enter id for reading milestone");
+                        idMilestoneUpdate = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Milestone updatedMilestone = s_bl.Milestone.Read(idMilestoneUpdate);
+                            Console.WriteLine(updatedMilestone.ToString());
+                            Console.WriteLine("Enter description, alias, remarks ");//if null to put the same details
+                            milestoneDescriptionUpdate = Console.ReadLine() ?? updatedMilestone?.Description;
+                            milestoneAliasUpdate = Console.ReadLine() ?? updatedMilestone?.Alias;
+                            milestoneRemarksUpdate = Console.ReadLine() ?? updatedMilestone?.Remarks;
+                            BO.Milestone newMilUpdate = new BO.Milestone()
+                            {
+                               Id = idMilestoneUpdate,
+                               Description=milestoneDescriptionUpdate,
+                               Alias=milestoneAliasUpdate,
+                               CreateAt= s_bl.Milestone.Read(milestoneInTaskIdUpdate)
+                                Task = new BO.TaskInEngineer()
+                                {
+                                    Id = idTaskUpdate,
+                                    Alias = s_bl.Task.Read(idTaskUpdate).Alias
+                                }
+                            };
+                            try
+                            {
+                                s_bl.Engineer.Update(newEngUpdate);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new BlFailedToCreate($"failed to update engineer id={idEngineerUpdate}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new BlFailedToRead($"failed to read id: {idEngineerUpdate} of engineer", ex);
+                        }
+                        break;
+                   
+
+                     
+                    default: return;
+                }
+            } while (chooseSubMenu > 0 && chooseSubMenu < 3);
 
         }
         public static void EngineerMenu()
@@ -319,7 +395,7 @@ namespace BlTest
                                  taskDeadlineUpdate, 
                                  taskCompleteUpdate;
                         TimeSpan requiredEffortTimeUpdate;
-                        EngineerExperience taskLevelUpdate;
+                        EngineerExperience? taskLevelUpdate;
                         Status statusTaskUpdate;
                         List<BO.TaskInList?> taskInListUpdate = null;
                         Console.WriteLine("Enter id for reading");
@@ -339,7 +415,7 @@ namespace BlTest
                         taskDeliverablesUpdate = Console.ReadLine();
                         taskRemarksUpdate = Console.ReadLine();
                         inputEEUpdate = Console.ReadLine();
-                        taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdate);
+                        taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
                         taskEngineerId = int.Parse(Console.ReadLine());
                         milestoneInTaskId = int.Parse(Console.ReadLine());
                         taskInListId = int.Parse(Console.ReadLine());
