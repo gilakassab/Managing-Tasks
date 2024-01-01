@@ -15,10 +15,10 @@ internal class TaskImplementation : ITask
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         DO.Task doTask = new DO.Task
-        (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
+        (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
         try
         {
-            var dependenciesToCreate = item.Dependencies
+            var dependenciesToCreate = item.Dependencies!
                 .Select(task => new DO.Dependency
                 {
                     DependentTask = item.Id,
@@ -48,7 +48,7 @@ internal class TaskImplementation : ITask
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
 
-        List<BO.TaskInList> tasksList = null;
+        List<BO.TaskInList> tasksList=null;
         BO.MilestoneInTask? milestone = null;
 
         int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
@@ -83,7 +83,7 @@ internal class TaskImplementation : ITask
             Complete = doTask.Complete,
             Deliverables = doTask.Deliverables,
             Remarks = doTask.Remarks,
-            Dependencies = tasksList
+            Dependencies = tasksList!
         };
     }
 
@@ -112,14 +112,14 @@ internal class TaskImplementation : ITask
             {
                 tasksList = Tools.CalculateList(doTask.Id);
             }
-            boTasks.Add(new BO.Task()
+            boTasks!.Add(new BO.Task()
             {
-                Id = doTask.Id,
+                Id = doTask!.Id,
                 Description = doTask.Description,
                 Alias = doTask.Alias,
                 Milestone = milestone,
                 RequiredEffortTime = doTask.RequiredEffortTime,
-                Level = (BO.EngineerExperience)doTask.Level,
+                Level = (BO.EngineerExperience)doTask.Level!,
                 IsActive = doTask.IsActive,
                 CreateAt = doTask.CreateAt,
                 Start = doTask.Start,
@@ -131,7 +131,7 @@ internal class TaskImplementation : ITask
                 Dependencies = tasksList
             });
         }
-        return boTasks.Where(filter1).ToList();
+        return boTasks!.Where(filter1).ToList();
     }
 
     public void Update(BO.Task item)
