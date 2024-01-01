@@ -28,33 +28,106 @@ internal class MilestoneImplementation : IMilestone
 
         foreach (var tasksList in uniqueLists)
         {
-
-            DO.Task doTask = new DO.Task
-                (0,
-                $"a milestone with Id: {milestoneAlias}",
-                $"M{milestoneAlias}",
-                true,
-                DateTime.Now,
-                null, null, true, null, null, null, null, null, null, null);
-            try
+            if (tasksList != null)
             {
-                int milestoneId = _dal.Task.Create(doTask);
-
-                foreach (var taskId in tasksList)
+                DO.Task doTask = new DO.Task
+                    (0,
+                    $"a milestone with Id: {milestoneAlias}",
+                    $"M{milestoneAlias}",
+                    true,
+                    DateTime.Now,
+                    null, null, true, null, null, null, null, null, null, null);
+                try
                 {
-                    dependencies.Add(new DO.Dependency
-                    {
-                        DependentTask = milestoneId,
-                        DependsOnTask = taskId
-                    });
-                }
+                    int milestoneId = _dal.Task.Create(doTask);
 
-                milestoneAlias++;
+                    foreach (var taskId in tasksList)
+                    {
+                        dependencies.Add(new DO.Dependency
+                        {
+                            DependentTask = milestoneId,
+                            DependsOnTask = taskId
+                        });
+                    }
+
+                    foreach (var dependencyGroup in groupedDependencies)
+                    {
+                        if (dependencyGroup.Item2.SequenceEqual(tasksList))
+                        {
+                            foreach (var dependentOnTaskId in dependencyGroup.Item2)
+                            {
+                                dependencies.Add(new DO.Dependency
+                                {
+                                    DependentTask = dependentOnTaskId,
+                                    DependsOnTask = milestoneId
+                                });
+                            }
+                        }
+                    }
+
+                    milestoneAlias++;
+                }
+                catch (DO.DalAlreadyExistsException ex)
+                {
+                    throw new BO.BlFailedToCreate($"failed to create Milestone with Alias = M{milestoneAlias}", ex);
+                }
             }
-            catch (DO.DalAlreadyExistsException ex)
+        }
+
+        //משימות שלא תלויות בשום משימה
+        var independentOnTasks = _dal.Task.ReadAll()
+    .Where(task => !dependencies.Any(d => d.DependentTask == task!.Id))
+    .Select(task => task!.Id)
+    .ToList();
+
+        DO.Task startMilestone = new DO.Task
+               (0,
+               $"a milestone with Id: {0}",
+               $"Start",
+               true,
+               DateTime.Now,
+               null, null, true, null, null, null, null, null, null, null);
+
+        //משימות ששום משימה לא תלויה בהן
+        var independentTasks = _dal.Task.ReadAll()
+    .Where(task => !dependencies.Any(d => d.DependsOnTask == task!.Id))
+    .Select(task => task!.Id)
+    .ToList();
+
+        DO.Task endMilestone = new DO.Task
+               (0,
+               $"a milestone with Id: {milestoneAlias}",
+               $"End",
+               true,
+               DateTime.Now,
+               null, null, true, null, null, null, null, null, null, null);
+
+        try
+        {
+            int startMilestoneId = _dal.Task.Create(startMilestone);
+            int endMilestoneId = _dal.Task.Create(endMilestone);
+
+            foreach (var task in independentOnTasks)
             {
-                throw new BO.BlFailedToCreate($"failed to create Milestone with Alias = M{milestoneAlias}", ex);
+                dependencies.Add(new DO.Dependency
+                {
+                    DependentTask = task,
+                    DependsOnTask = startMilestoneId
+                });
             }
+
+            foreach (var task in independentTasks)
+            {
+                dependencies.Add(new DO.Dependency
+                {
+                    DependentTask = endMilestoneId,
+                    DependsOnTask = task
+                });
+            }
+        }
+        catch (DO.DalAlreadyExistsException ex)
+        {
+            throw new BO.BlFailedToCreate("Failed to create END or START milestone", ex);
         }
 
         _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
@@ -79,7 +152,7 @@ internal class MilestoneImplementation : IMilestone
                 Id = t.Id,
                 Description = t.Description,
                 Alias = t.Alias,
-                Status = Helper.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete)
+                Status = Tools.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete)
             }).ToList();
 
             return new BO.Milestone()
@@ -88,7 +161,7 @@ internal class MilestoneImplementation : IMilestone
                 Description = doTaskMilestone.Description,
                 Alias = doTaskMilestone.Alias,
                 CreateAt = doTaskMilestone.CreateAt,
-                Status = Helper.CalculateStatus(doTaskMilestone.Start, doTaskMilestone.ForecastDate, doTaskMilestone.Deadline, doTaskMilestone.Complete),
+                Status = Tools.CalculateStatus(doTaskMilestone.Start, doTaskMilestone.ForecastDate, doTaskMilestone.Deadline, doTaskMilestone.Complete),
                 ForecastDate = doTaskMilestone.ForecastDate,
                 Deadline = doTaskMilestone.Deadline,
                 Complete = doTaskMilestone.Complete,
@@ -105,8 +178,8 @@ internal class MilestoneImplementation : IMilestone
 
     public void Update(BO.Milestone item)
     {
-        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
-        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
+        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         try
         {

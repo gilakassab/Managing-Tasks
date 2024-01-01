@@ -11,8 +11,8 @@ internal class TaskImplementation : ITask
 
     public int Create(BO.Task item)
     {
-        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
-        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
+        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         DO.Task doTask = new DO.Task
         (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
@@ -64,7 +64,7 @@ internal class TaskImplementation : ITask
         }
         else
         {
-            tasksList = Helper.CalculateList(id);
+            tasksList = Tools.CalculateList(id);
         }
 
         return new BO.Task()
@@ -76,8 +76,7 @@ internal class TaskImplementation : ITask
             CreateAt = doTask.CreateAt,
             RequiredEffortTime = doTask.RequiredEffortTime,
             Level = (BO.EngineerExperience)doTask.Level,
-            IsActive = doTask.IsActive,
-           
+            IsActive = doTask.IsActive,          
             Start = doTask.Start,
             ForecastDate = doTask.ForecastDate,
             Deadline = doTask.Deadline,
@@ -111,7 +110,7 @@ internal class TaskImplementation : ITask
             }
             else
             {
-                tasksList = Helper.CalculateList(doTask.Id);
+                tasksList = Tools.CalculateList(doTask.Id);
             }
             boTasks.Add(new BO.Task()
             {
@@ -137,11 +136,24 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task item)
     {
-        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
-        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
+        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         try
         {
+            if (item.Milestone != null)
+            {
+                _dal.Dependency.ReadAll(d => d.DependentTask == item.Id);
+                if (item.Dependencies != null)
+                {
+                    foreach (BO.TaskInList doDependency in item.Dependencies)
+                    {
+                        DO.Dependency doDepend = new DO.Dependency(0, item.Id, doDependency.Id);
+                        int idDependency = _dal.Dependency.Create(doDepend);
+                    }
+                }
+            }
+
             DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
             _dal.Task.Update(doTask);
         }
