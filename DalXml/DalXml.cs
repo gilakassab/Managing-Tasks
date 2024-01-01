@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using System;
+using System.Xml.Linq;
 
 namespace Dal;
 
@@ -30,9 +31,21 @@ sealed internal class DalXml : IDal
 
     public static IDal Instance => lazyInstance.Value;
 
-    public DateTime? startProject { get => Config.startProject; set => Config.startProject = value; }
+    //public DateTime? startProject { get => Config.startProject; set => Config.startProject = value; }
 
-    public DateTime? deadlineProject { get => Config.deadlineProject; set => Config.deadlineProject = value; }
+    //public DateTime? deadlineProject { get => Config.deadlineProject; set => Config.deadlineProject = value; }
+    public DateTime? deadlineProject
+    {
+        get => ParseDateTime(XDocument.Load(@"..\xml\data-config.xml").Root!.Element("deadlineProject")!.Value);
+        set
+        {
+            XDocument.Load(@"..\xml\data-config.xml").Root!.Element("deadlineProject")?.SetValue(value?.ToString("yyyy-MM-ddTHH:mm:ss")!);
+            XDocument.Load(@"..\xml\data-config.xml").Save(@"..\xml\data-config.xml");
+        }
+    }
+
+   
+
 
     private DalXml() { }
 

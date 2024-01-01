@@ -35,8 +35,8 @@ sealed internal class DalList : IDal
     public IDependency Dependency => dependencyInstance;
     public IEngineer Engineer => engineerInstance;
     public ITask Task => taskInstance;
-    public DateTime? startProject => DataSource.Config.startProject;
-    public DateTime? deadlineProject => DataSource.Config.deadlineProject;
+    public DateTime? startProject { get => DataSource.Config.startProject; set => DataSource.Config.startProject = value; }
+    public DateTime? deadlineProject { get => DataSource.Config.deadlineProject; set => DataSource.Config.deadlineProject = value; }
     public static IDal Instance => lazyInstance.Value;
 
     private DalList() { }
