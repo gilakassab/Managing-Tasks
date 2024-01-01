@@ -5,7 +5,7 @@ namespace BlApi;
 /// </summary>
 public interface IMilestone
 {
-    public int Create();
+    public IEnumerable<DO.Dependency> Create();
     public BO.Milestone? Read(int id);
     public void Update(BO.Milestone item);
 }

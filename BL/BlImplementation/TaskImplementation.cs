@@ -27,7 +27,9 @@ internal class TaskImplementation : ITask
                 .ToList();
             dependenciesToCreate.ForEach(dependency => _dal.Dependency.Create(dependency));
 
-            return item.Id;
+            int newId = _dal.Task.Create(doTask);
+
+            return newId;
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -88,7 +90,7 @@ internal class TaskImplementation : ITask
     public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         Func<BO.Task, bool>? filter1 = filter != null ? filter! : item => true;
-        List<BO.Task> boTasks = null;
+        List<BO.Task>? boTasks = null;
 
         foreach (DO.Task? doTask in _dal.Task.ReadAll())
         {

@@ -122,5 +122,10 @@ internal class DependencyImplementation : IDependency
         }
 
         arrayOfDependency.Save(@"..\xml\dependencies.xml");
+
+        string configFile = "data-config";
+        XElement configElement = XMLTools.LoadListFromXMLElement(configFile);
+        configElement.Element("NextDependencyId")?.SetValue("0");
+        XMLTools.SaveListToXMLElement(configElement, configFile);
     }
 }

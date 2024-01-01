@@ -1,5 +1,7 @@
 ﻿using DalApi;
 using DO;
+using System.Xml.Linq;
+
 namespace Dal;
 
 internal class TaskImplementation : ITask
@@ -52,5 +54,10 @@ internal class TaskImplementation : ITask
         {
             File.Delete(@"..\xml\tasks.xml");
         }
+
+        string configFile = "data-config";
+        XElement configElement = XMLTools.LoadListFromXMLElement(configFile);
+        configElement.Element("NextTaskId")?.SetValue("0");
+        XMLTools.SaveListToXMLElement(configElement, configFile);
     }
 }

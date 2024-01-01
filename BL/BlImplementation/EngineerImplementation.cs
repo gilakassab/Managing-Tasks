@@ -22,7 +22,7 @@ internal class EngineerImplementation : IEngineer
 
         DO.Engineer doEngineer = new DO.Engineer
         (boEngineer.Id,
-        boEngineer.Name,
+        boEngineer.Name!,
         boEngineer.IsActive,
         boEngineer.Email,
         (DO.EngineerExperience)boEngineer.Level,
@@ -71,7 +71,7 @@ internal class EngineerImplementation : IEngineer
 
         DO.Engineer newDoEngineer = new DO.Engineer
            (boEngineer.Id,
-            boEngineer.Name,
+            boEngineer.Name!,
             boEngineer.IsActive,
             boEngineer.Email,
             (DO.EngineerExperience)boEngineer.Level,
@@ -91,7 +91,7 @@ internal class EngineerImplementation : IEngineer
     private BO.Engineer? CreateBOFromDO(DO.Engineer doEngineer)
     {
         var doTasks = _dal.Task.ReadAll(t => t.EngineerId == doEngineer.Id && Helper.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete) == BO.Status.OnTrack).FirstOrDefault();
-        TaskInEngineer taskInEngineer = null;
+        TaskInEngineer? taskInEngineer = null;
         if (doTasks != null)
         {
             taskInEngineer = new BO.TaskInEngineer
@@ -106,7 +106,7 @@ internal class EngineerImplementation : IEngineer
             Id = doEngineer.Id,
             Name = doEngineer.Name,
             IsActive = doEngineer.IsActive,
-            Email = doEngineer.Email,
+            Email = doEngineer.Email!,
             Level = (BO.EngineerExperience)doEngineer.Level,
             Cost = doEngineer.Cost ?? 0,
             Role = (BO.Roles)doEngineer.Role,

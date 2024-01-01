@@ -2,16 +2,64 @@
 using BO;
 using DO;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace BlImplementation;
 
 internal class MilestoneImplementation : IMilestone
 {
     private DalApi.IDal _dal = Factory.Get;
-    
-    public int Create()
+
+    public IEnumerable<DO.Dependency> Create()
     {
-        throw new NotImplementedException();
+        var groupedDependencies = _dal.Dependency.ReadAll()
+            .GroupBy(d => d.DependentTask)
+            .OrderBy(group => group.Key)
+            .Select(group => (group.Key, group.Select(d => d!.DependsOnTask).ToList()))
+            .ToList();
+
+        var uniqueLists = groupedDependencies
+            .Select(group => group.Item2.Distinct().ToList())
+            .ToList();
+
+        int milestoneAlias = 1;
+
+        List<DO.Dependency> dependencies = new List<DO.Dependency>();
+
+        foreach (var tasksList in uniqueLists)
+        {
+
+            DO.Task doTask = new DO.Task
+                (0,
+                $"a milestone with Id: {milestoneAlias}",
+                $"M{milestoneAlias}",
+                true,
+                DateTime.Now,
+                null, null, true, null, null, null, null, null, null, null);
+            try
+            {
+                int milestoneId = _dal.Task.Create(doTask);
+
+                foreach (var taskId in tasksList)
+                {
+                    dependencies.Add(new DO.Dependency
+                    {
+                        DependentTask = milestoneId,
+                        DependsOnTask = taskId
+                    });
+                }
+
+                milestoneAlias++;
+            }
+            catch (DO.DalAlreadyExistsException ex)
+            {
+                throw new BO.BlFailedToCreate($"failed to create Milestone with Alias = M{milestoneAlias}", ex);
+            }
+        }
+
+        _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
+        dependencies.ToList().ForEach(d => _dal.Dependency.Create(d));
+        return _dal.Dependency.ReadAll()!;
     }
 
     public Milestone? Read(int id)
@@ -46,7 +94,7 @@ internal class MilestoneImplementation : IMilestone
                 Complete = doTaskMilestone.Complete,
                 CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / (double)tasksInList.Count) * 100,
                 Remarks = doTaskMilestone.Remarks,
-                Dependencies = tasksInList
+                Dependencies = tasksInList!
             };
         }
         catch (Exception ex)
@@ -62,8 +110,8 @@ internal class MilestoneImplementation : IMilestone
 
         try
         {
-            DO.Task oldDoTask = _dal.Task.Read(t=>t.Id== item.Id);
-            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, (TimeSpan)(item.ForecastDate - item.Deadline), null, true, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
+            DO.Task oldDoTask = _dal.Task.Read(t=>t.Id== item.Id)!;
+            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, (TimeSpan)(item.ForecastDate - item.Deadline)!, null, true, oldDoTask.Start, item.ForecastDate, item.Deadline, item.Complete, oldDoTask.Deliverables, item.Remarks, null);
             _dal.Task.Update(doTask);
         }
         catch (DO.DalAlreadyExistsException ex)

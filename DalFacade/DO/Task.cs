@@ -26,7 +26,7 @@ public record Task
     bool Milestone,
     DateTime CreateAt,
     TimeSpan? RequiredEffortTime,
-    EngineerExperience Level = EngineerExperience.Expert,
+    EngineerExperience? Level = null,
     bool IsActive = false,
     DateTime? Start = null,
     //DateTime? ScheduledDate = null,

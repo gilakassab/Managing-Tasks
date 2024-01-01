@@ -1,5 +1,4 @@
-﻿
-using BO;
+﻿using BO;
 
 namespace BlImplementation;
 
@@ -24,7 +23,7 @@ internal static class Helper
             throw new BO.BlInvalidDataException($"Invalid {paramName}. Must be a positive number.");
     }
 
-    public static void ValidateEmail(string email?, string paramName)
+    public static void ValidateEmail(string? email, string paramName)
     {
         try
         {
