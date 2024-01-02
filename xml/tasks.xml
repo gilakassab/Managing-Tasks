@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>395</Id>
+    <Id>0</Id>
     <Description>Decide what is the next project</Description>
     <Alias>Alias1</Alias>
     <Milestone>false</Milestone>
@@ -16,7 +16,7 @@
     <EngineerId>248728764</EngineerId>
   </Task>
   <Task>
-    <Id>396</Id>
+    <Id>1</Id>
     <Description>Check the requirements</Description>
     <Alias>Alias2</Alias>
     <Milestone>false</Milestone>
@@ -31,7 +31,7 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>397</Id>
+    <Id>2</Id>
     <Description>Choose the most convenient way</Description>
     <Alias>Alias3</Alias>
     <Milestone>false</Milestone>
@@ -46,7 +46,7 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>398</Id>
+    <Id>3</Id>
     <Description>Decide on the location of the feature</Description>
     <Alias>Alias4</Alias>
     <Milestone>false</Milestone>
@@ -61,7 +61,7 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>399</Id>
+    <Id>4</Id>
     <Description>Decide on the shape of the feature</Description>
     <Alias>Alias5</Alias>
     <Milestone>false</Milestone>
@@ -76,7 +76,7 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>400</Id>
+    <Id>5</Id>
     <Description>Work on the design</Description>
     <Alias>Alias6</Alias>
     <Milestone>false</Milestone>
@@ -91,7 +91,7 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>401</Id>
+    <Id>6</Id>
     <Description>stage 0 in the programming</Description>
     <Alias>P0</Alias>
     <Milestone>false</Milestone>
@@ -106,7 +106,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>402</Id>
+    <Id>7</Id>
     <Description>stage 1 in the programming</Description>
     <Alias>P1</Alias>
     <Milestone>false</Milestone>
@@ -121,7 +121,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>403</Id>
+    <Id>8</Id>
     <Description>stage 2 in the programming</Description>
     <Alias>P2</Alias>
     <Milestone>false</Milestone>
@@ -136,7 +136,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>404</Id>
+    <Id>9</Id>
     <Description>stage 3 in the programming</Description>
     <Alias>P3</Alias>
     <Milestone>false</Milestone>
@@ -151,7 +151,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>405</Id>
+    <Id>10</Id>
     <Description>stage 4 in the programming</Description>
     <Alias>P4</Alias>
     <Milestone>false</Milestone>
@@ -166,7 +166,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>406</Id>
+    <Id>11</Id>
     <Description>stage 5 in the programming</Description>
     <Alias>P5</Alias>
     <Milestone>false</Milestone>
@@ -181,7 +181,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>407</Id>
+    <Id>12</Id>
     <Description>stage 6 in the programming</Description>
     <Alias>P6</Alias>
     <Milestone>false</Milestone>
@@ -196,7 +196,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>408</Id>
+    <Id>13</Id>
     <Description>stage 7 in the programming</Description>
     <Alias>P6</Alias>
     <Milestone>false</Milestone>
@@ -211,7 +211,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>409</Id>
+    <Id>14</Id>
     <Description>Run the code</Description>
     <Alias>Alias15</Alias>
     <Milestone>false</Milestone>
@@ -226,7 +226,7 @@
     <EngineerId>934759393</EngineerId>
   </Task>
   <Task>
-    <Id>410</Id>
+    <Id>15</Id>
     <Description>Find errors in the code </Description>
     <Alias>Alias16</Alias>
     <Milestone>false</Milestone>
@@ -241,7 +241,7 @@
     <EngineerId>934759393</EngineerId>
   </Task>
   <Task>
-    <Id>411</Id>
+    <Id>16</Id>
     <Description>Get permission from the programmer and pass the code on</Description>
     <Alias>Alias17</Alias>
     <Milestone>false</Milestone>
@@ -256,7 +256,7 @@
     <EngineerId>934759393</EngineerId>
   </Task>
   <Task>
-    <Id>412</Id>
+    <Id>17</Id>
     <Description>Bring confirmation to the software tester that the code is correct</Description>
     <Alias>Alias18</Alias>
     <Milestone>false</Milestone>
@@ -271,7 +271,7 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
-    <Id>413</Id>
+    <Id>18</Id>
     <Description>Send the feature to the advertising team</Description>
     <Alias>Alias19</Alias>
     <Milestone>false</Milestone>
@@ -286,7 +286,7 @@
     <EngineerId>934759393</EngineerId>
   </Task>
   <Task>
-    <Id>414</Id>
+    <Id>19</Id>
     <Description>Update all platforms</Description>
     <Alias>Alias20</Alias>
     <Milestone>false</Milestone>

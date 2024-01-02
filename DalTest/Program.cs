@@ -207,7 +207,7 @@ namespace DalTest
                     bool taskMilestoneUpdate, isActiveUpdate;
                     DateTime taskCreateAtUpdate, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate;
                     TimeSpan requiredEffortTimeUpdate;
-                    EngineerExperience taskLevelUpdate;
+                    EngineerExperience? taskLevelUpdate;
                     Console.WriteLine("Enter id for reading");
                     idTaskUpdate = int.Parse(Console.ReadLine());
                     DO.Task updatedTask = s_dal.Task.Read(t => t.Id == idTaskUpdate);

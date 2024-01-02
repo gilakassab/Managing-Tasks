@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace BO;
 
-internal static class Tools
+public static class Tools
 {
     public static string ToStringProperty<T>(this T obj)
     {
@@ -86,7 +86,7 @@ internal static class Tools
     {
         DalApi.IDal _dal = Factory.Get;
 
-        List<BO.TaskInList> tasksList = null;
+        List<BO.TaskInList> tasksList = new List<TaskInList>();
         _dal.Dependency.ReadAll(d => d.DependentTask == taskId)
                            .Select(d => _dal.Task.Read(d1 => d1.Id == d.DependsOnTask))
                            .ToList()
@@ -97,9 +97,8 @@ internal static class Tools
                                    Id = task.Id,
                                    Alias = task.Alias,
                                    Description = task.Description,
-                                   Status = Tools.CalculateStatus(task.Start, task.ForecastDate, task.Deadline, task.Complete)
+                                   Status = (BO.Status)Tools.CalculateStatus(task.Start, task.ForecastDate, task.Deadline, task.Complete)
                                });
-
                            });
         return tasksList;
     }

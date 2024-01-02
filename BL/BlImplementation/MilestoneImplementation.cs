@@ -165,7 +165,7 @@ internal class MilestoneImplementation : IMilestone
                 ForecastDate = doTaskMilestone.ForecastDate,
                 Deadline = doTaskMilestone.Deadline,
                 Complete = doTaskMilestone.Complete,
-                CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / (double)tasksInList.Count) * 100,
+                CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / tasksInList.Count * 0.1) * 100,
                 Remarks = doTaskMilestone.Remarks,
                 Dependencies = tasksInList!
             };
