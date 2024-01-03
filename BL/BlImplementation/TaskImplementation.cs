@@ -1,14 +1,14 @@
 ﻿using BlApi;
 using System.Collections.Generic;
-namespace BO;
+using BO;
 
-
+namespace BlImplementation;
 
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = Factory.Get;
 
-    public int Create(Task item)
+    public int Create(BO.Task item)
     {
         Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
@@ -41,7 +41,7 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public Task? Read(int id)
+    public BO.Task? Read(int id)
     {
         DO.Task? doTask = _dal.Task.Read(t => t.Id == id);
         if (doTask == null)
@@ -86,7 +86,7 @@ internal class TaskImplementation : ITask
         }
 
 
-        return new Task()
+        return new BO.Task()
         {
             Id = doTask.Id,
             Description = doTask.Description,
@@ -107,10 +107,10 @@ internal class TaskImplementation : ITask
         };
     }
 
-    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null)
+    public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
-        Func<Task, bool>? filter1 = filter != null ? filter! : item => true;
-        List<Task>? boTasks = new List<Task>();
+        Func<BO.Task, bool>? filter1 = filter != null ? filter! : item => true;
+        List<BO.Task>? boTasks = new List<BO.Task>();
 
         foreach (DO.Task? doTask in _dal.Task.ReadAll())
         {
@@ -153,7 +153,7 @@ internal class TaskImplementation : ITask
                 };
             }
 
-            boTasks!.Add(new Task()
+            boTasks!.Add(new BO.Task()
             {
                 Id = doTask!.Id,
                 Description = doTask.Description,
@@ -172,13 +172,11 @@ internal class TaskImplementation : ITask
                 Dependencies = tasksList,
                 Engineer = engineerInTask
             });
-
-            Console.WriteLine(doTask.Id);
         }
         return boTasks!.Where(filter1).ToList();
     }
 
-    public void Update(Task item)
+    public void Update(BO.Task item)
     {
         Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
@@ -187,7 +185,6 @@ internal class TaskImplementation : ITask
         {
             if (item.Milestone != null)
             {
-                _dal.Dependency.ReadAll(d => d.DependentTask == item.Id);
                 if (item.Dependencies != null)
                 {
                     foreach (TaskInList doDependency in item.Dependencies)
