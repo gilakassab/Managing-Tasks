@@ -80,5 +80,4 @@
     <DependentTask>19</DependentTask>
     <DependsOnTask>18</DependsOnTask>
   </Dependency>
-  
 </ArrayOfDependency>

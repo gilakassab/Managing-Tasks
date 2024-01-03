@@ -5,6 +5,20 @@ namespace BO;
 
 public static class Tools
 {
+    //public static string ToStringProperty<T>(this T obj)
+    //{
+    //    PropertyInfo[] properties = typeof(T).GetProperties();
+
+    //    string result = string.Join(", ", properties.Select(property =>
+    //    {
+    //        object? value = property.GetValue(obj);
+    //        string valueString = (value != null) ? value.ToString() : "null";
+    //        return $"{property.Name}: {valueString}";
+    //    }));
+
+    //    return result;
+    //}
+
     public static string ToStringProperty<T>(this T obj)
     {
         PropertyInfo[] properties = typeof(T).GetProperties();
@@ -12,7 +26,21 @@ public static class Tools
         string result = string.Join(", ", properties.Select(property =>
         {
             object? value = property.GetValue(obj);
-            string valueString = (value != null) ? value.ToString() : "null";
+            string valueString;
+
+            if (value == null)
+            {
+                valueString = "null";
+            }
+            else if (value is IEnumerable<object> enumerableValue)
+            {
+                valueString = string.Join(", ", enumerableValue.Select(item => item.ToString()));
+            }
+            else
+            {
+                valueString = value.ToString();
+            }
+
             return $"{property.Name}: {valueString}";
         }));
 
@@ -103,15 +131,15 @@ public static class Tools
         return tasksList;
     }
 
-    //public static void EnterDates()
-    //{
-    //    Console.WriteLine("Enter the project start date (yyyy-MM-ddTHH:mm:ss):");
-    //    string? startDateString = Console.ReadLine() ?? throw new BO.BlInvalidEnteredValue("The entered value is incorrect");
-    //    DateTime.TryParse(startDateString, out DateTime startDate);
-    //    DalApi.Factory.Get.startDateProject = startDate;
-    //    Console.WriteLine("Enter the project end date (yyyy-MM-ddTHH:mm:ss):");
-    //    string? endDateString = Console.ReadLine() ?? throw new BO.BlInvalidEnteredValue("The entered value is incorrect");
-    //    DateTime.TryParse(endDateString, out DateTime endDate);
-    //    DalApi.Factory.Get.endDateProject = endDate;
-    //}
+    public static void EnterStartDateProject(DateTime startDate)
+    {
+        DalApi.IDal _dal = Factory.Get;
+        _dal.startProject = startDate;
+    }
+
+    public static void EnterDeadLineDateProject(DateTime deadlineProject)
+    {
+        DalApi.IDal _dal = Factory.Get;
+        _dal.deadlineProject = deadlineProject;
+    }
 }
