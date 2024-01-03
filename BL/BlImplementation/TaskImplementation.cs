@@ -11,8 +11,8 @@ internal class TaskImplementation : ITask
 
     public int Create(BO.Task item)
     {
-        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
-        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
+        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         DO.Task doTask = new DO.Task
         (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
@@ -44,29 +44,38 @@ internal class TaskImplementation : ITask
 
     public BO.Task? Read(int id)
     {
+        //*******************
+        Console.WriteLine("****************");
+        BO.EngineerInTask aaa = new BO.EngineerInTask() { Id = 0, Name = "shira" };
+        Console.WriteLine(aaa.Id);
+        Console.WriteLine("**************");
+
         DO.Task? doTask = _dal.Task.Read(t => t.Id == id);
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
 
-        List<BO.TaskInList> tasksList=null;
+        List<BO.TaskInList> tasksList = null;
         BO.MilestoneInTask? milestone = null;
 
-        int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
-        DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
-        if (milestoneAsATask != null)
+        DO.Dependency checkMilestone = _dal.Dependency.Read(d => d.DependsOnTask == doTask.Id);
+        if (checkMilestone != null)
         {
-            string aliasOfMilestone = milestoneAsATask.Alias;
-            milestone = new BO.MilestoneInTask()
+            int milestoneId = checkMilestone.DependentTask;
+            DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
+            if (milestoneAsATask != null)
             {
-                Id = milestoneId,
-                Alias = aliasOfMilestone
-            };
+                string aliasOfMilestone = milestoneAsATask.Alias;
+                milestone = new BO.MilestoneInTask()
+                {
+                    Id = milestoneId,
+                    Alias = aliasOfMilestone
+                };
+            }
+            else
+            {
+                tasksList = Tools.CalculateList(id);
+            }
         }
-        else
-        {
-            tasksList = Helper.CalculateList(id)!;
-        }
-
         return new BO.Task()
         {
             Id = doTask.Id,
@@ -75,9 +84,8 @@ internal class TaskImplementation : ITask
             Milestone = milestone,
             CreateAt = doTask.CreateAt,
             RequiredEffortTime = doTask.RequiredEffortTime,
-            Level = (BO.EngineerExperience)doTask.Level!,
-            IsActive = doTask.IsActive,
-           
+            Level = (BO.EngineerExperience)doTask.Level,
+            IsActive = doTask.IsActive,          
             Start = doTask.Start,
             ForecastDate = doTask.ForecastDate,
             Deadline = doTask.Deadline,
@@ -98,20 +106,25 @@ internal class TaskImplementation : ITask
             List<BO.TaskInList>? tasksList = null;
             BO.MilestoneInTask? milestone = null;
 
-            int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
-            DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
-            if (milestoneAsATask != null)
+
+            var checkMilestone = _dal.Dependency.Read(d => d.DependentTask == doTask.Id);
+            if (checkMilestone != null)
             {
-                string aliasOfMilestone = milestoneAsATask.Alias;
-                milestone = new BO.MilestoneInTask()
+                int milestoneId = checkMilestone.Id;
+                DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
+                if (milestoneAsATask != null)
                 {
-                    Id = milestoneId,
-                    Alias = aliasOfMilestone
-                };
-            }
-            else
-            {
-                tasksList = Helper.CalculateList(doTask!.Id);
+                    string aliasOfMilestone = milestoneAsATask.Alias;
+                    milestone = new BO.MilestoneInTask()
+                    {
+                        Id = milestoneId,
+                        Alias = aliasOfMilestone
+                    };
+                }
+                else
+                {
+                    tasksList = Tools.CalculateList(doTask.Id);
+                }
             }
             boTasks!.Add(new BO.Task()
             {
@@ -137,12 +150,25 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task item)
     {
-        Helper.ValidatePositiveNumber(item.Id, nameof(item.Id));
-        Helper.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
+        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
+        Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         try
         {
-            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
+            if (item.Milestone != null)
+            {
+                _dal.Dependency.ReadAll(d => d.DependentTask == item.Id);
+                if (item.Dependencies != null)
+                {
+                    foreach (BO.TaskInList doDependency in item.Dependencies)
+                    {
+                        DO.Dependency doDepend = new DO.Dependency(0, item.Id, doDependency.Id);
+                        int idDependency = _dal.Dependency.Create(doDepend);
+                    }
+                }
+            }
+
+            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, item.IsActive, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
             _dal.Task.Update(doTask);
         }
         catch (DO.DalAlreadyExistsException ex)
