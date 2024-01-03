@@ -64,7 +64,7 @@ internal class TaskImplementation : ITask
         }
         else
         {
-            tasksList = Tools.CalculateList(id);
+            tasksList = Tools.CalculateList(id)!;
         }
 
         return new BO.Task()

@@ -20,7 +20,21 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        throw new DalDeletionImpossible($"Engineer is indelible entity");
+        if ((Read(t => t.Id == id)) != null)
+        {
+            if ((DataSource.Tasks.Find(t => t.EngineerId == id)) == null)
+            {
+                DataSource.Engineers.Remove(DataSource.Engineers.Find(t => t.Id == id));
+            }
+            else
+            {
+                throw new InvalidOperationException($"Cannot delete engineer with ID:{id} because he have task.");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException($"Engineer with ID:{id} does not exists.");
+        }
     }
 
     public Engineer? Read(Func<Engineer, bool> filter)
