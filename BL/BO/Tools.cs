@@ -62,7 +62,7 @@ public static class Tools
 
     public static void ValidatePositiveNumber(double? number, string paramName)
     {
-        if (number <= 0)
+        if (number < 0)
             throw new BO.BlInvalidDataException($"Invalid {paramName}. Must be a positive number.");
     }
 
