@@ -320,6 +320,7 @@ namespace BlTest
                                 Description = s_bl.Task.Read(taskInListId)!.Description,
                                 Alias = s_bl.Task.Read(taskInListId)!.Alias,
                                 Status = BO.Helper.CalculateStatus(taskStart, taskForecastDate, taskDeadline, taskComplete)
+                                נךנךליל
                             });
                             taskInListId = int.Parse(Console.ReadLine()!);
                         }
