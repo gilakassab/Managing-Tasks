@@ -388,11 +388,6 @@ namespace BlTest
                             taskRemarksUpdate,
                             inputEEUpdate;
                         bool isActiveUpdate;
-                        DateTime taskCreateAtUpdate,
-                                 taskStartUpdate,
-                                 taskForecastDateUpdate,
-                                 taskDeadlineUpdate,
-                                 taskCompleteUpdate;
                         TimeSpan? requiredEffortTimeUpdate;
                         EngineerExperience? taskLevelUpdate;
                         List<BO.TaskInList?> taskInListUpdate = new List<BO.TaskInList>();
@@ -404,11 +399,6 @@ namespace BlTest
                         taskDescriptionUpdate = Console.ReadLine()??updatedTask.Description;
                         taskAliasUpdate = Console.ReadLine()??updatedTask.Alias;
                         isActiveUpdate = updatedTask.IsActive;
-                        //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskCreateAtUpdate);
-                        //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskStartUpdate);
-                        //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskForecastDateUpdate);
-                        //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskDeadlineUpdate);
-                        //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskCompleteUpdate);
                         requiredEffortTimeUpdate = updatedTask.RequiredEffortTime;
                         taskDeliverablesUpdate = Console.ReadLine()??updatedTask.Deliverables;
                         taskRemarksUpdate = Console.ReadLine()??updatedTask.Remarks;
