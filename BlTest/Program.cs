@@ -388,12 +388,7 @@ namespace BlTest
                             taskRemarksUpdate,
                             inputEEUpdate;
                         bool isActiveUpdate;
-                        DateTime taskCreateAtUpdate,
-                                 taskStartUpdate,
-                                 taskForecastDateUpdate,
-                                 taskDeadlineUpdate,
-                                 taskCompleteUpdate;
-                        TimeSpan requiredEffortTimeUpdate;
+                        TimeSpan? requiredEffortTimeUpdate;
                         EngineerExperience? taskLevelUpdate;
                         List<BO.TaskInList?> taskInListUpdate;
                         Console.WriteLine("Enter id for reading");
@@ -401,18 +396,13 @@ namespace BlTest
                         BO.Task updatedTask = s_bl.Task.Read(idTaskUpdate)!;
                         Console.WriteLine(updatedTask.ToString());
                         Console.WriteLine("Enter details to update");//if null to put the same details
-                        taskDescriptionUpdate = Console.ReadLine()!;
-                        taskAliasUpdate = Console.ReadLine()!;
-                        isActiveUpdate = Console.ReadLine() == "false" ? false : true;
-                        DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskCreateAtUpdate);
-                        DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskStartUpdate);
-                        DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskForecastDateUpdate);
-                        DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskDeadlineUpdate);
-                        DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out taskCompleteUpdate);
-                        requiredEffortTimeUpdate = TimeSpan.Zero;
-                        taskDeliverablesUpdate = Console.ReadLine()!;
-                        taskRemarksUpdate = Console.ReadLine()!;
-                        inputEEUpdate = Console.ReadLine()!;
+                        taskDescriptionUpdate = Console.ReadLine()??updatedTask.Description;
+                        taskAliasUpdate = Console.ReadLine()??updatedTask.Alias;
+                        isActiveUpdate = updatedTask.IsActive;
+                        requiredEffortTimeUpdate = updatedTask.RequiredEffortTime;
+                        taskDeliverablesUpdate = Console.ReadLine()??updatedTask.Deliverables;
+                        taskRemarksUpdate = Console.ReadLine()??updatedTask.Remarks;
+                        inputEEUpdate = Console.ReadLine()??updatedTask.Level.ToString();
                         taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
                         //int.TryParse(Console.ReadLine() ?? updatedTask.Engineer.Id.ToString(), out taskEngineerIdUpdate);
                         int.TryParse(Console.ReadLine() ?? updatedTask.Milestone.Id.ToString(), out milestoneInTaskId);
