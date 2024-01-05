@@ -10,7 +10,7 @@ internal class TaskImplementation : ITask
 
     public int Create(BO.Task item)
     {
-        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
+
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         DO.Task doTask = new DO.Task

@@ -23,7 +23,7 @@ namespace BlTest
             do
             {
                 Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, ,UPDATE }");
-                int.TryParse(Console.ReadLine() ?? throw new Exception("Enter a number please"), out chooseSubMenu);
+                int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("Enter a number please"), out chooseSubMenu);
 
                 switch (chooseSubMenu)
                 {
@@ -40,7 +40,7 @@ namespace BlTest
                     case 2:
                         int id;
                         Console.WriteLine("Enter id for reading");
-                        int.TryParse(Console.ReadLine() ?? throw new Exception("Enter a number please"), out id);
+                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("Enter a number please"), out id);
                         try
                         {
                             if (s_bl.Milestone!.Read(id) is null)
@@ -61,7 +61,7 @@ namespace BlTest
                             milestoneAliasUpdate;
                         string? milestoneRemarksUpdate;
                         Console.WriteLine("Enter id for reading milestone");
-                        int.TryParse(Console.ReadLine() ?? throw new Exception("Enter a number please"), out idMilestoneUpdate);
+                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("Enter a number please"), out idMilestoneUpdate);
                         try
                         {
                             Milestone updatedMilestone = s_bl.Milestone.Read(idMilestoneUpdate)!;
@@ -109,7 +109,7 @@ namespace BlTest
             do
             {
                 Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, READALL ,UPDATE,DELETE }");
-                int.TryParse(Console.ReadLine() ?? throw new Exception("Enter a number please"), out chooseSubMenu);
+                int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("Enter a number please"), out chooseSubMenu);
 
                 switch (chooseSubMenu)
                 {
@@ -125,7 +125,7 @@ namespace BlTest
                         DO.Roles role;
                         bool isActive;
                         double costEngineer;
-                        int.TryParse(Console.ReadLine() ?? throw new Exception("enter a number please"), out idEngineer);
+                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idEngineer);
                         nameEngineer = (Console.ReadLine()!);
                         isActive = Console.ReadLine() == "false" ? false : true;
                         emailEngineer = Console.ReadLine()!;
@@ -275,8 +275,7 @@ namespace BlTest
                 {
                     case 1:
                         Console.WriteLine("Enter  description, alias,deriverables, remarks,milestone, dates and task's level");
-                        int taskId,
-                            taskEngineerId,
+                        int  days,
                             milestoneInTaskId,
                             engineerInTaskId,
                             taskInListId;
@@ -287,30 +286,31 @@ namespace BlTest
                                inputEE;
                         bool isActive;
                         TimeSpan requiredEffortTime;
-                        DateTime taskCreateAt;
-                        DateTime? taskStart,
-                                 taskForecastDate,
-                                 taskDeadline,
-                                 taskComplete;
                         EngineerExperience taskLevel;
-                        List<BO.TaskInList?> taskInList = null;
-                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskId);
+                        List<BO.TaskInList?> taskInList = new List<TaskInList?>();
+                        Console.WriteLine("Enter  description");
                         taskDescription = Console.ReadLine()!;
+                        Console.WriteLine("Enter  alias");
                         taskAlias = Console.ReadLine()!;
-                        isActive = Console.ReadLine() == "false" ? false : true;
+                        isActive = true;
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskCreateAt);
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskStart);
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskForecastDate);
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskDeadline);
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskComplete);
+                        Console.WriteLine("Enter  deliverables");
                         taskDeliverables = Console.ReadLine()!;
-                        requiredEffortTime = TimeSpan.Zero;
+                        Console.WriteLine("Enter  required effort time");
+                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out days);
+                        requiredEffortTime = TimeSpan.FromDays(days);
+                        Console.WriteLine("Enter remarks");
                         taskRemarks = Console.ReadLine()!;
+                        Console.WriteLine("Enter engineer id");
                         int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out engineerInTaskId);
+                        Console.WriteLine("Enter input for level");
                         inputEE = Console.ReadLine()!;
                         taskLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEE);
-                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskEngineerId);
-                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out milestoneInTaskId);
+                        Console.WriteLine("Enter task in list id");
                         int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskInListId);
                         while (taskInListId != -1)
                         {
@@ -325,11 +325,11 @@ namespace BlTest
                         }
                         BO.Task newTask = new BO.Task()
                         {
-                            Id = taskId,
+                            Id = 0,
                             Description = taskDescription,
                             Alias = taskAlias,
                             IsActive = isActive,
-                            CreateAt =  DateTime.Now,
+                            CreateAt = DateTime.Now,
                             Start = null,
                             ForecastDate = null,
                             Deadline = null,
@@ -344,11 +344,7 @@ namespace BlTest
                             },
                             Level = taskLevel,
                             Status = Tools.CalculateStatus(null, null, null, null),
-                            Milestone = new MilestoneInTask()
-                            {
-                                Id = milestoneInTaskId,
-                                Alias = s_bl.Milestone.Read(milestoneInTaskId)!.Alias
-                            },
+                            Milestone = null,
                             Dependencies = taskInList!
                         };
                         try { s_bl.Task.Create(newTask); }
@@ -385,8 +381,6 @@ namespace BlTest
                     case 4:
 
                         int idTaskUpdate,
-                             milestoneInTaskIdUpdate,
-                             engineerInTaskIdUpdate,
                              taskEngineerIdUpdate;
                         string? taskDescriptionUpdate,
                             taskAliasUpdate,
@@ -423,7 +417,7 @@ namespace BlTest
                         //int.TryParse(Console.ReadLine() ?? updatedTask.Engineer.Id.ToString(), out taskEngineerIdUpdate);
                         int.TryParse(Console.ReadLine() ?? updatedTask.Milestone.Id.ToString(), out milestoneInTaskId);
                         int.TryParse(Console.ReadLine() ?? null, out taskInListId);
-                        int.TryParse(Console.ReadLine() ?? updatedTask.Engineer.Id.ToString(), out engineerInTaskIdUpdate);
+                        int.TryParse(Console.ReadLine() ?? updatedTask.Engineer.Id.ToString(), out taskEngineerIdUpdate);
                         //int.TryParse(Console.ReadLine() ?? updatedTask., out milestoneInTaskIdUpdate);
                         while (taskInListId != -1)
                         {
@@ -455,8 +449,8 @@ namespace BlTest
                             Engineer = new EngineerInTask()
                             {
 
-                                Id = engineerInTaskIdUpdate,
-                                Name = s_bl.Engineer.Read(engineerInTaskIdUpdate)!.Name!
+                                Id = taskEngineerIdUpdate,
+                                Name = s_bl.Engineer.Read(taskEngineerIdUpdate)!.Name!
                             },
                             Level = taskLevelUpdate,
                             Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete),
@@ -495,8 +489,9 @@ namespace BlTest
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
             if (ans == "Y")
                 DalTest.Initialization.Do();
-
+            Console.WriteLine("TASK");
             TaskMenu();
+            Console.WriteLine("engineer");
             EngineerMenu();
             Console.WriteLine("Enter start date for the project");
             DateTime.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a date"), out start);
@@ -504,6 +499,7 @@ namespace BlTest
             DateTime.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a date"), out end);
             Tools.EnterStartDateProject(start);
             Tools.EnterDeadLineDateProject(end);
+            Console.WriteLine("Milestone");
             MilestoneMenu();
 
 
