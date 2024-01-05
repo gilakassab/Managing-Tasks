@@ -220,9 +220,53 @@ internal class MilestoneImplementation : IMilestone
     //            return dependsOnTask != null ? CalculateLatestFinishDate(dependsOnTask) : DateTime.MinValue;
     //        });
 
-    //        // ובחר את התאריך האחרון שהתלויות יסתיימו כדי לבצע את העבודה
-    //        earliestStartDate = latestDependencyFinishDate;
-    //    }
+        //var  allMilestones
+        //    .Reverse()
+        //    .Select(t => new DO.Task(
+        //    t.Id,
+        //    t.Description,
+        //    t.Alias,
+        //    t.Milestone,
+        //    t.CreateAt,
+        //    t.RequiredEffortTime,
+        //    t.Level,
+        //    t.IsActive,
+        //    t.Start,
+        //    t.ForecastDate,
+        //    CalculateLatestFinishDate(t),
+        //    t.Complete,
+        //    t.Deliverables,
+        //    t.Remarks,
+        //    t.EngineerId))
+        //    .ToList()foreach (t => { _dal.Task.Update(t)}) ;
+}
+    ??????????
+    public DateTime? CalculateLatestFinishDate(DO.Task task)
+    {
+        var dependencies = _dal.Dependency.ReadAll(d => d.DependsOnTask == task.Id);
+
+        // אם אין למשימה תלות, התאריך האחרון האפשרי הוא תאריך הסיום המתוכנן של הפרויקט
+        if (dependencies == null)
+            return _dal.deadlineProject;
+
+        // קביעת תאריך הסיום האחרון האפשרי
+        var dependenciesIds = dependencies.Select(d => d.DependentTask).ToList();
+        var dependentsTask = _dal.Task.ReadAll(t => dependenciesIds.Any(number => number == t.Id)).ToList();
+        DateTime? latestFinishDate = dependentsTask.Max(t => {
+            if (t.Milestone)
+                return t.Deadline;
+            return (DateTime)(t.Deadline) - (TimeSpan)(t.RequiredEffortTime);
+        });
+        return latestFinishDate;
+    }
+
+    public DateTime? CalculateEarliestStartDate(DO.Task task)
+    {
+        var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == task.Id);
+
+        // אם אין למשימה תלות, התאריך הראשון האפשרי הוא תאריך ההתחלה המתוכנן של הפרויקט
+        if (dependencies == null)
+            return _dal.startProject;
 
     //    return earliestStartDate;
     //}
