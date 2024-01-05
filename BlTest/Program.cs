@@ -500,10 +500,6 @@ namespace BlTest
             Console.WriteLine("Enter start and deadline for the project");
 
             MilestoneMenu();
-
-
-
-
         }
     }
 }

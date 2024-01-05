@@ -1,9 +1,10 @@
 ﻿using BlImplementation;
 using System.Reflection;
+using DalApi;
 
 namespace BO;
 
-internal static class Tools
+public static class Tools
 {
     public static string ToStringProperty<T>(this T obj)
     {
@@ -86,7 +87,7 @@ internal static class Tools
     {
         DalApi.IDal _dal = Factory.Get;
 
-        List<BO.TaskInList> tasksList = null;
+        List<BO.TaskInList> tasksList = new List<TaskInList>();
         _dal.Dependency.ReadAll(d => d.DependentTask == taskId)
                            .Select(d => _dal.Task.Read(d1 => d1.Id == d.DependsOnTask))
                            .ToList()
@@ -97,9 +98,8 @@ internal static class Tools
                                    Id = task.Id,
                                    Alias = task.Alias,
                                    Description = task.Description,
-                                   Status = Tools.CalculateStatus(task.Start, task.ForecastDate, task.Deadline, task.Complete)
+                                   Status = (BO.Status)Tools.CalculateStatus(task.Start, task.ForecastDate, task.Deadline, task.Complete)
                                });
-
                            });
         return tasksList;
     }
@@ -115,4 +115,16 @@ internal static class Tools
     //    DateTime.TryParse(endDateString, out DateTime endDate);
     //    DalApi.Factory.Get.endDateProject = endDate;
     //}
+
+    public static void EnterStartDateProject(DateTime startDate)
+    {
+        DalApi.IDal _dal = Factory.Get;
+        _dal.startProject = startDate;
+    }
+
+    public static void EnterDeadLineDateProject(DateTime startDate)
+    {
+        DalApi.IDal _dal = Factory.Get;
+        _dal.startProject = startDate;
+    }
 }

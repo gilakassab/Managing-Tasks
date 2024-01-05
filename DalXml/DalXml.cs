@@ -36,16 +36,33 @@ sealed internal class DalXml : IDal
     //public DateTime? deadlineProject { get => Config.deadlineProject; set => Config.deadlineProject = value; }
     public DateTime? deadlineProject
     {
-        get => ParseDateTime(XDocument.Load(@"..\xml\data-config.xml").Root!.Element("deadlineProject")!.Value);
+        get
+        {
+            var value = XDocument.Load(@"..\xml\data-config.xml").Root?.Element("deadlineProject")?.Value;
+            return string.IsNullOrEmpty(value) ? null : DateTime.Parse(value);
+        }
         set
         {
-            XDocument.Load(@"..\xml\data-config.xml").Root!.Element("deadlineProject")?.SetValue(value?.ToString("yyyy-MM-ddTHH:mm:ss")!);
-            XDocument.Load(@"..\xml\data-config.xml").Save(@"..\xml\data-config.xml");
+            var xDocument = XDocument.Load(@"..\xml\data-config.xml");
+            xDocument.Root?.Element("deadlineProject")?.SetValue(value?.ToString("yyyy-MM-ddTHH:mm:ss")!);
+            xDocument.Save(@"..\xml\data-config.xml");
         }
     }
 
-   
-
+    public DateTime? startProject
+    {
+        get
+        {
+            var value = XDocument.Load(@"..\xml\data-config.xml").Root?.Element("startProject")?.Value;
+            return string.IsNullOrEmpty(value) ? null : DateTime.Parse(value);
+        }
+        set
+        {
+            var xDocument = XDocument.Load(@"..\xml\data-config.xml");
+            xDocument.Root?.Element("startProject")?.SetValue(value?.ToString("yyyy-MM-ddTHH:mm:ss")!);
+            xDocument.Save(@"..\xml\data-config.xml");
+        }
+    }
 
     private DalXml() { }
 
