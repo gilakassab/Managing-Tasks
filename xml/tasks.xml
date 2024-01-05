@@ -300,21 +300,4 @@
     <Complete xsi:nil="true" />
     <EngineerId>113634844</EngineerId>
   </Task>
-  <Task>
-    <Id>20</Id>
-    <Description>DFHRYH</Description>
-    <Alias>RTHTHJ</Alias>
-    <Milestone>false</Milestone>
-    <CreateAt>2024-01-05T13:46:52.1771745+02:00</CreateAt>
-    <RequiredEffortTime>P4D</RequiredEffortTime>
-    <Level>Advanced</Level>
-    <IsActive>true</IsActive>
-    <Start xsi:nil="true" />
-    <ForecastDate xsi:nil="true" />
-    <Deadline xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables>SDGGTH</Deliverables>
-    <Remarks>DFHTYJ</Remarks>
-    <EngineerId>248728764</EngineerId>
-  </Task>
 </ArrayOfTask>
