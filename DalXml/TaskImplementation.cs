@@ -29,7 +29,7 @@ internal class TaskImplementation : ITask
 
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
-        return XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath).FirstOrDefault(filter!);
+        return XMLTools.LoadListFromXMLSerializer<DO.Task>(filePath).SingleOrDefault(filter!);
     }
 
     public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)

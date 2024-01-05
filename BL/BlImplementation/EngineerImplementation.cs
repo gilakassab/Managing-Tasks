@@ -90,7 +90,7 @@ internal class EngineerImplementation : IEngineer
 
     private BO.Engineer? CreateBOFromDO(DO.Engineer doEngineer)
     {
-        var doTasks = _dal.Task.ReadAll(t => t.EngineerId == doEngineer.Id && Tools.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete) == BO.Status.OnTrack).FirstOrDefault();
+        var doTasks = _dal.Task.ReadAll(t => t.EngineerId == doEngineer.Id /*&& Tools.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete) == BO.Status.OnTrack*/).FirstOrDefault();
         TaskInEngineer? taskInEngineer = null;
         if (doTasks != null)
         {

@@ -42,54 +42,49 @@ internal class DependencyImplementation : IDependency
         }
     }
 
-    public Dependency? Read(int id)
-    {
-        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
-
-        var query = from depElement in rootElement.Elements("Dependency")
-                    where (int)depElement.Element("Id") == id
-                    select new Dependency
-                    {
-                        Id = (int)depElement.Element("Id"),
-                        DependentTask = (int)depElement.Element("DependentTask"),
-                        DependsOnTask = (int)depElement.Element("DependsOnTask")
-                    };
-
-        return query.SingleOrDefault();
-    }
 
     public Dependency? Read(Func<Dependency, bool> filter)
     {
-        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
+        XElement? allDependencies = XDocument.Load(@"..\xml\dependencies.xml").Root;
 
-        var query = from depElement in rootElement.Elements("Dependency")
-                    let dependency = new Dependency
-                    {
-                        Id = (int)depElement.Element("Id"),
-                        DependentTask = (int)depElement.Element("DependentTask"),
-                        DependsOnTask = (int)depElement.Element("DependsOnTask")
-                    }
-                    where filter(dependency)
-                    select dependency;
+        XElement? dependencyElement = allDependencies?
+                    .Elements("Dependency")
+                    .FirstOrDefault(dependency => filter(new Dependency(
+                        (int)dependency.Element("Id")!,
+                        (int)dependency.Element("DependentTask")!,
+                        (int)dependency.Element("DependsOnTask")!
+                    )));
 
-        return query.SingleOrDefault();
+        if (dependencyElement != null)
+        {
+            Dependency? dependency = new Dependency(
+                (int)dependencyElement.Element("Id")!,
+                (int)dependencyElement.Element("DependentTask")!,
+                (int)dependencyElement.Element("DependsOnTask")!
+            );
+            return dependency;
+        }
+        return null;
     }
 
-    public IEnumerable<Dependency?> ReadAll(Func<DO.Dependency, bool>? filter = null)
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        XElement rootElement = XMLTools.LoadListFromXMLElement(filePath);
+        XElement? dependenciesElement = XMLTools.LoadListFromXMLElement("dependencies");
 
-        var query = from depElement in rootElement.Elements("Dependency")
-                    let dependency = new Dependency
-                    {
-                        Id = (int)depElement.Element("Id"),
-                        DependentTask = (int)depElement.Element("DependentTask"),
-                        DependsOnTask = (int)depElement.Element("DependsOnTask")
-                    }
-                    where filter == null || filter(dependency)
-                    select dependency;
+        IEnumerable<Dependency> dependencies = dependenciesElement
+            .Elements("Dependency")
+            .Select(e => new Dependency(
+                Id: (int)e.Element("Id")!,
+                DependentTask: (int)e.Element("DependentTask")!,
+                DependsOnTask: (int)e.Element("DependsOnTask")!
+            ));
 
-        return query.ToList();
+        if (filter != null)
+        {
+            dependencies = dependencies.Where(filter);
+        }
+
+        return dependencies;
     }
 
     public void Update(Dependency item)

@@ -20,6 +20,18 @@ internal class MilestoneImplementation : IMilestone
             .Select(group => group.Item2.Distinct().ToList())
             .ToList();
 
+        foreach (var dependencyGroup in groupedDependencies)
+        {
+            Console.WriteLine($"Dependent Task: {dependencyGroup.Key}");
+
+            foreach (var dependsOnTask in dependencyGroup.Item2)
+            {
+                Console.WriteLine($"  Depends on Task: {dependsOnTask}");
+            }
+
+            Console.WriteLine(); // קפיצת שורה להפרדת קבוצות
+        }
+
         int milestoneAlias = 1;
 
         List<DO.Dependency> dependencies = new List<DO.Dependency>();
@@ -130,6 +142,9 @@ internal class MilestoneImplementation : IMilestone
 
         _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
         dependencies.ToList().ForEach(d => _dal.Dependency.Create(d));
+
+        CalculateDatesInOrder();
+
         return _dal.Dependency.ReadAll()!;
     }
 
@@ -189,55 +204,6 @@ internal class MilestoneImplementation : IMilestone
         {
             throw new BO.BlAlreadyExistsException($"Milsetone with ID={item.Id} not exists", ex);
         }
-    }
-
-    //public void CalculateDatesInOrder()
-    //{
-    //    Queue<Task> queue = new Queue<Task>();
-
-    //    // הוספת המשימות שאין להן תלות (לדוג', אבן דרך START)
-    //    var tasksWithoutDependencies = _dal.Task.ReadAll().Where(t => t.Dependencies.Count == 0);
-    //    foreach (var task in tasksWithoutDependencies)
-    //    {
-    //        queue.Enqueue(task);
-    //    }
-
-    //    while (queue.Count > 0)
-    //    {
-    //        Task currentTask = queue.Dequeue();
-
-    //        // חישוב התאריכים למשימה
-    //        DateTime latestFinishDate = CalculateLatestFinishDate(currentTask);
-    //        DateTime earliestStartDate = CalculateEarliestStartDate(currentTask);
-
-    //        // עבור כל משימה שתלויה במשימה הנוכחית, הוספתה לתור
-    //        var dependentTasks = _dal.Task.ReadAll(t => t.Dependencies.Any(d => d.DependsOnTask == currentTask.Id));
-    //        foreach (var dependentTask in dependentTasks)
-    //        {
-    //            queue.Enqueue(dependentTask);
-    //        }
-    //    }
-    //}
-
-    public DateTime? CalculateLatestFinishDate(DO.Task task)
-    {
-        var dependency = _dal.Dependency.Read(d => d.DependsOnTask == task.Id);
-
-        // אם אין למשימה תלות, התאריך האחרון האפשרי הוא תאריך הסיום המתוכנן של הפרויקט
-        if (dependency == null)
-            return _dal.deadlineProject;
-
-        // קביעת תאריך הסיום האחרון האפשרי
-
-        if (task.Milestone)
-        {
-            var dependentsTask = _dal.Task.ReadAll(t => t.Id == dependency.DependentTask).ToList();
-            if (dependentsTask == null)
-                throw new BlDoesNotExistException($"Depndency with DependentTask={dependency.DependentTask} not exists");
-            DateTime latestFinishDate = dependentsTask.Max(t => (DateTime)(t.Deadline) - (TimeSpan)(t.RequiredEffortTime));
-            return latestFinishDate;
-        }
-        return null;
     }
 //what??
     //public DateTime CalculateEarliestStartDate(DO.Task task)
