@@ -10,7 +10,6 @@ internal class TaskImplementation : ITask
 
     public int Create(BO.Task item)
     {
-        Tools.ValidatePositiveNumber(item.Id, nameof(item.Id));
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         DO.Task doTask = new DO.Task
@@ -185,6 +184,10 @@ internal class TaskImplementation : ITask
         {
             if (item.Milestone != null)
             {
+                foreach (var item1 in _dal.Dependency.ReadAll(d => d.DependentTask == item.Id))
+                {
+                    _dal.Dependency.Delete(item1.Id);
+                }
                 if (item.Dependencies != null)
                 {
                     foreach (TaskInList doDependency in item.Dependencies)
