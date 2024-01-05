@@ -44,29 +44,38 @@ internal class TaskImplementation : ITask
 
     public BO.Task? Read(int id)
     {
+        //*******************
+        Console.WriteLine("****************");
+        BO.EngineerInTask aaa = new BO.EngineerInTask() { Id = 0, Name = "shira" };
+        Console.WriteLine(aaa.Id);
+        Console.WriteLine("**************");
+
         DO.Task? doTask = _dal.Task.Read(t => t.Id == id);
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
 
-        List<BO.TaskInList> tasksList=null;
+        List<BO.TaskInList> tasksList = null;
         BO.MilestoneInTask? milestone = null;
 
-        int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
-        DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
-        if (milestoneAsATask != null)
+        DO.Dependency checkMilestone = _dal.Dependency.Read(d => d.DependsOnTask == doTask.Id);
+        if (checkMilestone != null)
         {
-            string aliasOfMilestone = milestoneAsATask.Alias;
-            milestone = new BO.MilestoneInTask()
+            int milestoneId = checkMilestone.DependentTask;
+            DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
+            if (milestoneAsATask != null)
             {
-                Id = milestoneId,
-                Alias = aliasOfMilestone
-            };
+                string aliasOfMilestone = milestoneAsATask.Alias;
+                milestone = new BO.MilestoneInTask()
+                {
+                    Id = milestoneId,
+                    Alias = aliasOfMilestone
+                };
+            }
+            else
+            {
+                tasksList = Tools.CalculateList(id);
+            }
         }
-        else
-        {
-            tasksList = Tools.CalculateList(id)!;
-        }
-
         return new BO.Task()
         {
             Id = doTask.Id,
@@ -97,20 +106,25 @@ internal class TaskImplementation : ITask
             List<BO.TaskInList>? tasksList = null;
             BO.MilestoneInTask? milestone = null;
 
-            int milestoneId = _dal.Dependency.Read(d => d.DependentTask == doTask.Id)!.Id;
-            DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
-            if (milestoneAsATask != null)
+
+            var checkMilestone = _dal.Dependency.Read(d => d.DependentTask == doTask.Id);
+            if (checkMilestone != null)
             {
-                string aliasOfMilestone = milestoneAsATask.Alias;
-                milestone = new BO.MilestoneInTask()
+                int milestoneId = checkMilestone.Id;
+                DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
+                if (milestoneAsATask != null)
                 {
-                    Id = milestoneId,
-                    Alias = aliasOfMilestone
-                };
-            }
-            else
-            {
-                tasksList = Tools.CalculateList(doTask.Id);
+                    string aliasOfMilestone = milestoneAsATask.Alias;
+                    milestone = new BO.MilestoneInTask()
+                    {
+                        Id = milestoneId,
+                        Alias = aliasOfMilestone
+                    };
+                }
+                else
+                {
+                    tasksList = Tools.CalculateList(doTask.Id);
+                }
             }
             boTasks!.Add(new BO.Task()
             {
