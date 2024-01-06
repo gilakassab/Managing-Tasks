@@ -80,19 +80,4 @@
     <DependentTask>19</DependentTask>
     <DependsOnTask>18</DependsOnTask>
   </Dependency>
-  <Dependency>
-    <Id>16</Id>
-    <DependentTask>0</DependentTask>
-    <DependsOnTask>4</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>17</Id>
-    <DependentTask>0</DependentTask>
-    <DependsOnTask>4</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>18</Id>
-    <DependentTask>0</DependentTask>
-    <DependsOnTask>3</DependsOnTask>
-  </Dependency>
 </ArrayOfDependency>
