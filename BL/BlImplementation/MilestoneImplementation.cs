@@ -214,7 +214,7 @@ internal class MilestoneImplementation : IMilestone
         foreach (var milstone in allMilestones)
         {
             _dal.Task.Update(new DO.Task(
-                milstone.Id,
+            milstone.Id,
             milstone.Description,
             milstone.Alias,
             true,
@@ -238,7 +238,7 @@ internal class MilestoneImplementation : IMilestone
                 {
                     _dal.Task.Create(
                         new DO.Task(
-                task.Id,
+                task!.Id,
                 task.Description,
                 task.Alias,
                 task.Milestone,
@@ -262,7 +262,7 @@ internal class MilestoneImplementation : IMilestone
         foreach (var milestone in allMilestones)
         {
             _dal.Task.Update(new DO.Task(
-                milestone.Id,
+                milestone!.Id,
             milestone.Description,
             milestone.Alias,
             true,

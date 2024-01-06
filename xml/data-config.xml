@@ -4,4 +4,8 @@
   <NextTaskId>20</NextTaskId>
   <startProject>2024-01-01T00:00:00</startProject>
   <deadlineProject>2024-06-01T00:00:00</deadlineProject>
+  <NextDependencyId>66</NextDependencyId>
+  <NextTaskId>36</NextTaskId>
+  <startProject>0001-01-01T00:00:00</startProject>
+  <deadlineProject>0001-01-01T00:00:00</deadlineProject>
 </config>
