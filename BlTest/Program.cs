@@ -399,16 +399,16 @@ namespace BlTest
                         Console.WriteLine("Enter description to update");//if null to put the same details
                         taskDescriptionUpdate = Console.ReadLine() ?? updatedTask.Description;
                         Console.WriteLine("Enter alias to update");
-                        taskAliasUpdate = Console.ReadLine()??updatedTask.Alias;
+                        taskAliasUpdate = Console.ReadLine() ?? updatedTask.Alias;
                         //Console.WriteLine("Enter required effort time to update");
                         //int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out daysUpdate);
                         //requiredEffortTimeUpdate = TimeSpan.FromDays(daysUpdate)?? updatedTask.RequiredEffortTime;
                         Console.WriteLine("Enter deliverables to update");
-                        taskDeliverablesUpdate = Console.ReadLine()??updatedTask.Deliverables;
+                        taskDeliverablesUpdate = Console.ReadLine() ?? updatedTask.Deliverables;
                         Console.WriteLine("Enter remarks to update");
-                        taskRemarksUpdate = Console.ReadLine()??updatedTask.Remarks;
+                        taskRemarksUpdate = Console.ReadLine() ?? updatedTask.Remarks;
                         Console.WriteLine("Enter input 1-5 to update the level");
-                        inputEEUpdate = Console.ReadLine()??updatedTask.Level.ToString();
+                        inputEEUpdate = Console.ReadLine() ?? updatedTask.Level.ToString();
                         taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
                         //int.TryParse(Console.ReadLine() ?? null, out taskInListId);
                         int.TryParse(Console.ReadLine() ?? updatedTask.Engineer!.Id.ToString(), out taskEngineerIdUpdate);
@@ -449,7 +449,7 @@ namespace BlTest
                             Level = taskLevelUpdate,
                             Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete),
                             Milestone = updatedTask.Milestone,
-                            Dependencies =updatedTask.Dependencies,
+                            Dependencies = updatedTask.Dependencies,
                         };
                         try { s_bl.Task.Update(newTaskUpdate); }
                         catch (Exception ex) { throw new BlFailedToUpdate($"failed to update id:{idTaskUpdate} in task", ex); }

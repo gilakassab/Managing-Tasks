@@ -18,20 +18,9 @@ internal class MilestoneImplementation : IMilestone
             .ToList();
 
         var uniqueLists = groupedDependencies
-            .Select(group => group.Item2.Distinct().ToList())
-            .ToList();
+            .Select(group => group.Item2.ToList())
+            .ToList().Distinct();
 
-        //foreach (var dependencyGroup in groupedDependencies)
-        //{
-        //    Console.WriteLine($"Dependent Task: {dependencyGroup.Key}");
-
-        //    foreach (var dependsOnTask in dependencyGroup.Item2)
-        //    {
-        //        Console.WriteLine($"  Depends on Task: {dependsOnTask}");
-        //    }
-
-        //    Console.WriteLine(); // קפיצת שורה להפרדת קבוצות
-        //}
 
         int milestoneAlias = 1;
 
@@ -65,14 +54,11 @@ internal class MilestoneImplementation : IMilestone
                     {
                         if (dependencyGroup.Item2.SequenceEqual(tasksList))
                         {
-                            foreach (var dependentOnTaskId in dependencyGroup.Item2)
+                            dependencies.Add(new DO.Dependency
                             {
-                                dependencies.Add(new DO.Dependency
-                                {
-                                    DependentTask = dependentOnTaskId,
-                                    DependsOnTask = milestoneId
-                                });
-                            }
+                                DependentTask = dependencyGroup.Item1,
+                                DependsOnTask = milestoneId
+                            });
                         }
                     }
 
@@ -113,6 +99,8 @@ internal class MilestoneImplementation : IMilestone
                DateTime.Now,
                null, null, true, null, null, null, null, null, null, null);
 
+        _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
+
         try
         {
             int startMilestoneId = _dal.Task.Create(startMilestone);
@@ -141,10 +129,13 @@ internal class MilestoneImplementation : IMilestone
             throw new BO.BlFailedToCreate("Failed to create END or START milestone", ex);
         }
 
-        _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
-        dependencies.ToList().ForEach(d => _dal.Dependency.Create(d));
+        foreach(var dependency in dependencies.ToList())
+        {
+            if (dependency != null)
+                _dal.Dependency.Create(dependency);
+        }
 
-        //CalculateDatesInOrder();
+        CalculateDatesInOrder();
 
         return _dal.Dependency.ReadAll()!;
     }
@@ -209,7 +200,7 @@ internal class MilestoneImplementation : IMilestone
 
     private void CalculateDatesInOrder()
     {
-        var allMilestones = _dal.Task.ReadAll(t => t.Milestone);
+        var allMilestones = _dal.Task.ReadAll(t => t.Milestone).OrderBy(milestone => milestone.Alias).Reverse().ToList();
 
         foreach (var milstone in allMilestones)
         {
@@ -257,7 +248,8 @@ internal class MilestoneImplementation : IMilestone
             }
         }
 
-        var reverseMilestone = allMilestones.Reverse().ToList();
+        allMilestones.Reverse();
+        var reverseMilestone = allMilestones.ToList();
 
         foreach (var milestone in allMilestones)
         {
