@@ -1,14 +1,16 @@
 ﻿namespace DO;
 
 /// <summary>
-/// Tasks
+/// 
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Description"></param>
 /// <param name="Alias"></param>
 /// <param name="Milestone"></param>
-/// <param name="requiredEffortTime"></param>
 /// <param name="CreateAt"></param>
+/// <param name="RequiredEffortTime"></param>
+/// <param name="Level"></param>
+/// <param name="IsActive"></param>
 /// <param name="Start"></param>
 /// <param name="ForecastDate"></param>
 /// <param name="Deadline"></param>
@@ -16,8 +18,6 @@
 /// <param name="Deliverables"></param>
 /// <param name="Remarks"></param>
 /// <param name="EngineerId"></param>
-/// <param name="Level"></param>
-/// <param name="isActive"></param>
 public record Task
     (
     int Id,
@@ -25,7 +25,7 @@ public record Task
     string Alias,
     bool Milestone,
     DateTime CreateAt,
-    TimeSpan? RequiredEffortTime,
+    TimeSpan? RequiredEffortTime=null,
     EngineerExperience? Level = null,
     bool IsActive = false,
     DateTime? Start = null,

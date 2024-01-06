@@ -1,5 +1,6 @@
 ﻿using BlImplementation;
 using System.Reflection;
+using DalApi;
 
 namespace BO;
 

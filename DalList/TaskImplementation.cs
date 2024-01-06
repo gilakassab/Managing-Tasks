@@ -18,7 +18,21 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        throw new DalDeletionImpossible($"Task is indelible entity");
+        if ((Read(t => t.Id == id)) != null)
+        {
+            if ((DataSource.Dependencies.Find(t => t.DependentTask == id)) == null)
+            {
+                DataSource.Tasks.Remove(DataSource.Tasks.Find(t => t.Id == id));
+            }
+            else
+            {
+                throw new InvalidOperationException($"Cannot delete task with ID:{id} because it have dependency.");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException($"Task with ID:{id} does not exists.");
+        }
     }
 
     public Task? Read(Func<Task, bool> filter)

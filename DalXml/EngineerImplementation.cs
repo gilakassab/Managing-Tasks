@@ -25,7 +25,11 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        throw new DalDeletionImpossible($"Engineer is indelible entity");
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        if (Read(e => e.Id == id) is null)
+            throw new DalDoesNotExistException($"An object of type engineer with ID {id} doesnt exists");
+        engineersList.RemoveAll(t => t.Id == id);
+        XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
     }
 
     public Engineer? Read(Func<Engineer, bool> filter)

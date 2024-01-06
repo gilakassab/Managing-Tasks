@@ -31,6 +31,9 @@ namespace BlTest
                         try
                         {
                             s_bl.Milestone.Create();
+                            s_bl.Task!.ReadAll(t => t.Milestone != null)
+                                      .ToList()
+                                      .ForEach(task => Console.WriteLine(task.ToString()));
                         }
                         catch (Exception ex)
                         {
@@ -274,7 +277,7 @@ namespace BlTest
                 switch (chooseSubMenu)
                 {
                     case 1:
-                        int  days,
+                        int days,
                             milestoneInTaskId,
                             engineerInTaskId,
                             taskInListId;
@@ -394,7 +397,7 @@ namespace BlTest
                         BO.Task updatedTask = s_bl.Task.Read(idTaskUpdate)!;
                         Console.WriteLine(updatedTask.ToString());
                         Console.WriteLine("Enter description to update");//if null to put the same details
-                        taskDescriptionUpdate = Console.ReadLine()??updatedTask.Description;
+                        taskDescriptionUpdate = Console.ReadLine() ?? updatedTask.Description;
                         Console.WriteLine("Enter alias to update");
                         taskAliasUpdate = Console.ReadLine()??updatedTask.Alias;
                         //Console.WriteLine("Enter required effort time to update");
@@ -495,5 +498,3 @@ namespace BlTest
         }
     }
 }
-
-

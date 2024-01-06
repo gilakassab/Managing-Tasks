@@ -20,7 +20,11 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        throw new DalDeletionImpossible($"Task is indelible entity");
+        List<DO.Task> tasksList = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
+        if (Read(t => t.Id == id) is null)
+            throw new DalDoesNotExistException($"An object of type task with ID {id} doesnt exists");
+        tasksList.RemoveAll(t => t.Id == id);
+        XMLTools.SaveListToXMLSerializer<DO.Task>(tasksList, "tasks");
     }
 
     public DO.Task? Read(Func<DO.Task, bool> filter)
