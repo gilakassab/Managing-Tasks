@@ -21,17 +21,17 @@ internal class MilestoneImplementation : IMilestone
             .Select(group => group.Item2.Distinct().ToList())
             .ToList();
 
-        foreach (var dependencyGroup in groupedDependencies)
-        {
-            Console.WriteLine($"Dependent Task: {dependencyGroup.Key}");
+        //foreach (var dependencyGroup in groupedDependencies)
+        //{
+        //    Console.WriteLine($"Dependent Task: {dependencyGroup.Key}");
 
-            foreach (var dependsOnTask in dependencyGroup.Item2)
-            {
-                Console.WriteLine($"  Depends on Task: {dependsOnTask}");
-            }
+        //    foreach (var dependsOnTask in dependencyGroup.Item2)
+        //    {
+        //        Console.WriteLine($"  Depends on Task: {dependsOnTask}");
+        //    }
 
-            Console.WriteLine(); // קפיצת שורה להפרדת קבוצות
-        }
+        //    Console.WriteLine(); // קפיצת שורה להפרדת קבוצות
+        //}
 
         int milestoneAlias = 1;
 
@@ -144,7 +144,7 @@ internal class MilestoneImplementation : IMilestone
         _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
         dependencies.ToList().ForEach(d => _dal.Dependency.Create(d));
 
-        CalculateDatesInOrder();
+        //CalculateDatesInOrder();
 
         return _dal.Dependency.ReadAll()!;
     }
