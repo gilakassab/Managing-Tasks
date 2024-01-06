@@ -300,6 +300,8 @@
     <Complete xsi:nil="true" />
     <EngineerId>113634844</EngineerId>
   </Task>
+<<<<<<< HEAD
+=======
   <Task>
     <Id>20</Id>
     <Description>a milestone with Id: 1</Description>
@@ -855,4 +857,5 @@
     <Complete xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
+>>>>>>> c3a99fee16c9b16133faf1621b444aec8ab89ab6
 </ArrayOfTask>

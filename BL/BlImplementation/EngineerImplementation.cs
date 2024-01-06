@@ -17,7 +17,7 @@ internal class EngineerImplementation : IEngineer
     {
         Tools.ValidatePositiveId(boEngineer.Id, nameof(boEngineer.Id));
         Tools.ValidateNonEmptyString(boEngineer.Name, nameof(boEngineer.Name));
-        Tools.ValidateEmail(boEngineer.Name, nameof(boEngineer.Name));
+        Tools.ValidateEmail(boEngineer.Email, nameof(boEngineer.Email));
         Tools.ValidatePositiveNumber(boEngineer.Cost, nameof(boEngineer.Cost));
 
         DO.Engineer doEngineer = new DO.Engineer
