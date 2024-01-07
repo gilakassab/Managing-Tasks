@@ -196,9 +196,9 @@ namespace BlTest
                     case 4:
                         int idEngineerUpdate,
                             idTaskUpdate;
-                        string? nameEngineerUpdate;
-                        string emailEngineerUpdate,
-                            inputUpdateEE,
+                        string? nameEngineerUpdate,
+                            emailEngineerUpdate;
+                        string inputUpdateEE,
                             inputUpdateR;
                         EngineerExperience levelEngineerUpdate;
                         double costEngineerUpdate;
@@ -209,15 +209,21 @@ namespace BlTest
                         {
                             Engineer updatedEngineer = s_bl.Engineer.Read(idEngineerUpdate)!;
                             Console.WriteLine(updatedEngineer.ToString());
-                            Console.WriteLine("Enter name, isactive,level,cost,role and id of task to update");//if null to put the same details
+                            Console.WriteLine("name");//if null to put the same details
                             nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Name;
+                            Console.WriteLine("is active");
                             isActiveUpdate = Console.ReadLine() == "false" ? false : true;
+                            Console.WriteLine("email");
                             emailEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Email;
+                            Console.WriteLine("1-5 to level");
                             inputUpdateEE = Console.ReadLine()!;
+                            Console.WriteLine("1-3 to role");
                             inputUpdateR = Console.ReadLine()!;
                             levelEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdateEE) ? updatedEngineer.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdateEE);
+                            Console.WriteLine("cost");
                             double.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out costEngineerUpdate);
                             role = (DO.Roles)Enum.Parse(typeof(DO.Roles), inputUpdateR);
+                            Console.WriteLine("id task");
                             int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTaskUpdate);
                             BO.Engineer newEngUpdate = new BO.Engineer()
                             {
@@ -411,6 +417,7 @@ namespace BlTest
                         inputEEUpdate = Console.ReadLine() ?? updatedTask.Level.ToString();
                         taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
                         //int.TryParse(Console.ReadLine() ?? null, out taskInListId);
+                        Console.WriteLine("Enter ID of engineer");
                         int.TryParse(Console.ReadLine() ?? updatedTask.Engineer!.Id.ToString(), out taskEngineerIdUpdate);
                         //int.TryParse(Console.ReadLine() ?? updatedTask., out milestoneInTaskIdUpdate);
                         //while (taskInListId != -1)
