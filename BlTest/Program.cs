@@ -483,12 +483,12 @@ namespace BlTest
             TaskMenu();
             Console.WriteLine("engineer");
             EngineerMenu();
-            Console.WriteLine("Enter start date for the project");
-            DateTime.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a date"), out start);
-            Console.WriteLine("Enter end date for the project");
-            DateTime.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a date"), out end);
-            Tools.EnterStartDateProject(start);
-            Tools.EnterDeadLineDateProject(end);
+            //Console.WriteLine("Enter start date for the project");
+            //DateTime.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a date"), out start);
+            //Console.WriteLine("Enter end date for the project");
+            //DateTime.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a date"), out end);
+            //Tools.EnterStartDateProject(start);
+            //Tools.EnterDeadLineDateProject(end);
             Console.WriteLine("Milestone");
             MilestoneMenu();
 

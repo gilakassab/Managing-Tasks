@@ -193,7 +193,7 @@ internal class TaskImplementation : ITask
 
         try
         {
-            if (item.Milestone != null)
+            if (item.Milestone == null)
             {
                 foreach (var item1 in _dal.Dependency.ReadAll(d => d.DependentTask == item.Id))
                 {
