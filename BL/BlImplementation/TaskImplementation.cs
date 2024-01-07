@@ -115,7 +115,8 @@ internal class TaskImplementation : ITask
             Deliverables = doTask.Deliverables,
             Remarks = doTask.Remarks,
             Dependencies = tasksList!,
-            Engineer = engineerInTask
+            Engineer = engineerInTask,
+            Status = Tools.CalculateStatus(doTask.Start, doTask.ForecastDate, doTask.Deadline, doTask.Complete),
         };
     }
 
@@ -188,7 +189,8 @@ internal class TaskImplementation : ITask
                 Deliverables = doTask.Deliverables,
                 Remarks = doTask.Remarks,
                 Dependencies = tasksList,
-                Engineer = engineerInTask
+                Engineer = engineerInTask,
+                Status = Tools.CalculateStatus(doTask.Start, doTask.ForecastDate, doTask.Deadline, doTask.Complete),
             });
         }
         return boTasks.Where(filter1).ToList();

@@ -1,13 +1,4 @@
 ﻿using BO;
-using DalApi;
-using DalTest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlTest
 {
@@ -22,7 +13,7 @@ namespace BlTest
             int chooseSubMenu;
             do
             {
-                Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, ,UPDATE }");//milestone haas 4 options to choose
+                Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, ,UPDATE }");//milestone has 4 options to choose
                 int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("Enter a number please"), out chooseSubMenu);//using tryparse function
 
                 switch (chooseSubMenu)
@@ -193,7 +184,7 @@ namespace BlTest
                     case 4://update engineer
                         int idEngineerUpdate,
                             idTaskUpdate;
-                        string? nameEngineerUpdate,
+                        string nameEngineerUpdate,
                             emailEngineerUpdate;
                         string inputUpdateEE,
                             inputUpdateR;
@@ -206,8 +197,8 @@ namespace BlTest
                         {
                             Engineer updatedEngineer = s_bl.Engineer.Read(idEngineerUpdate)!;
                             Console.WriteLine(updatedEngineer.ToString());
-                            Console.WriteLine("Enter name, isactive, email, level, cost, role and id of task to update");//if null to put the same details
-                            nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Name;
+                            Console.WriteLine("Enter name, isactive, email, level, cost and role to update");//if null to put the same details
+                            nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Name!;
                             Console.WriteLine("is active");
                             isActiveUpdate = Console.ReadLine() == "false" ? false : true;
                             Console.WriteLine("email");
@@ -220,8 +211,6 @@ namespace BlTest
                             Console.WriteLine("cost");
                             double.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out costEngineerUpdate);
                             role = (DO.Roles)Enum.Parse(typeof(DO.Roles), inputUpdateR);
-                            Console.WriteLine("id task");
-                            int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTaskUpdate);
                             BO.Engineer newEngUpdate = new BO.Engineer()
                             {
                                 Id = idEngineerUpdate,
@@ -231,11 +220,7 @@ namespace BlTest
                                 Level = (BO.EngineerExperience)levelEngineerUpdate,
                                 Cost = costEngineerUpdate,
                                 Role = (BO.Roles)role,
-                                Task = new BO.TaskInEngineer()
-                                {
-                                    Id = idTaskUpdate,
-                                    Alias = s_bl.Task.Read(idTaskUpdate)!.Alias
-                                }
+                                Task = updatedEngineer.Task
                             };
                             try
                             {
@@ -279,7 +264,7 @@ namespace BlTest
                 int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out chooseSubMenu);
                 switch (chooseSubMenu)
                 {
-                    case 1://create tasl
+                    case 1://create task
                         int days,
                             milestoneInTaskId,
                             engineerInTaskId,
