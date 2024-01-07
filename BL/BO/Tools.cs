@@ -82,33 +82,22 @@ public static class Tools
 
     public static Status CalculateStatus(DateTime? start, DateTime? forecastDate, DateTime? deadline, DateTime? complete)
     {
-        if (start == null && deadline == null)
+        if (start != null && complete == null) // אם המשימה באמצע להעשות 
+            return Status.OnTrack; 
+        
+        if (complete != null) // אם המשימה הושלמה 
+            return Status.Completed;
+
+        if (complete == null && DateTime.Now > forecastDate) // אם המשימה עוד לא נגמרה וכבר עבר התאריך המתכונן לסיום
+            return Status.InJeopardy;
+        
+        if (forecastDate == null && deadline == null) // אם המשימה עוד לא  בלוז
             return Status.Unscheduled;
 
-        if (start != null && deadline != null && complete == null)
+        if (forecastDate != null && deadline != null) // אם המשימה כבר בלוז
             return Status.Scheduled;
 
-        if (start != null && complete != null && complete <= forecastDate)
-            return Status.OnTrack;
-
-        if (start != null && complete != null && complete > forecastDate)
-            return Status.InJeopardy;
-
         return Status.Unscheduled;
-
-        //if (startDate == null && baselineStartDate == null)
-        //    return Status.Unscheduled;
-
-        //if (startDate != null && baselineStartDate != null && scheduledStartDate != null)
-        //    return Status.Scheduled;
-
-        //if (startDate != null && completeDate != null && completeDate <= forecastDate)
-        //    return Status.OnTrack;
-
-        //if (startDate != null && completeDate != null && deadlineDate != null && completeDate <= forecastDate)
-        //    return Status.InJeopardy;
-
-        //return Status.Unscheduled;
     }
 
     public static List<BO.TaskInList>? CalculateList(int taskId)
