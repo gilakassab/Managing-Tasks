@@ -29,20 +29,6 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>2</Id>
-    <Description>Choose the most convenient way</Description>
-    <Alias>Alias3</Alias>
-    <Milestone>false</Milestone>
-    <CreateAt>2024-01-01T00:00:00</CreateAt>
-    <RequiredEffortTime>P3D</RequiredEffortTime>
-    <Level>AdvancedBeginner</Level>
-    <Start xsi:nil="true" />
-    <ForecastDate xsi:nil="true" />
-    <Deadline xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <EngineerId>982485477</EngineerId>
-  </Task>
-  <Task>
     <Id>3</Id>
     <Description>Decide on the location of the feature</Description>
     <Alias>Alias4</Alias>
@@ -211,6 +197,20 @@
     <EngineerId>934759393</EngineerId>
   </Task>
   <Task>
+    <Id>15</Id>
+    <Description>Find errors in the code </Description>
+    <Alias>Alias16</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <Level>Beginner</Level>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
+    <EngineerId>934759393</EngineerId>
+  </Task>
+  <Task>
     <Id>16</Id>
     <Description>Get permission from the programmer and pass the code on</Description>
     <Alias>Alias17</Alias>
@@ -265,5 +265,19 @@
     <Deadline xsi:nil="true" />
     <Complete xsi:nil="true" />
     <EngineerId>113634844</EngineerId>
+  </Task>
+  <Task>
+    <Id>2</Id>
+    <Description>Choose the most convenient way</Description>
+    <Alias>Alias3</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P3D</RequiredEffortTime>
+    <Level>Intermediate</Level>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
+    <EngineerId>982485477</EngineerId>
   </Task>
 </ArrayOfTask>
