@@ -42,9 +42,16 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        throw new BO.BlDeletionImpossible($"Engineer is indelible entity");
-    }
+        try
+        {
+            _dal.Engineer.Delete(id);
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlFailedToDelete($"Failed to delete engineer with ID={id}", ex);
+        }
 
+    }
     public BO.Engineer? Read(int id)
     {
         DO.Engineer? doEngineer = _dal.Engineer.Read(e => e.Id == id);

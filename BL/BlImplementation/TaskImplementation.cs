@@ -37,7 +37,14 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _dal.Task.Delete(id);
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlFailedToDelete($"Failed to delete task with ID={id}", ex);
+        }
     }
 
     public BO.Task? Read(int id)
