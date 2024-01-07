@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using Dal;
+using DalApi;
 using DO;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -25,11 +26,27 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        if (Read(e => e.Id == id) is null)
-            throw new DalDoesNotExistException($"An object of type engineer with ID {id} doesnt exists");
-        engineersList.RemoveAll(t => t.Id == id);
-        XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
+    //    List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+    //    if (Read(e => e.Id == id) is null)
+    //        throw new DalDoesNotExistException($"An object of type engineer with ID {id} doesnt exists");
+    //    engineersList.RemoveAll(t => t.Id == id);
+    //    XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
+    List<Engineer> lst = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+    List<DO.Task> lstTask = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
+
+        foreach (var task in lstTask)
+        {
+            if(task.EngineerId == id && task.Start <= DateTime.Now)
+            {
+                throw new DalDeletionImpossible($"Engineer with ID={id} cannot be deleted");
+
+            }
+        }
+        Engineer? engineer = lst.FirstOrDefault(engineer => engineer?.Id == id);
+        if (engineer is null)
+             throw new DalDoesNotExistException($"Dependency with ID={id} is not exists");
+        lst.Remove(engineer);
+        XMLTools.SaveListToXMLSerializer<Engineer>(lst, "engineers");
     }
 
     public Engineer? Read(Func<Engineer, bool> filter)

@@ -20,11 +20,35 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        List<DO.Task> tasksList = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
-        if (Read(t => t.Id == id) is null)
-            throw new DalDoesNotExistException($"An object of type task with ID {id} doesnt exists");
-        tasksList.RemoveAll(t => t.Id == id);
-        XMLTools.SaveListToXMLSerializer<DO.Task>(tasksList, "tasks");
+        //List<DO.Task> tasksList = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
+        //if (Read(t => t.Id == id) is null)
+        //    throw new DalDoesNotExistException($"An object of type task with ID {id} doesnt exists");
+        //tasksList.RemoveAll(t => t.Id == id);
+        //XMLTools.SaveListToXMLSerializer<DO.Task>(tasksList, "tasks");
+
+        List<Dependency> lstDependency = XMLTools.LoadListFromXMLSerializer<Dependency>("dependencies");
+        List<DO.Task> lst = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
+        DO.Task? task = lst.FirstOrDefault(task => task?.Id == id);
+        if (task is null)
+            throw new DalDoesNotExistException($"Task with ID={id} is not exist");
+        if (Config.startProject >= DateTime.Now)
+            throw new DalDeletionImpossible("Task cannot be deleted because the project already began");
+        foreach (var dep in lstDependency)
+        {
+            if (dep.DependsOnTask == id)
+            {
+                throw new Exception($"Task with ID ={id} cannot be deleted");
+            }
+        }
+        foreach (var dep in lstDependency)
+        {
+            if (dep.DependentTask == id)
+            {
+                lstDependency.Remove(dep);
+            }
+        }
+        lst.Remove(task);
+        XMLTools.SaveListToXMLSerializer<DO.Task>(lst, "tasks");
     }
 
     public DO.Task? Read(Func<DO.Task, bool> filter)

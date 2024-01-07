@@ -18,21 +18,30 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        if ((Read(t => t.Id == id)) != null)
-        {
-            if ((DataSource.Dependencies.Find(t => t.DependentTask == id)) == null)
-            {
-                DataSource.Tasks.Remove(DataSource.Tasks.Find(t => t.Id == id));
-            }
-            else
-            {
-                throw new InvalidOperationException($"Cannot delete task with ID:{id} because it have dependency.");
-            }
-        }
-        else
-        {
-            throw new InvalidOperationException($"Task with ID:{id} does not exists.");
-        }
+        //if ((Read(t => t.Id == id)) != null)
+        //{
+        //    if ((DataSource.Dependencies.Find(t => t.DependentTask == id)) == null)
+        //    {
+        //        DataSource.Tasks.Remove(DataSource.Tasks.Find(t => t.Id == id));
+        //    }
+        //    else
+        //    {
+        //        throw new InvalidOperationException($"Cannot delete task with ID:{id} because it have dependency.");
+        //    }
+        //}
+        //else
+        //{
+        //    throw new InvalidOperationException($"Task with ID:{id} does not exists.");
+        //}
+
+        var taskToDelete = Read(t => t.Id == id);
+        if (taskToDelete is null)
+            throw new DalDoesNotExistException($"Task with ID={id} does not exist");
+
+        if (DataSource.Dependencies.Any(d => d.DependsOnTask == id))
+            throw new DalDeletionImpossible($"Task with ID={id} has a depends task");
+
+        DataSource.Tasks.Remove(taskToDelete);
     }
 
     public Task? Read(Func<Task, bool> filter)

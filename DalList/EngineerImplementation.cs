@@ -20,21 +20,29 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        if ((Read(t => t.Id == id)) != null)
-        {
-            if ((DataSource.Tasks.Find(t => t.EngineerId == id)) == null)
-            {
-                DataSource.Engineers.Remove(DataSource.Engineers.Find(t => t.Id == id));
-            }
-            else
-            {
-                throw new InvalidOperationException($"Cannot delete engineer with ID:{id} because he have task.");
-            }
-        }
-        else
-        {
-            throw new InvalidOperationException($"Engineer with ID:{id} does not exists.");
-        }
+        //if ((Read(t => t.Id == id)) != null)
+        //{
+        //    if ((DataSource.Tasks.Find(t => t.EngineerId == id)) == null)
+        //    {
+        //        DataSource.Engineers.Remove(DataSource.Engineers.Find(t => t.Id == id));
+        //    }
+        //    else
+        //    {
+        //        throw new InvalidOperationException($"Cannot delete engineer with ID:{id} because he have task.");
+        //    }
+        //}
+        //else
+        //{
+        //    throw new InvalidOperationException($"Engineer with ID:{id} does not exists.");
+        //}
+        var engineerToDelete = Read(e => e.Id == id);
+        if (engineerToDelete is null)
+            throw new DalDoesNotExistException($"Engineer with ID={id} does not exist");
+
+        if (DataSource.Tasks.Any(t => t.EngineerId == id))
+            throw new DalDeletionImpossible($"Engineer with ID={id} has a task to do");
+
+        DataSource.Engineers.Remove(engineerToDelete);
     }
 
     public Engineer? Read(Func<Engineer, bool> filter)

@@ -492,9 +492,6 @@ namespace BlTest
             Console.WriteLine("Milestone");
             MilestoneMenu();
 
-
-
-
         }
     }
 }
