@@ -6,6 +6,7 @@ namespace BlImplementation;
 
 internal class TaskImplementation : ITask
 {
+    // קבלת אובייקט IDal מהמפעיל Factory
     private DalApi.IDal _dal = Factory.Get;
 
     public int Create(BO.Task item)

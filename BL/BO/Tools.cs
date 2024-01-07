@@ -22,29 +22,36 @@ public static class Tools
 
     public static string ToStringProperty<T>(this T obj)
     {
+        // קבלת מאפיינים של אובייקט מסוג T
         PropertyInfo[] properties = typeof(T).GetProperties();
 
+        // בניית מחרוזת המייצגת את האובייקט
         string result = string.Join(", ", properties.Select(property =>
         {
+            // קבלת הערך של המאפיין הנוכחי
             object? value = property.GetValue(obj);
             string valueString;
 
+            // בדיקה האם הערך הוא null
             if (value == null)
             {
                 valueString = "null";
             }
+            // בדיקה האם הערך הוא קבוצה (IEnumerable)
             else if (value is IEnumerable<object> enumerableValue)
             {
+                // אם זה כך, המרת כל איבר בקבוצה למחרוזת ושורפת יחודיות
                 valueString = string.Join(", ", enumerableValue.Select(item => item.ToString()));
             }
+            // אם אין קבוצה או null, המרת הערך למחרוזת
             else
             {
                 valueString = value.ToString();
             }
-
+            // בניית המחרוזת שמייצגת את המאפיין והערך שלו
             return $"{property.Name}: {valueString}";
         }));
-
+        // החזרת התוצאה
         return result;
     }
 
@@ -66,7 +73,7 @@ public static class Tools
             throw new BO.BlInvalidDataException($"Invalid {paramName}. Must be a positive number.");
     }
 
-    public static void ValidateEmail(string? email, string paramName)
+    public static void ValidateEmail(string? email, string paramName)//validation to email
     {
         try
         {
@@ -102,22 +109,29 @@ public static class Tools
 
     public static List<BO.TaskInList>? CalculateList(int taskId)
     {
+        // קבלת אובייקט IDal מהמפעיל Factory
         DalApi.IDal _dal = Factory.Get;
 
+        // יצירת רשימה לאחסון המשימות
         List<BO.TaskInList>? tasksList = new List<BO.TaskInList>();
+        // קריאת כל התלות של משימות שהן תלויות במשימה עם הזהות taskId
         _dal.Dependency.ReadAll(d => d.DependentTask == taskId)
+                           // קבלת רשימת משימות שהן תלויות במשימה עם הזהות taskId
                            .Select(d => _dal.Task.Read(d1 => d1.Id == d.DependsOnTask))
                            .ToList()
                            .ForEach(task =>
                            {
+                               // הוספת TaskInList לרשימה tasksList
                                tasksList.Add(new BO.TaskInList()
                                {
                                    Id = task.Id,
                                    Alias = task.Alias,
                                    Description = task.Description,
+                                   // חישוב והצבת סטטוס בהתאם לפונקציה CalculateStatus
                                    Status = (BO.Status)Tools.CalculateStatus(task.Start, task.ForecastDate, task.Deadline, task.Complete)
                                });
                            });
+        // החזרת הרשימה tasksList
         return tasksList;
     }
 
