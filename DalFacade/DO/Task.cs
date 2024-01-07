@@ -27,7 +27,6 @@ public record Task
     DateTime CreateAt,
     TimeSpan? RequiredEffortTime=null,
     EngineerExperience? Level = null,
-    bool IsActive = false,
     DateTime? Start = null,
     //DateTime? ScheduledDate = null,
     //DateTime? BaselineStartDate = null,
@@ -39,6 +38,6 @@ public record Task
     int? EngineerId = null 
  )
 {
-    public Task() : this(0, "", "", true, new DateTime(2024,1,1) ,TimeSpan.Zero) { }
+    public Task() : this(0, "", "", false, new DateTime(2024,1,1) ,TimeSpan.Zero) { }
 }
  

@@ -43,12 +43,11 @@ namespace DalTest
                         double costEngineer;
                         idEngineer = int.Parse(Console.ReadLine());
                         nameEngineer = (Console.ReadLine());
-                        isActive = Console.ReadLine() == "false" ? false : true;
                         emailEngineer = Console.ReadLine();
                         input = Console.ReadLine();
                         levelEngineer = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), input);
                         costEngineer = double.Parse(Console.ReadLine());
-                        s_dal.Engineer.Create(new Engineer(idEngineer, nameEngineer, isActive, emailEngineer, levelEngineer, costEngineer));
+                        s_dal.Engineer.Create(new Engineer(idEngineer, nameEngineer, emailEngineer, levelEngineer, costEngineer));
                         break;
                     case 2:
                         int id;
@@ -69,21 +68,19 @@ namespace DalTest
                         string nameEngineerUpdate, emailEngineerUpdate, inputUpdate;
                         EngineerExperience levelEngineerUpdate;
                         double costEngineerUpdate;
-                        bool isActiveUpdate;
                         Console.WriteLine("Enter id for reading");
                         idEngineerUpdate = int.Parse(Console.ReadLine());
                         Engineer updatedEngineer = s_dal.Engineer.Read(e => e.Id == idEngineerUpdate);
                         Console.WriteLine(updatedEngineer.ToString());
                         Console.WriteLine("Enter details to update");//if null to put the same details
                         nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer?.Name;
-                        isActiveUpdate = Console.ReadLine() == "false" ? false : true;
                         emailEngineerUpdate = Console.ReadLine() ?? updatedEngineer?.Email;
                         inputUpdate = Console.ReadLine();
                         levelEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedEngineer.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdate);
                         costEngineerUpdate = double.Parse(Console.ReadLine());
 
 
-                        s_dal.Engineer.Update(new Engineer(idEngineerUpdate, nameEngineerUpdate, isActiveUpdate, emailEngineerUpdate, levelEngineerUpdate, costEngineerUpdate));
+                        s_dal.Engineer.Update(new Engineer(idEngineerUpdate, nameEngineerUpdate, emailEngineerUpdate, levelEngineerUpdate, costEngineerUpdate));
                         break;
                     case 5:
                         int idDelete;
@@ -162,9 +159,9 @@ namespace DalTest
                 {
                     case 1:
                         Console.WriteLine("Enter  description, alias,deriverables, remarks,milestone, dates and task's level");
-                        int taskEngineerId, currentTaskNum;
+                        int taskEngineerId;
                         string taskDescription, taskAlias, taskDeliverables, taskRemarks, input;
-                        bool taskMilestone, isActive;
+                        bool taskMilestone;
                         TimeSpan requiredEffortTime;
                         DateTime taskCreateAt, taskStart, taskForecastDate, taskDeadline, taskComplete;
                         EngineerExperience taskLevel;
@@ -174,7 +171,6 @@ namespace DalTest
                         requiredEffortTime = TimeSpan.Zero;
                         input = Console.ReadLine();
                         taskLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), input);
-                        isActive = Console.ReadLine() == "false" ? false : true;
                         taskCreateAt = DateTime.Parse(Console.ReadLine());
                         taskStart = DateTime.Parse(Console.ReadLine());
                         taskForecastDate = DateTime.Parse(Console.ReadLine());
@@ -184,7 +180,7 @@ namespace DalTest
                         taskRemarks = Console.ReadLine();
                         taskEngineerId = int.Parse(Console.ReadLine());
 
-                        s_dal.Task.Create(new DO.Task(0, taskDescription, taskAlias, taskMilestone, taskCreateAt, requiredEffortTime, taskLevel, isActive, taskStart, taskForecastDate, taskDeadline, taskComplete, taskDeliverables, taskRemarks, taskEngineerId));
+                        s_dal.Task.Create(new DO.Task(0, taskDescription, taskAlias, taskMilestone, taskCreateAt, requiredEffortTime, taskLevel, taskStart, taskForecastDate, taskDeadline, taskComplete, taskDeliverables, taskRemarks, taskEngineerId));
                         break;
                     case 2:
                         int id;
@@ -201,9 +197,9 @@ namespace DalTest
         .ForEach(task => Console.WriteLine(task.ToString()));
                         break;
                     case 4:
-                        int idTaskUpdate, currentTaskNumUpdate, taskEngineerIdUpdate;
+                        int idTaskUpdate, taskEngineerIdUpdate;
                         string taskDescriptionUpdate, taskAliasUpdate, taskDeliverablesUpdate, taskRemarksUpdate, inputUpdate;
-                        bool taskMilestoneUpdate, isActiveUpdate;
+                        bool taskMilestoneUpdate;
                         DateTime taskCreateAtUpdate, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate;
                         TimeSpan requiredEffortTimeUpdate;
                         EngineerExperience? taskLevelUpdate;
@@ -218,7 +214,6 @@ namespace DalTest
                         requiredEffortTimeUpdate = TimeSpan.Zero;
                         inputUpdate = Console.ReadLine();
                         taskLevelUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdate);
-                        isActiveUpdate = Console.ReadLine() == "false" ? false : true;
                         taskCreateAtUpdate = DateTime.Parse(Console.ReadLine());
                         taskStartUpdate = DateTime.Parse(Console.ReadLine());
                         taskForecastDateUpdate = DateTime.Parse(Console.ReadLine());
@@ -228,7 +223,7 @@ namespace DalTest
                         taskRemarksUpdate = Console.ReadLine();
                         taskEngineerIdUpdate = int.Parse(Console.ReadLine());
 
-                        s_dal.Task.Update(new DO.Task(idTaskUpdate, taskDescriptionUpdate, taskAliasUpdate, taskMilestoneUpdate, taskCreateAtUpdate, requiredEffortTimeUpdate, taskLevelUpdate, isActiveUpdate, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate, taskDeliverablesUpdate, taskRemarksUpdate, taskEngineerIdUpdate)); break;
+                        s_dal.Task.Update(new DO.Task(idTaskUpdate, taskDescriptionUpdate, taskAliasUpdate, taskMilestoneUpdate, taskCreateAtUpdate, requiredEffortTimeUpdate, taskLevelUpdate, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate, taskDeliverablesUpdate, taskRemarksUpdate, taskEngineerIdUpdate)); break;
                     case 5:
                         int idDelete;
                         Console.WriteLine("Enter id for deleting");

@@ -25,7 +25,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToCreate("Failed to create milestone ", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 2://read milstone
@@ -43,7 +43,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead("Failed to read milestone ", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 3://update milstone
@@ -75,18 +75,11 @@ namespace BlTest
                                 Remarks = milestoneRemarksUpdate,
                                 Dependencies = s_bl.Milestone.Read(idMilestoneUpdate)!.Dependencies
                             };
-                            try
-                            {
-                                s_bl.Milestone.Update(newMilUpdate);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new BlFailedToCreate($"failed to update milestone id={idMilestoneUpdate}", ex);
-                            }
+                            s_bl.Milestone.Update(newMilUpdate);
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead($"failed to read id: {idMilestoneUpdate} of engineer", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     default: return;
@@ -116,38 +109,36 @@ namespace BlTest
                         DO.Roles role;
                         bool isActive;
                         double costEngineer;
-                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idEngineer);
-                        nameEngineer = (Console.ReadLine()!);
-                        isActive = Console.ReadLine() == "false" ? false : true;
-                        emailEngineer = Console.ReadLine()!;
-                        inputEE = Console.ReadLine()!;
-                        inputR = Console.ReadLine()!;
-                        levelEngineer = (DO.EngineerExperience)Enum.Parse(typeof(DO.EngineerExperience), inputEE);
-                        double.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a doublenumber please"), out costEngineer);
-                        role = (DO.Roles)Enum.Parse(typeof(DO.Roles), inputR);
-                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTask);
-                        BO.Engineer newEng = new BO.Engineer()
-                        {
-                            Id = idEngineer,
-                            Name = nameEngineer,
-                            IsActive = isActive,
-                            Email = emailEngineer,
-                            Level = (BO.EngineerExperience)levelEngineer,
-                            Cost = costEngineer,
-                            Role = (BO.Roles)role,
-                            Task = new BO.TaskInEngineer()
-                            {
-                                Id = idTask,
-                                Alias = s_bl.Task.Read(idTask)!.Alias
-                            }
-                        };
                         try
                         {
+                            int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idEngineer);
+                            nameEngineer = (Console.ReadLine()!);
+                            emailEngineer = Console.ReadLine()!;
+                            inputEE = Console.ReadLine()!;
+                            inputR = Console.ReadLine()!;
+                            levelEngineer = (DO.EngineerExperience)Enum.Parse(typeof(DO.EngineerExperience), inputEE);
+                            double.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a doublenumber please"), out costEngineer);
+                            role = (DO.Roles)Enum.Parse(typeof(DO.Roles), inputR);
+                            int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTask);
+                            BO.Engineer newEng = new BO.Engineer()
+                            {
+                                Id = idEngineer,
+                                Name = nameEngineer,
+                                Email = emailEngineer,
+                                Level = (BO.EngineerExperience)levelEngineer,
+                                Cost = costEngineer,
+                                Role = (BO.Roles)role,
+                                Task = new BO.TaskInEngineer()
+                                {
+                                    Id = idTask,
+                                    Alias = s_bl.Task.Read(idTask)!.Alias
+                                }
+                            };
                             s_bl.Engineer.Create(newEng);
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToCreate("Failed to build engineer ", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 2://read engineer
@@ -165,7 +156,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead("Failed to read engineer ", ex);
+                            Console.WriteLine(ex);
                         }
 
                         break;
@@ -178,7 +169,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToReadAll("Failed to readall engineer ", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 4://update engineer
@@ -197,10 +188,8 @@ namespace BlTest
                         {
                             Engineer updatedEngineer = s_bl.Engineer.Read(idEngineerUpdate)!;
                             Console.WriteLine(updatedEngineer.ToString());
-                            Console.WriteLine("Enter name, isactive, email, level, cost and role to update");//if null to put the same details
+                            Console.WriteLine("Enter name, email, level, cost and role to update");//if null to put the same details
                             nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Name!;
-                            Console.WriteLine("is active");
-                            isActiveUpdate = Console.ReadLine() == "false" ? false : true;
                             Console.WriteLine("email");
                             emailEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Email;
                             Console.WriteLine("1-5 to level");
@@ -215,7 +204,6 @@ namespace BlTest
                             {
                                 Id = idEngineerUpdate,
                                 Name = nameEngineerUpdate,
-                                IsActive = isActiveUpdate,
                                 Email = emailEngineerUpdate,
                                 Level = (BO.EngineerExperience)levelEngineerUpdate,
                                 Cost = costEngineerUpdate,
@@ -228,12 +216,12 @@ namespace BlTest
                             }
                             catch (Exception ex)
                             {
-                                throw new BlFailedToCreate($"failed to update engineer id={idEngineerUpdate}", ex);
+                                Console.WriteLine(ex);
                             }
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead($"failed to read id: {idEngineerUpdate} of engineer", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 5://delete engineer
@@ -246,7 +234,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToDelete("failed to delete engineer", ex);
+                                    Console.WriteLine(ex);
                         }
 
                         break;
@@ -302,43 +290,45 @@ namespace BlTest
                         taskLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEE);
                         Console.WriteLine("Enter task in list id");
                         int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskInListId);
-                        while (taskInListId != -1)
+                        try
                         {
-                            taskInList!.Add(new BO.TaskInList()
+                            while (taskInListId != -1)
                             {
-                                Id = taskInListId,
-                                Description = s_bl.Task.Read(taskInListId)!.Description,
-                                Alias = s_bl.Task.Read(taskInListId)!.Alias,
-                                Status = Tools.CalculateStatus(null, null, null, null)
-                            });
-                            taskInListId = int.Parse(Console.ReadLine()!);
+                                taskInList!.Add(new BO.TaskInList()
+                                {
+                                    Id = taskInListId,
+                                    Description = s_bl.Task.Read(taskInListId)!.Description,
+                                    Alias = s_bl.Task.Read(taskInListId)!.Alias,
+                                    Status = Tools.CalculateStatus(null, null, null, null)
+                                });
+                                taskInListId = int.Parse(Console.ReadLine()!);
+                            }
+                            BO.Task newTask = new BO.Task()
+                            {
+                                Id = 0,
+                                Description = taskDescription,
+                                Alias = taskAlias,
+                                CreateAt = DateTime.Now,
+                                Start = null,
+                                ForecastDate = null,
+                                Deadline = null,
+                                Complete = null,
+                                Deliverables = taskDeliverables,
+                                RequiredEffortTime = requiredEffortTime,
+                                Remarks = taskRemarks,
+                                Engineer = new EngineerInTask()
+                                {
+                                    Id = engineerInTaskId,
+                                    Name = s_bl.Engineer.Read(engineerInTaskId)!.Name!
+                                },
+                                Level = taskLevel,
+                                Status = Tools.CalculateStatus(null, null, null, null),
+                                Milestone = null,
+                                Dependencies = taskInList!
+                            };
+                            s_bl.Task.Create(newTask);
                         }
-                        BO.Task newTask = new BO.Task()
-                        {
-                            Id = 0,
-                            Description = taskDescription,
-                            Alias = taskAlias,
-                            IsActive = isActive,
-                            CreateAt = DateTime.Now,
-                            Start = null,
-                            ForecastDate = null,
-                            Deadline = null,
-                            Complete = null,
-                            Deliverables = taskDeliverables,
-                            RequiredEffortTime = requiredEffortTime,
-                            Remarks = taskRemarks,
-                            Engineer = new EngineerInTask()
-                            {
-                                Id = engineerInTaskId,
-                                Name = s_bl.Engineer.Read(engineerInTaskId)!.Name!
-                            },
-                            Level = taskLevel,
-                            Status = Tools.CalculateStatus(null, null, null, null),
-                            Milestone = null,
-                            Dependencies = taskInList!
-                        };
-                        try { s_bl.Task.Create(newTask); }
-                        catch (Exception ex) { throw new BlFailedToCreate("failed to create task", ex); }
+                        catch (Exception ex) { Console.WriteLine(ex); }
                         break;
                     case 2://read task
                         int id;
@@ -353,7 +343,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead($"failed to read id: {id} in task", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 3://read all task
@@ -365,7 +355,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead($"failed to readall task", ex);
+                            Console.WriteLine(ex);
                         }
                         break;
                     case 4://update task
@@ -379,69 +369,71 @@ namespace BlTest
                             inputEEUpdate;
                         TimeSpan requiredEffortTimeUpdate;
                         EngineerExperience? taskLevelUpdate;
-                        List<BO.TaskInList?> taskInListUpdate = new List<BO.TaskInList>();
-                        Console.WriteLine("Enter id for reading");
-                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTaskUpdate);
-                        BO.Task updatedTask = s_bl.Task.Read(idTaskUpdate)!;
-                        Console.WriteLine(updatedTask.ToString());
-                        Console.WriteLine("Enter description to update");//if null to put the same details
-                        taskDescriptionUpdate = Console.ReadLine() ?? updatedTask.Description;
-                        Console.WriteLine("Enter alias to update");
-                        taskAliasUpdate = Console.ReadLine() ?? updatedTask.Alias;
-                        //Console.WriteLine("Enter required effort time to update");
-                        //int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out daysUpdate);
-                        //requiredEffortTimeUpdate = TimeSpan.FromDays(daysUpdate)?? updatedTask.RequiredEffortTime;
-                        Console.WriteLine("Enter deliverables to update");
-                        taskDeliverablesUpdate = Console.ReadLine() ?? updatedTask.Deliverables;
-                        Console.WriteLine("Enter remarks to update");
-                        taskRemarksUpdate = Console.ReadLine() ?? updatedTask.Remarks;
-                        Console.WriteLine("Enter input 1-5 to update the level");
-                        inputEEUpdate = Console.ReadLine() ?? updatedTask.Level.ToString();
-                        taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
-                        //int.TryParse(Console.ReadLine() ?? null, out taskInListId);
-                        Console.WriteLine("Enter ID of engineer");
-                        int.TryParse(Console.ReadLine() ?? updatedTask.Engineer!.Id.ToString(), out taskEngineerIdUpdate);
-                        //int.TryParse(Console.ReadLine() ?? updatedTask., out milestoneInTaskIdUpdate);
-                        //while (taskInListId != -1)
-                        //{
-                        //    taskInListUpdate!.Add(new BO.TaskInList()
-                        //    {
-                        //        Id = taskInListId,
-                        //        Description = s_bl.Task.Read(taskInListId)!.Description,
-                        //        Alias = s_bl.Task.Read(taskInListId)!.Alias,
-                        //        Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete)
-                        //    });
-                        //    int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskInListId);
-
-                        //}
-
-                        BO.Task newTaskUpdate = new BO.Task()
+                        try
                         {
-                            Id = idTaskUpdate,
-                            Description = taskDescriptionUpdate,
-                            Alias = taskAliasUpdate,
-                            IsActive = true,
-                            CreateAt = updatedTask.CreateAt,
-                            Start = updatedTask.Start,
-                            ForecastDate = updatedTask.ForecastDate,
-                            Deadline = updatedTask.Deadline,
-                            Complete = updatedTask.Complete,
-                            Deliverables = taskDeliverablesUpdate,
-                            RequiredEffortTime = TimeSpan.FromDays(10),
-                            Remarks = taskRemarksUpdate,
-                            Engineer = new EngineerInTask()
-                            {
+                            List<BO.TaskInList?> taskInListUpdate = new List<BO.TaskInList>();
+                            Console.WriteLine("Enter id for reading");
+                            int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTaskUpdate);
+                            BO.Task updatedTask = s_bl.Task.Read(idTaskUpdate)!;
+                            Console.WriteLine(updatedTask.ToString());
+                            Console.WriteLine("Enter description to update");//if null to put the same details
+                            taskDescriptionUpdate = Console.ReadLine() ?? updatedTask.Description;
+                            Console.WriteLine("Enter alias to update");
+                            taskAliasUpdate = Console.ReadLine() ?? updatedTask.Alias;
+                            //Console.WriteLine("Enter required effort time to update");
+                            //int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out daysUpdate);
+                            //requiredEffortTimeUpdate = TimeSpan.FromDays(daysUpdate)?? updatedTask.RequiredEffortTime;
+                            Console.WriteLine("Enter deliverables to update");
+                            taskDeliverablesUpdate = Console.ReadLine() ?? updatedTask.Deliverables;
+                            Console.WriteLine("Enter remarks to update");
+                            taskRemarksUpdate = Console.ReadLine() ?? updatedTask.Remarks;
+                            Console.WriteLine("Enter input 1-5 to update the level");
+                            inputEEUpdate = Console.ReadLine() ?? updatedTask.Level.ToString();
+                            taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
+                            //int.TryParse(Console.ReadLine() ?? null, out taskInListId);
+                            Console.WriteLine("Enter ID of engineer");
+                            int.TryParse(Console.ReadLine() ?? updatedTask.Engineer!.Id.ToString(), out taskEngineerIdUpdate);
+                            //int.TryParse(Console.ReadLine() ?? updatedTask., out milestoneInTaskIdUpdate);
+                            //while (taskInListId != -1)
+                            //{
+                            //    taskInListUpdate!.Add(new BO.TaskInList()
+                            //    {
+                            //        Id = taskInListId,
+                            //        Description = s_bl.Task.Read(taskInListId)!.Description,
+                            //        Alias = s_bl.Task.Read(taskInListId)!.Alias,
+                            //        Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete)
+                            //    });
+                            //    int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskInListId);
 
-                                Id = taskEngineerIdUpdate,
-                                Name = s_bl.Engineer.Read(taskEngineerIdUpdate)!.Name!
-                            },
-                            Level = taskLevelUpdate,
-                            Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete),
-                            Milestone = updatedTask.Milestone,
-                            Dependencies = updatedTask.Dependencies,
-                        };
-                        try { s_bl.Task.Update(newTaskUpdate); }
-                        catch (Exception ex) { throw new BlFailedToUpdate($"failed to update id:{idTaskUpdate} in task", ex); }
+                            //}
+
+                            BO.Task newTaskUpdate = new BO.Task()
+                            {
+                                Id = idTaskUpdate,
+                                Description = taskDescriptionUpdate,
+                                Alias = taskAliasUpdate,
+                                CreateAt = updatedTask.CreateAt,
+                                Start = updatedTask.Start,
+                                ForecastDate = updatedTask.ForecastDate,
+                                Deadline = updatedTask.Deadline,
+                                Complete = updatedTask.Complete,
+                                Deliverables = taskDeliverablesUpdate,
+                                RequiredEffortTime = TimeSpan.FromDays(10),
+                                Remarks = taskRemarksUpdate,
+                                Engineer = new EngineerInTask()
+                                {
+
+                                    Id = taskEngineerIdUpdate,
+                                    Name = s_bl.Engineer.Read(taskEngineerIdUpdate)!.Name!
+                                },
+                                Level = taskLevelUpdate,
+                                Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete),
+                                Milestone = updatedTask.Milestone,
+                                Dependencies = updatedTask.Dependencies,
+                            };
+                            s_bl.Task.Update(newTaskUpdate);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex); }
                         ; break;
                     case 5://delete task
                         int idDelete;
@@ -453,7 +445,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToDelete($"failed to delete in task", ex);
+                            Console.WriteLine( ex);
                         }
                         break;
                     default: return;

@@ -1,25 +1,9 @@
-﻿using BlImplementation;
+﻿using BO;
 using System.Reflection;
-using DalApi;
-
-namespace BO;
 
 public static class Tools
 {
-    //public static string ToStringProperty<T>(this T obj)
-    //{
-    //    PropertyInfo[] properties = typeof(T).GetProperties();
-
-    //    string result = string.Join(", ", properties.Select(property =>
-    //    {
-    //        object? value = property.GetValue(obj);
-    //        string valueString = (value != null) ? value.ToString() : "null";
-    //        return $"{property.Name}: {valueString}";
-    //    }));
-
-    //    return result;
-    //}
-
+    // פונקציה שמחזירה מחרוזת המייצגת את התכולת האובייקט
     public static string ToStringProperty<T>(this T obj)
     {
         // קבלת מאפיינים של אובייקט מסוג T
@@ -55,25 +39,29 @@ public static class Tools
         return result;
     }
 
+    // פונקציה שבודקת אם המספר חיובי
     public static void ValidatePositiveId(int? id, string paramName)
     {
         if (id <= 0)
             throw new BO.BlInvalidDataException($"Invalid {paramName} ID. Must be a positive number.");
     }
 
+    // פונקציה שבודקת אם המחרוזת לא ריקה או מכילה רק רווחים
     public static void ValidateNonEmptyString(string? value, string paramName)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new BO.BlInvalidDataException($"{paramName} cannot be empty.");
     }
 
+    // פונקציה שבודקת אם המספר חיובי
     public static void ValidatePositiveNumber(double? number, string paramName)
     {
         if (number < 0)
             throw new BO.BlInvalidDataException($"Invalid {paramName}. Must be a positive number.");
     }
 
-    public static void ValidateEmail(string? email, string paramName)//validation to email
+    // פונקציה שבודקת תקינות כתובת האימייל
+    public static void ValidateEmail(string? email, string paramName)
     {
         try
         {
@@ -87,18 +75,19 @@ public static class Tools
         }
     }
 
+    // פונקציה שמחשבת ומחזירה את הסטטוס של משימה לפי המצב שלה
     public static Status CalculateStatus(DateTime? start, DateTime? forecastDate, DateTime? deadline, DateTime? complete)
     {
         if (start != null && complete == null) // אם המשימה באמצע להעשות 
-            return Status.OnTrack; 
-        
+            return Status.OnTrack;
+
         if (complete != null) // אם המשימה הושלמה 
             return Status.Completed;
 
         if (complete == null && DateTime.Now > forecastDate) // אם המשימה עוד לא נגמרה וכבר עבר התאריך המתכונן לסיום
             return Status.InJeopardy;
-        
-        if (forecastDate == null && deadline == null) // אם המשימה עוד לא  בלוז
+
+        if (forecastDate == null && deadline == null) // אם המשימה עוד לא בלוז
             return Status.Unscheduled;
 
         if (forecastDate != null && deadline != null) // אם המשימה כבר בלוז
@@ -135,12 +124,14 @@ public static class Tools
         return tasksList;
     }
 
+    // פונקציה שמציינת את תאריך ההתחלה של הפרויקט
     public static void EnterStartDateProject(DateTime startDate)
     {
         DalApi.IDal _dal = Factory.Get;
         _dal.startProject = startDate;
     }
 
+    // פונקציה שמציינת את תאריך הסיום הכללי של הפרויקט
     public static void EnterDeadLineDateProject(DateTime deadlineProject)
     {
         DalApi.IDal _dal = Factory.Get;
