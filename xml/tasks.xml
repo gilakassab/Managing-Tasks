@@ -490,4 +490,18 @@
     <Complete xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
+  <Task>
+    <Id>2</Id>
+    <Description>Choose the most convenient way</Description>
+    <Alias>Alias3</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P3D</RequiredEffortTime>
+    <Level>Intermediate</Level>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
+    <EngineerId>982485477</EngineerId>
+  </Task>
 </ArrayOfTask>

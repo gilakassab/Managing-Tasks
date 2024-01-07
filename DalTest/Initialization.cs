@@ -76,10 +76,15 @@ public static class Initialization
         s_dal.Dependency.Create(new Dependency(0, 11, 10));
         s_dal.Dependency.Create(new Dependency(0, 12, 11));
         s_dal.Dependency.Create(new Dependency(0, 13, 12));
-        s_dal.Dependency.Create(new Dependency(0, 13, 14));
+        s_dal.Dependency.Create(new Dependency(0, 14, 13));
         s_dal.Dependency.Create(new Dependency(0, 14, 19));
         s_dal.Dependency.Create(new Dependency(0, 15, 13));
         s_dal.Dependency.Create(new Dependency(0, 19, 17));
         s_dal.Dependency.Create(new Dependency(0, 19, 18));
+        s_dal.Dependency.Create(new Dependency(0, 17, 6));
+        s_dal.Dependency.Create(new Dependency(0, 18, 16));
+        s_dal.Dependency.Create(new Dependency(0, 12, 9));
+       
+
     }
 }
