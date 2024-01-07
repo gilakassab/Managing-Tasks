@@ -115,7 +115,7 @@ public static class Tools
     {
         DalApi.IDal _dal = Factory.Get;
 
-        List<BO.TaskInList> tasksList = new List<TaskInList>();
+        List<BO.TaskInList>? tasksList = new List<BO.TaskInList>();
         _dal.Dependency.ReadAll(d => d.DependentTask == taskId)
                            .Select(d => _dal.Task.Read(d1 => d1.Id == d.DependsOnTask))
                            .ToList()

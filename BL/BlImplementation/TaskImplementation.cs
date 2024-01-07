@@ -46,8 +46,8 @@ internal class TaskImplementation : ITask
         if (doTask == null)
             throw new BlDoesNotExistException($"Task with ID={id} does Not exist");
 
-        List<TaskInList>? tasksList = null;
-        MilestoneInTask? milestone = null;
+        List<TaskInList> tasksList = null;
+        MilestoneInTask milestone = null;
 
         DO.Dependency checkMilestone = _dal.Dependency.Read(d => d.DependsOnTask == doTask.Id);
         if (checkMilestone != null)
@@ -84,6 +84,11 @@ internal class TaskImplementation : ITask
             };
         }
 
+        EngineerExperience? level = null;
+        if(doTask.Level != null)
+        {
+            level = (EngineerExperience)doTask.Level;
+        }
 
         return new BO.Task()
         {
@@ -93,7 +98,7 @@ internal class TaskImplementation : ITask
             Milestone = milestone,
             CreateAt = doTask.CreateAt,
             RequiredEffortTime = doTask.RequiredEffortTime,
-            Level = (EngineerExperience)doTask.Level,
+            Level = level,
             IsActive = doTask.IsActive,
             Start = doTask.Start,
             ForecastDate = doTask.ForecastDate,
@@ -113,14 +118,14 @@ internal class TaskImplementation : ITask
 
         foreach (DO.Task? doTask in _dal.Task.ReadAll())
         {
-            List<TaskInList>? tasksList = null;
+            List<TaskInList>? tasksList = new List<TaskInList>();
             MilestoneInTask? milestone = null;
 
 
-            var checkMilestone = _dal.Dependency.Read(d => d.DependentTask == doTask.Id);
+            DO.Dependency checkMilestone = _dal.Dependency.Read(d => d.DependsOnTask == doTask.Id);
             if (checkMilestone != null)
             {
-                int milestoneId = checkMilestone.Id;
+                int milestoneId = checkMilestone.DependentTask;
                 DO.Task? milestoneAsATask = _dal.Task.Read(t => t.Id == milestoneId && t.Milestone);
                 if (milestoneAsATask != null)
                 {
@@ -152,14 +157,20 @@ internal class TaskImplementation : ITask
                 };
             }
 
-            boTasks!.Add(new BO.Task()
+            EngineerExperience? level = null;
+            if (doTask.Level != null)
+            {
+                level = (EngineerExperience)doTask.Level;
+            }
+
+            boTasks.Add(new BO.Task()
             {
                 Id = doTask!.Id,
                 Description = doTask.Description,
                 Alias = doTask.Alias,
                 Milestone = milestone,
                 RequiredEffortTime = doTask.RequiredEffortTime,
-                Level = (EngineerExperience)doTask.Level!,
+                Level = level,
                 IsActive = doTask.IsActive,
                 CreateAt = doTask.CreateAt,
                 Start = doTask.Start,
@@ -172,7 +183,7 @@ internal class TaskImplementation : ITask
                 Engineer = engineerInTask
             });
         }
-        return boTasks!.Where(filter1).ToList();
+        return boTasks.Where(filter1).ToList();
     }
 
     public void Update(BO.Task item)

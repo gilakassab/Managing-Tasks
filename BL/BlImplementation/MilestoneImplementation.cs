@@ -2,6 +2,7 @@
 using BO;
 using DalApi;
 using System;
+using System.ComponentModel.Design.Serialization;
 
 namespace BlImplementation;
 
@@ -18,9 +19,9 @@ internal class MilestoneImplementation : IMilestone
             .ToList();
 
         var uniqueLists = groupedDependencies
-            .Select(group => group.Item2.ToList())
-            .ToList().Distinct();
-
+     .Select(group => group.Item2.ToList())
+     .DistinctBy(list => string.Join(",", list))
+     .ToList();
 
         int milestoneAlias = 1;
 
@@ -72,7 +73,7 @@ internal class MilestoneImplementation : IMilestone
         }
 
         //משימות שלא תלויות בשום משימה
-        var independentOnTasks = _dal.Task.ReadAll()
+        var independentOnTasks = _dal.Task.ReadAll(t=>!t.Milestone)
     .Where(task => !dependencies.Any(d => d.DependentTask == task!.Id))
     .Select(task => task!.Id)
     .ToList();
@@ -86,7 +87,7 @@ internal class MilestoneImplementation : IMilestone
                null, null, true, null, null, null, null, null, null, null);
 
         //משימות ששום משימה לא תלויה בהן
-        var independentTasks = _dal.Task.ReadAll()
+        var independentTasks = _dal.Task.ReadAll(t=>!t.Milestone)
     .Where(task => !dependencies.Any(d => d.DependsOnTask == task!.Id))
     .Select(task => task!.Id)
     .ToList();
@@ -129,13 +130,13 @@ internal class MilestoneImplementation : IMilestone
             throw new BO.BlFailedToCreate("Failed to create END or START milestone", ex);
         }
 
-        foreach(var dependency in dependencies.ToList())
+        foreach (var dependency in dependencies.ToList())
         {
             if (dependency != null)
                 _dal.Dependency.Create(dependency);
         }
 
-        CalculateDatesInOrder();
+        //CalculateDatesInOrder();
 
         return _dal.Dependency.ReadAll()!;
     }
@@ -148,8 +149,8 @@ internal class MilestoneImplementation : IMilestone
             if (doTaskMilestone == null)
                 throw new BO.BlDoesNotExistException($"Milstone with ID={id} does Not exist");
 
-            var tasksId = _dal.Dependency.ReadAll(d => d.DependsOnTask == doTaskMilestone.Id)
-                                         .Select(d => d.DependentTask);
+            var tasksId = _dal.Dependency.ReadAll(d => d.DependentTask == doTaskMilestone.Id)
+                                         .Select(d => d.DependsOnTask);
             var tasks = _dal.Task.ReadAll(t => tasksId.Contains(t.Id)).ToList();
 
             var tasksInList = tasks.Select(t => new BO.TaskInList
@@ -159,6 +160,12 @@ internal class MilestoneImplementation : IMilestone
                 Alias = t.Alias,
                 Status = Tools.CalculateStatus(t.Start, t.ForecastDate, t.Deadline, t.Complete)
             }).ToList();
+
+            double CompletionPercentage = 0;
+            if(tasksInList.Count > 0)
+            {
+                CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / tasksInList.Count * 0.1) * 100;
+            }
 
             return new BO.Milestone()
             {
@@ -170,7 +177,7 @@ internal class MilestoneImplementation : IMilestone
                 ForecastDate = doTaskMilestone.ForecastDate,
                 Deadline = doTaskMilestone.Deadline,
                 Complete = doTaskMilestone.Complete,
-                CompletionPercentage = (tasksInList.Count(t => t.Status == Status.OnTrack) / tasksInList.Count * 0.1) * 100,
+                CompletionPercentage = CompletionPercentage,
                 Remarks = doTaskMilestone.Remarks,
                 Dependencies = tasksInList!
             };
@@ -198,77 +205,67 @@ internal class MilestoneImplementation : IMilestone
         }
     }
 
-    private void CalculateDatesInOrder()
+    private void CalculateDatesOfTasksAndMilestones()
     {
-        var allMilestones = _dal.Task.ReadAll(t => t.Milestone).OrderBy(milestone => milestone.Alias).Reverse().ToList();
+        var lastMilestone = _dal.Task.Read(t => t.Alias == "End");
 
-        foreach (var milstone in allMilestones)
+        if (lastMilestone == null)
+            return;
+
+        recursionDatesForNilstones(lastMilestone);
+    }
+
+    private void recursionDatesForNilstones(DO.Task milestone)
+    {
+        if (milestone.Deadline!=null) return;
+
+        DateTime? date=CalculateLatestFinishDate(milestone);
+
+        _dal.Task.Update(new DO.Task(
+           milestone.Id,
+           milestone.Description,
+           milestone.Alias,
+           true,
+           milestone.CreateAt,
+           null,
+           null,
+           true,
+           null,
+           null,
+           date,
+           null,
+           null,
+           null,
+           null));
+
+        var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == milestone.Id);
+
+        if (dependencies == null)
+            return;
+
+
+        var depenntOnTasks = dependencies.Select(d => _dal.Task.Read(t => t.Id == d.DependsOnTask));
+
+        foreach (var task in depenntOnTasks)
         {
-            _dal.Task.Update(new DO.Task(
-            milstone.Id,
-            milstone.Description,
-            milstone.Alias,
-            true,
-            milstone.CreateAt,
-            null,
-            null,
-            true,
-            null,
-            null,
-            CalculateLatestFinishDate(milstone),
-            null,
-            null,
-            null,
-            null));
+            _dal.Task.Update(
+                       new DO.Task(
+               task!.Id,
+               task.Description,
+               task.Alias,
+               task.Milestone,
+               task.CreateAt,
+               task.RequiredEffortTime,
+               task.Level,
+               task.IsActive,
+               task.Start,
+               (DateTime)(date) - (TimeSpan)(task.RequiredEffortTime),
+               date,
+               task.Complete,
+               task.Deliverables,
+               task.Remarks,
+               task.EngineerId));
 
-            var dependentOnTasksDependency = _dal.Dependency.ReadAll(d => d.DependentTask == milstone.Id);
-            if (dependentOnTasksDependency != null)
-            {
-                var dependentOnTasks = _dal.Task.ReadAll(t => dependentOnTasksDependency.Any(d => d.DependsOnTask == t.Id));
-                foreach (var task in dependentOnTasks)
-                {
-                    _dal.Task.Create(
-                        new DO.Task(
-                task!.Id,
-                task.Description,
-                task.Alias,
-                task.Milestone,
-                task.CreateAt,
-                task.RequiredEffortTime,
-                task.Level,
-                task.IsActive,
-                task.Start,
-                (DateTime)(milstone.Deadline) - (TimeSpan)(task.RequiredEffortTime),
-                milstone.Deadline,
-                task.Complete,
-                task.Deliverables,
-                task.Remarks,
-                task.EngineerId));
-                }
-            }
-        }
-
-        allMilestones.Reverse();
-        var reverseMilestone = allMilestones.ToList();
-
-        foreach (var milestone in allMilestones)
-        {
-            _dal.Task.Update(new DO.Task(
-                milestone!.Id,
-            milestone.Description,
-            milestone.Alias,
-            true,
-            milestone.CreateAt,
-            null,
-            null,
-            true,
-            null,
-            CalculateEarliestStartDate(milestone),
-            milestone.Deadline,
-            null,
-            null,
-            null,
-            null));
         }
     }
 
@@ -289,21 +286,97 @@ internal class MilestoneImplementation : IMilestone
         return latestFinishDate;
     }
 
-    private DateTime? CalculateEarliestStartDate(DO.Task milestone)
-    {
-        var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == milestone.Id);
+    //private void CalculateDatesInOrder()
+    //{
+    //    var allMilestones = _dal.Task.ReadAll(t => t.Milestone).OrderBy(milestone => milestone.Alias).Reverse().ToList();
 
-        // אם אין למשימה תלות, התאריך הראשון האפשרי הוא תאריך ההתחלה המתוכנן של הפרויקט
-        if (dependencies == null)
-            return _dal.startProject;
+    //    foreach (var milstone in allMilestones)
+    //    {
+    //        _dal.Task.Update(new DO.Task(
+    //        milstone.Id,
+    //        milstone.Description,
+    //        milstone.Alias,
+    //        true,
+    //        milstone.CreateAt,
+    //        null,
+    //        null,
+    //        true,
+    //        null,
+    //        null,
+    //        CalculateLatestFinishDate(milstone),
+    //        null,
+    //        null,
+    //        null,
+    //        null));
 
-        // קביעת תאריך התחלה הראשון האפשרי
-        var dependenciesIds = dependencies.Select(d => d.DependsOnTask).ToList();
-        var dependentsTask = _dal.Task.ReadAll(t => dependenciesIds.Any(number => number == t.Id)).ToList();
-        DateTime? earliestStartDate = dependentsTask.Min(t =>
-        {
-            return t.ForecastDate;
-        });
-        return earliestStartDate;
-    }
+    //        var dependentOnTasksDependency = _dal.Dependency.ReadAll(d => d.DependentTask == milstone.Id);
+    //        if (dependentOnTasksDependency != null)
+    //        {
+    //            var dependentOnTasks = _dal.Task.ReadAll(t => dependentOnTasksDependency.Any(d => d.DependsOnTask == t.Id));
+    //            foreach (var task in dependentOnTasks)
+    //            {
+    //                _dal.Task.Update(
+    //                    new DO.Task(
+    //            task!.Id,
+    //            task.Description,
+    //            task.Alias,
+    //            task.Milestone,
+    //            task.CreateAt,
+    //            task.RequiredEffortTime,
+    //            task.Level,
+    //            task.IsActive,
+    //            task.Start,
+    //            (DateTime)(milstone.Deadline) - (TimeSpan)(task.RequiredEffortTime),
+    //            milstone.Deadline,
+    //            task.Complete,
+    //            task.Deliverables,
+    //            task.Remarks,
+    //            task.EngineerId));
+    //            }
+    //        }
+    //    }
+
+    //    allMilestones.Reverse();
+    //    var reverseMilestone = allMilestones.ToList();
+
+    //    foreach (var milestone in allMilestones)
+    //    {
+    //        _dal.Task.Update(new DO.Task(
+    //            milestone!.Id,
+    //        milestone.Description,
+    //        milestone.Alias,
+    //        true,
+    //        milestone.CreateAt,
+    //        null,
+    //        null,
+    //        true,
+    //        null,
+    //        CalculateEarliestStartDate(milestone),
+    //        milestone.Deadline,
+    //        null,
+    //        null,
+    //        null,
+    //        null));
+    //    }
+    //}
+
+
+
+    //private DateTime? CalculateEarliestStartDate(DO.Task milestone)
+    //{
+    //    var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == milestone.Id);
+
+    //    // אם אין למשימה תלות, התאריך הראשון האפשרי הוא תאריך ההתחלה המתוכנן של הפרויקט
+    //    if (dependencies == null)
+    //        return _dal.startProject;
+
+    //    // קביעת תאריך התחלה הראשון האפשרי
+    //    var dependenciesIds = dependencies.Select(d => d.DependsOnTask).ToList();
+    //    var dependentsTask = _dal.Task.ReadAll(t => dependenciesIds.Any(number => number == t.Id)).ToList();
+    //    DateTime? earliestStartDate = dependentsTask.Min(t =>
+    //    {
+    //        return t.ForecastDate;
+    //    });
+    //    return earliestStartDate;
+    //}
 }
