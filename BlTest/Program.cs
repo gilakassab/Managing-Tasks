@@ -209,7 +209,7 @@ namespace BlTest
                         {
                             Engineer updatedEngineer = s_bl.Engineer.Read(idEngineerUpdate)!;
                             Console.WriteLine(updatedEngineer.ToString());
-                            Console.WriteLine("Enter name, isactive,level,cost,role and id of task to update");//if null to put the same details
+                            Console.WriteLine("Enter name, isactive, email, level, cost, role and id of task to update");//if null to put the same details
                             nameEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Name;
                             isActiveUpdate = Console.ReadLine() == "false" ? false : true;
                             emailEngineerUpdate = Console.ReadLine() ?? updatedEngineer.Email;
@@ -245,7 +245,7 @@ namespace BlTest
                         }
                         catch (Exception ex)
                         {
-                            throw new BlFailedToRead($"failed to read id: {idEngineerUpdate} of engineer", ex);
+                            2throw new BlFailedToRead($"failed to read id: {idEngineerUpdate} of engineer", ex);
                         }
                         break;
                     case 5:
