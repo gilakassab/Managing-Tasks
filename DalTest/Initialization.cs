@@ -83,8 +83,5 @@ public static class Initialization
         s_dal.Dependency.Create(new Dependency(0, 19, 18));
         s_dal.Dependency.Create(new Dependency(0, 17, 6));
         s_dal.Dependency.Create(new Dependency(0, 18, 16));
-        s_dal.Dependency.Create(new Dependency(0, 12, 9));
-       
-
     }
 }

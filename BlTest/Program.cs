@@ -90,7 +90,7 @@ namespace BlTest
                         break;
                     default: return;
                 }
-            } while (chooseSubMenu > 0 && chooseSubMenu < 3);
+            } while (chooseSubMenu > 0 && chooseSubMenu <= 3);
 
         }
         public static void EngineerMenu()
@@ -182,8 +182,8 @@ namespace BlTest
                             idTaskUpdate;
                         string nameEngineerUpdate,
                             emailEngineerUpdate;
-                        string inputUpdateEE,
-                            inputUpdateR;
+                        string inputUpdate;
+                        BO.Roles roleUpdate;
                         EngineerExperience levelEngineerUpdate;
                         double costEngineerUpdate;
                         Console.WriteLine("Enter id for reading");
@@ -205,20 +205,18 @@ namespace BlTest
                                 emailEngineerUpdate = updatedEngineer.Email;
                             }
                             Console.WriteLine("1-5 to level");
-                            inputUpdateEE = Console.ReadLine()!;
-                            levelEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdateEE) ? updatedEngineer.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdateEE);
+                            inputUpdate = Console.ReadLine()!;
+                            levelEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedEngineer.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputUpdate);
                             
                             Console.WriteLine("1-3 to role");
-                            inputUpdateR = Console.ReadLine()!;
-                            role = (DO.Roles)Enum.Parse(typeof(DO.Roles), inputUpdateR);
+                            inputUpdate = Console.ReadLine()!;
+                            roleUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedEngineer.Role : (BO.Roles)Enum.Parse(typeof(BO.Roles), inputUpdate);
+
 
                             Console.WriteLine("cost");
-                            double.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out costEngineerUpdate);
-                            if (costEngineerUpdate == null)
-                            {
-                                costEngineerUpdate = updatedEngineer.Cost;
-                            }
-                            
+                            inputUpdate = Console.ReadLine()!;
+                            costEngineerUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedEngineer.Cost : int.Parse(inputUpdate);
+
                             BO.Engineer newEngUpdate = new BO.Engineer()
                             {
                                 Id = idEngineerUpdate,
@@ -226,7 +224,7 @@ namespace BlTest
                                 Email = emailEngineerUpdate,
                                 Level = (BO.EngineerExperience)levelEngineerUpdate,
                                 Cost = costEngineerUpdate,
-                                Role = (BO.Roles)role,
+                                Role = roleUpdate,
                                 Task = updatedEngineer.Task
                             };
                             try
@@ -387,12 +385,13 @@ namespace BlTest
                             taskAliasUpdate,
                             taskDeliverablesUpdate,
                             taskRemarksUpdate,
-                            inputEEUpdate;
+                            inputEEUpdate,
+                            inputUpdate;
                         TimeSpan? requiredEffortTimeUpdate;
                         EngineerExperience? taskLevelUpdate;
                         try
                         {
-                            List<BO.TaskInList?> taskInListUpdate = new List<BO.TaskInList>();
+                            List<BO.TaskInList?> taskInListUpdate = new List<BO.TaskInList?>();
                             Console.WriteLine("Enter id for reading");
                             int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out idTaskUpdate);
                             BO.Task updatedTask = s_bl.Task.Read(idTaskUpdate)!;
@@ -409,15 +408,9 @@ namespace BlTest
                                 taskAliasUpdate = updatedTask.Alias;
                             }
                             Console.WriteLine("Enter required effort time to update");
-                            daysUpdate=int.Parse(Console.ReadLine()!);
-                            
-                            if(daysUpdate == 0) { 
-                                requiredEffortTimeUpdate = TimeSpan.FromDays(daysUpdate);
-                            }
-                            else
-                            {
-                                requiredEffortTimeUpdate = updatedTask.RequiredEffortTime;
-                            }
+                            inputUpdate = Console.ReadLine()!;
+                            requiredEffortTimeUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedTask.RequiredEffortTime : TimeSpan.FromDays(int.Parse(inputUpdate));
+
                             Console.WriteLine("Enter deliverables to update");
                             taskDeliverablesUpdate = Console.ReadLine() ?? updatedTask.Deliverables;
                             if (taskDeliverablesUpdate == null || taskDeliverablesUpdate == "")
@@ -431,15 +424,17 @@ namespace BlTest
                                 taskRemarksUpdate = updatedTask.Remarks;
                             }
                             Console.WriteLine("Enter input 1-5 to update the level");
-                            inputEEUpdate = Console.ReadLine() ?? updatedTask.Level.ToString();
+                            inputEEUpdate = Console.ReadLine()!;
                             taskLevelUpdate = string.IsNullOrWhiteSpace(inputEEUpdate) ? updatedTask.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), inputEEUpdate);
                             Console.WriteLine("entertask in list id");
-                            taskInListIdUpdate = int.Parse(Console.ReadLine());
-                            if(taskInListIdUpdate == null) {
+                            inputUpdate = Console.ReadLine()!;
+
+                            if(string.IsNullOrWhiteSpace(inputUpdate)) {
                                 taskInListUpdate = updatedTask.Dependencies!;
                             }
                             else
                             {
+                                taskInListIdUpdate = int.Parse(inputUpdate);
                                 while (taskInListIdUpdate != -1)
                                 {
                                     taskInListUpdate!.Add(new BO.TaskInList()
@@ -449,17 +444,13 @@ namespace BlTest
                                         Alias = s_bl.Task.Read(taskInListIdUpdate)!.Alias,
                                         Status = Tools.CalculateStatus(updatedTask.Start, updatedTask.ForecastDate, updatedTask.Deadline, updatedTask.Complete)
                                     });
-                                    int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskInListId);
+                                    int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out taskInListIdUpdate);
                                 }
                             }
                             Console.WriteLine("Enter ID of engineer");
-                            taskEngineerIdUpdate=int.Parse(Console.ReadLine());
-                            if (taskEngineerIdUpdate == 0)
-                            {
-                                taskEngineerIdUpdate = updatedTask.Engineer!.Id;
-                            }
-                            
-                            
+                            inputUpdate = Console.ReadLine()!;
+                            taskEngineerIdUpdate = string.IsNullOrWhiteSpace(inputUpdate) ? updatedTask.Engineer!.Id : int.Parse(inputUpdate);
+
                             BO.Task newTaskUpdate = new BO.Task()
                             {
                                 Id = idTaskUpdate,

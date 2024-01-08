@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using DalApi;
+using DO;
 using System;
 using System.ComponentModel.Design.Serialization;
 
@@ -10,10 +11,55 @@ internal class MilestoneImplementation : IMilestone
 {
     private DalApi.IDal _dal = Factory.Get;
 
+    //public void RemoveRedundantDependencies(List<Dependency> dependencies, int currentDependentTask, int initialDependentTask, int currentDependsOnTask)
+    //{
+    //    // בדוק עבור תלות ישירות
+    //    var directDependencies = dependencies.Where(dep => dep.DependentTask == currentDependentTask && dep.DependsOnTask != initialDependentTask);
+
+    //    foreach (var directDependency in directDependencies)
+    //    {
+    //        // בדוק אם יש כבר תלות ישירות כמו תלות עקיפה
+    //        var existingDirectDependency = dependencies.FirstOrDefault(dep => dep.DependentTask == currentDependentTask && dep.DependsOnTask == directDependency.DependsOnTask);
+
+    //        // אם קיימת כבר תלות ישירה, מחק את התלות היישירות המיותרות
+    //        if (existingDirectDependency != null)
+    //        {
+    //            dependencies.Remove(directDependency);
+    //        }
+
+    //        // המשך לבדוק רקורסיבית עבור התלות הבאות
+    //        RemoveRedundantDependencies(dependencies, directDependency.DependsOnTask, initialDependentTask, directDependency.DependsOnTask);
+    //    }
+    //}
+
+
+//    initialDependentTask מסמלת את המשימה שגרמה להתחיל לבדוק תלות.בקריאה הראשונה לפונקציה, כאשר את מפעילה אותה על משימה מסוימת, את משתינה את התלות שלה.
+
+//    לדוגמה, אם יש לך משימה 1 והתלות שלה הן:
+
+
+//    תלות ישירות: 2, 3
+//תלות עקיפות: אין
+//    ואז את מרצה את הפונקציה על משימה 1 כך:
+
+
+//    csharp
+//    Copy code
+//    RemoveRedundantDependencies(dependencies, 1, 1, 0);
+//    במקרה הזה, התלות של המשימה הן:
+
+//תלות ישירות: 2, 3
+//תלות עקיפות: 2, 3
+//בעזרת הפרמטרים:
+
+//currentDependentTask - 1
+//initialDependentTask - 1 (המשימה המקורית שאת מבדקת)
+//currentDependsOnTask - 0 (המשימה שאליה היא תלויה)
+//בהמשך, כאשר את מפעילה את הפונקציה על המשימות הנוספות(2, 3 וכדומה), תשים את initialDependentTask כמספר המשימה שאת מבדקת.
+
     // פונקציה Create: יצירת אבני דרך במערכת, המתחילה ונגמרת עם משימות יחודיות
     public IEnumerable<DO.Dependency> Create()
     {
-
         // קביעת תלות בין המשימות במערכת
         var groupedDependencies = _dal.Dependency.ReadAll()
             .GroupBy(d => d.DependentTask)
@@ -215,7 +261,7 @@ internal class MilestoneImplementation : IMilestone
             // קריאת אבן בדרך הקיים מהמסד
             DO.Task oldDoTask = _dal.Task.Read(t => t.Id == item.Id)!;
             // בנייה של משימה חדשה לפי המודל המקודם והמודל החדש
-            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, null, null, oldDoTask.Start, item.ForecastDate, item.Deadline, item.Complete, oldDoTask.Deliverables, item.Remarks, null);
+            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, true, item.CreateAt, null, null, oldDoTask.Start, item.ForecastDate, item.Deadline, item.Complete, oldDoTask.Deliverables, item.Remarks, null);
             _dal.Task.Update(doTask);
         }
         catch (DO.DalAlreadyExistsException ex)
