@@ -1,4 +1,5 @@
 ﻿using BO;
+using DalTest;
 
 namespace BlTest
 {
@@ -88,7 +89,7 @@ namespace BlTest
                             Console.WriteLine(ex);
                         }
                         break;
-                    default: return;
+                    default: break;
                 }
             } while (chooseSubMenu > 0 && chooseSubMenu <= 3);
 
@@ -267,11 +268,11 @@ namespace BlTest
             {
                 Console.WriteLine("enum SubMenu { EXIT ,CREATE , READ, READALL ,UPDATE,DELETE }");
                 int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out chooseSubMenu);
+                
                 switch (chooseSubMenu)
                 {
                     case 1://create task
                         int days,
-                            milestoneInTaskId,
                             engineerInTaskId,
                             taskInListId;
                         string taskDescription,
@@ -279,7 +280,6 @@ namespace BlTest
                                taskDeliverables,
                                taskRemarks,
                                inputEE;
-                        bool isActive;
                         TimeSpan requiredEffortTime;
                         EngineerExperience taskLevel;
                         List<BO.TaskInList?> taskInList = new List<TaskInList?>();
@@ -287,7 +287,6 @@ namespace BlTest
                         taskDescription = Console.ReadLine()!;
                         Console.WriteLine("Enter  alias");
                         taskAlias = Console.ReadLine()!;
-                        isActive = true;
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskCreateAt);
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskStart);
                         //DateTime.TryParse(Console.ReadLine() ?? throw new Exception("enter a date please"), out taskForecastDate);
@@ -378,9 +377,7 @@ namespace BlTest
                     case 4://update task
                         int idTaskUpdate,
                              taskEngineerIdUpdate,
-                             daysUpdate;
-                         int taskInListIdUpdate;
-                        
+                              taskInListIdUpdate;
                         string? taskDescriptionUpdate,
                             taskAliasUpdate,
                             taskDeliverablesUpdate,
@@ -515,8 +512,40 @@ namespace BlTest
             Tools.EnterStartDateProject(start);
             Tools.EnterDeadLineDateProject(end);
             Console.WriteLine("Milestone");
-            MilestoneMenu();//calls to milestone men
-
-        }
+            MilestoneMenu();//calls to milestone 
+            Console.Write("would you like to change something more?  (Y/N)");
+            string? ans2 = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            if (ans2 == "Y")
+            {
+                try
+                {
+                    int chooseEntity;
+                    do
+                    {
+                        Console.WriteLine(" { EXIT, MILESTONE, ENGINEER, TASK }");
+                        int.TryParse(Console.ReadLine() ?? throw new BlInvalidDataException("enter a number please"), out chooseEntity);
+                        switch (chooseEntity)
+                        {
+                            case 1:
+                                MilestoneMenu();
+                                break;
+                            case 2:
+                                EngineerMenu();
+                                break;
+                            case 3:
+                                
+                                TaskMenu();
+                                break;
+                            default: return;
+                        }
+                    } while (chooseEntity >= 0 && chooseEntity < 4);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+    }
+              
     }
 }

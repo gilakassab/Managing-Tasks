@@ -32,32 +32,7 @@ internal class MilestoneImplementation : IMilestone
     //    }
     //}
 
-
-//    initialDependentTask מסמלת את המשימה שגרמה להתחיל לבדוק תלות.בקריאה הראשונה לפונקציה, כאשר את מפעילה אותה על משימה מסוימת, את משתינה את התלות שלה.
-
-//    לדוגמה, אם יש לך משימה 1 והתלות שלה הן:
-
-
-//    תלות ישירות: 2, 3
-//תלות עקיפות: אין
-//    ואז את מרצה את הפונקציה על משימה 1 כך:
-
-
-//    csharp
-//    Copy code
-//    RemoveRedundantDependencies(dependencies, 1, 1, 0);
-//    במקרה הזה, התלות של המשימה הן:
-
-//תלות ישירות: 2, 3
-//תלות עקיפות: 2, 3
-//בעזרת הפרמטרים:
-
-//currentDependentTask - 1
-//initialDependentTask - 1 (המשימה המקורית שאת מבדקת)
-//currentDependsOnTask - 0 (המשימה שאליה היא תלויה)
-//בהמשך, כאשר את מפעילה את הפונקציה על המשימות הנוספות(2, 3 וכדומה), תשים את initialDependentTask כמספר המשימה שאת מבדקת.
-
-    // פונקציה Create: יצירת אבני דרך במערכת, המתחילה ונגמרת עם משימות יחודיות
+   // פונקציה Create: יצירת אבני דרך במערכת, המתחילה ונגמרת עם משימות יחודיות
     public IEnumerable<DO.Dependency> Create()
     {
         // קביעת תלות בין המשימות במערכת
@@ -277,10 +252,10 @@ internal class MilestoneImplementation : IMilestone
         if (lastMilestone == null)
             return;
 
-        recursionDatesForNilstones(lastMilestone);
+        recursionDatesForMilstones(lastMilestone);
     }
 
-    private void recursionDatesForNilstones(DO.Task milestone)
+    private void recursionDatesForMilstones(DO.Task milestone)
     {
         // אם כבר יש תאריך סיום לאבן הדרך, יש לסיים
         if (milestone.Deadline != null) return;
@@ -332,7 +307,7 @@ internal class MilestoneImplementation : IMilestone
                     task.EngineerId));
 
             // קריאה נוספת לפונקציה עבור משימה תלולה
-            recursionDatesForNilstones(_dal.Task.Read(t => t.Id == _dal.Dependency.Read(d => d.DependentTask == task.Id)!.DependsOnTask)!);
+            recursionDatesForMilstones(_dal.Task.Read(t => t.Id == _dal.Dependency.Read(d => d.DependentTask == task.Id)!.DependsOnTask)!);
         }
 
         // עדכון של אבן הדרך עצמה
