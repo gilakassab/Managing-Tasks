@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="TaskListWindow" Height="640" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="387*"/>
+            <ColumnDefinition Width="13*"/>
+        </Grid.ColumnDefinitions>
         <!--Extrnal Grid-->
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -14,13 +18,25 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--Internal, Upper Grid-->
-        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        <Grid Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="33*"/>
+                <ColumnDefinition Width="80*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Label" Grid.Column="0" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
         </Grid>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="127,0,0,0" VerticalAlignment="Center"/>
+        <ListView Grid.Row="1" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+
     </Grid>
 </Window>
