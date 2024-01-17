@@ -27,7 +27,8 @@
                 <ColumnDefinition Width="80*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Label" Grid.Column="0" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}"  SelectedValue="{Binding Path=EngExperience, Mode=TwoWay}"
+Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         </Grid>
         <ListView Grid.Row="1" ItemsSource="{Binding Path=TaskList}">

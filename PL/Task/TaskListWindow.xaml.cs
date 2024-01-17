@@ -21,24 +21,27 @@ namespace PL.Task
     public partial class TaskListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public ObservableCollection<BO.TaskInList> TaskList
+        public ObservableCollection<BO.Task> TaskList
         {
-            get { return (ObservableCollection<BO.TaskInList>)GetValue(TaskListProperty); }
+            get { return (ObservableCollection<BO.Task>)GetValue(TaskListProperty); }
             set { SetValue(TaskListProperty, value); }
         }
 
         public static readonly DependencyProperty TaskListProperty =
-            DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.Task>), typeof(TaskListWindow), new PropertyMetadata(null));
+        public BO.EngineerExperience EngExperience { get; set; } = ;
+
 
         public TaskListWindow()
         {
             InitializeComponent();
+            var temp = s_bl?.Task.ReadAll();
+            TaskList = temp == null ? new() : new(temp!);
+           
 
-            var tasks = s_bl?.Task.ReadAll();
-
-          
-        }
-
-
+        
     }
+
+
+}
 }
