@@ -29,7 +29,7 @@ namespace PL.Task
 
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.Task>), typeof(TaskListWindow), new PropertyMetadata(null));
-        public BO.EngineerExperience EngExperience { get; set; } = ;
+        public BO.EngineerExperience EngExperience { get; set; } = BO.EngineerExperience.None;
 
 
         public TaskListWindow()
