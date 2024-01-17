@@ -8,8 +8,17 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <!-- goes to TaskListWindow-->
-        <Button Content="Handle Tasks" HorizontalAlignment="Left" Height="50" Width="252" Click="btnTaskList_Click" Margin="49,242,0,142"/>
+        <Button Content="Handle Tasks" HorizontalAlignment="Left" Width="190" Click="btnTaskList_Click" Margin="116,191,0,193" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.065"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
         <!-- initialize the project-->
-        <Button Content="Handle Initialization" HorizontalAlignment="Left" Height="50" Width="252" Click="btnInitialization_Click" Margin="49,335,0,49"/>
+        <Button Content="Handle Initialization" HorizontalAlignment="Left" Width="189" Click="btnInitialization_Click" Margin="116,284,0,102"/>
     </Grid>
 </Window>
