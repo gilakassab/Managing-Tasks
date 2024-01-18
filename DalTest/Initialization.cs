@@ -1,7 +1,6 @@
 ﻿namespace DalTest;
 using DalApi;
 using DO;
-using DalFacade;
 using System.Numerics;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;

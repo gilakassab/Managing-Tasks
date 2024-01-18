@@ -19,7 +19,6 @@ namespace PL
     {
         static readonly IEnumerable<BO.Roles> s_enums =
         (Enum.GetValues(typeof(BO.Roles)) as IEnumerable<BO.Roles>)!;
-       //.Concat(new BO.Roles[] { BO.Roles.None });
 
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
