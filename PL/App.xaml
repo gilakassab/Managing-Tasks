@@ -5,6 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:EngineerExperiencesCollection x:Key="EngineerExperiencesCollectionKey" />
+        <local:RolesCollection x:Key="RolesCollectionKey" />
     </Application.Resources>
 </Application>
 

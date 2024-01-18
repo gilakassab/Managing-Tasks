@@ -8,6 +8,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P10D</RequiredEffortTime>
     <Level>Expert</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -22,6 +23,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P20D</RequiredEffortTime>
     <Level>AdvancedBeginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -36,6 +38,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P3D</RequiredEffortTime>
     <Level>AdvancedBeginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -50,6 +53,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P5D</RequiredEffortTime>
     <Level>AdvancedBeginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -64,6 +68,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Level>AdvancedBeginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -78,6 +83,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P100D</RequiredEffortTime>
     <Level>AdvancedBeginner</Level>
+    <Role>GraphicArtist</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -92,6 +98,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -106,6 +113,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -120,6 +128,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -134,6 +143,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -148,6 +158,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -162,6 +173,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -176,6 +188,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -190,6 +203,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P30D</RequiredEffortTime>
     <Level>Advanced</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -204,6 +218,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P20D</RequiredEffortTime>
     <Level>Beginner</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -218,6 +233,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P20D</RequiredEffortTime>
     <Level>Beginner</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -232,6 +248,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P6D</RequiredEffortTime>
     <Level>Beginner</Level>
+    <Role>Programmer</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -246,6 +263,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P5D</RequiredEffortTime>
     <Level>Beginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -260,6 +278,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P3D</RequiredEffortTime>
     <Level>Beginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />
@@ -274,6 +293,7 @@
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Level>Beginner</Level>
+    <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
     <Deadline xsi:nil="true" />

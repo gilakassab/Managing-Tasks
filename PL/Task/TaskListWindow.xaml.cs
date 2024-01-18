@@ -30,18 +30,28 @@ namespace PL.Task
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.Task>), typeof(TaskListWindow), new PropertyMetadata(null));
         public BO.EngineerExperience EngExperience { get; set; } = BO.EngineerExperience.None;
+        public BO.Roles Role { get; set; } = BO.Roles.None;
 
+        private void cbEngineerExperience_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Role = BO.Roles.None;
+            var temp = (EngExperience == BO.EngineerExperience.None) ?
+                s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Level == EngExperience)!;
+            TaskList = temp == null ? new() : new(temp!);
+        }
+
+        private void cbRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var temp = (Role == BO.Roles.None) ?
+                s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Role == Role)!;
+            TaskList = temp == null ? new() : new(temp!);
+        }
 
         public TaskListWindow()
         {
             InitializeComponent();
             var temp = s_bl?.Task.ReadAll();
             TaskList = temp == null ? new() : new(temp!);
-           
-
-        
+        }
     }
-
-
-}
 }

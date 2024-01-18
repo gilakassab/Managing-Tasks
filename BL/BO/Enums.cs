@@ -1,5 +1,5 @@
 ﻿namespace BO;
 
-public enum EngineerExperience { None, Beginner, AdvancedBeginner, Intermediate, Advanced, Expert }
+public enum EngineerExperience { Beginner, AdvancedBeginner, Intermediate, Advanced, Expert, None }
 public enum Status { Unscheduled, Scheduled, OnTrack, InJeopardy, Completed }
-public enum Roles {  GraphicArtist, Programmer, TeamLeader }
+public enum Roles { GraphicArtist, Programmer, TeamLeader, None }

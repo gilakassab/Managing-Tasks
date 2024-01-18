@@ -41,26 +41,26 @@ public static class Initialization
 
     private static void createTasks()
     {
-        s_dal!.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(10), EngineerExperience.Expert, null, null, null, null, null, null, 248728764));
-        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(20), EngineerExperience.AdvancedBeginner, null, null, null, null, null, null, 982485477));
-        s_dal.Task.Create(new Task(0, "Choose the most convenient way", "Alias3", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(3), EngineerExperience.AdvancedBeginner, null, null, null, null, null, null, 982485477));
-        s_dal.Task.Create(new Task(0, "Decide on the location of the feature", "Alias4", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(5), EngineerExperience.AdvancedBeginner, null, null, null, null, null, null, 982485477));
-        s_dal.Task.Create(new Task(0, "Decide on the shape of the feature", "Alias5", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(2), EngineerExperience.AdvancedBeginner, null, null, null, null, null, null, 982485477));
-        s_dal.Task.Create(new Task(0, "Work on the design", "Alias6", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(100), EngineerExperience.AdvancedBeginner, null, null, null, null, null, null, 982485477));
-        s_dal.Task.Create(new Task(0, "stage 0 in the programming", "P0", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 1 in the programming", "P1", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 2 in the programming", "P2", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 3 in the programming", "P3", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 4 in the programming", "P4", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 5 in the programming", "P5", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 6 in the programming", "P6", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "stage 7 in the programming", "P6", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "Run the code", "Alias15", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(20), EngineerExperience.Beginner, null, null, null, null, null, null, 934759393));
-        s_dal.Task.Create(new Task(0, "Find errors in the code ", "Alias16", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(20), EngineerExperience.Beginner, null, null, null, null, null, null, 934759393));
-        s_dal.Task.Create(new Task(0, "Get permission from the programmer and pass the code on", "Alias17", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(6), EngineerExperience.Beginner, null, null, null, null, null, null, 934759393));
-        s_dal.Task.Create(new Task(0, "Bring confirmation to the software tester that the code is correct", "Alias18", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(5), EngineerExperience.Beginner, null, null, null, null, null, null, 165324683));
-        s_dal.Task.Create(new Task(0, "Send the feature to the advertising team", "Alias19", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(3), EngineerExperience.Beginner, null, null, null, null, null, null, 934759393));
-        s_dal.Task.Create(new Task(0, "Update all platforms", "Alias20", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(2), EngineerExperience.Beginner, null, null, null, null, null, null, 113634844));
+        s_dal!.Task.Create(new Task(0, "Decide what is the next project", "Alias1", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(10), EngineerExperience.Expert, Roles.TeamLeader, null, null, null, null, null, null, 248728764));
+        s_dal.Task.Create(new Task(0, "Check the requirements", "Alias2", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(20), EngineerExperience.AdvancedBeginner, Roles.TeamLeader, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Choose the most convenient way", "Alias3", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(3), EngineerExperience.AdvancedBeginner, Roles.TeamLeader, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Decide on the location of the feature", "Alias4", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(5), EngineerExperience.AdvancedBeginner, Roles.TeamLeader, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Decide on the shape of the feature", "Alias5", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(2), EngineerExperience.AdvancedBeginner, Roles.TeamLeader, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "Work on the design", "Alias6", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(100), EngineerExperience.AdvancedBeginner, Roles.GraphicArtist, null, null, null, null, null, null, 982485477));
+        s_dal.Task.Create(new Task(0, "stage 0 in the programming", "P0", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 1 in the programming", "P1", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 2 in the programming", "P2", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 3 in the programming", "P3", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 4 in the programming", "P4", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 5 in the programming", "P5", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 6 in the programming", "P6", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "stage 7 in the programming", "P6", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(30), EngineerExperience.Advanced, Roles.Programmer, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "Run the code", "Alias15", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(20), EngineerExperience.Beginner, Roles.Programmer, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Find errors in the code ", "Alias16", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(20), EngineerExperience.Beginner, Roles.Programmer, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Get permission from the programmer and pass the code on", "Alias17", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(6), EngineerExperience.Beginner, Roles.Programmer, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Bring confirmation to the software tester that the code is correct", "Alias18", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(5), EngineerExperience.Beginner, Roles.TeamLeader, null, null, null, null, null, null, 165324683));
+        s_dal.Task.Create(new Task(0, "Send the feature to the advertising team", "Alias19", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(3), EngineerExperience.Beginner, Roles.TeamLeader, null, null, null, null, null, null, 934759393));
+        s_dal.Task.Create(new Task(0, "Update all platforms", "Alias20", false, new DateTime(2024, 1, 1), TimeSpan.FromDays(2), EngineerExperience.Beginner, Roles.TeamLeader, null, null, null, null, null, null, 113634844));
     }
 
     private static void createDependencies()
