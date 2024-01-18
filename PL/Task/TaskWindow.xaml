@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         Title="TaskWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="446,202,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.166,4.61" Width="103" Height="54" Grid.Column="1"/>
+        <Button Content="Update" HorizontalAlignment="Left" Margin="446,281,0,0" VerticalAlignment="Top" Height="53" Width="103" Grid.Column="1"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,26,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.095,-1.033" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,57,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.976,-1.281" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,259,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.702,2.275" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,228,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.34,2.554" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,202,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,171,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,145,0,0" VerticalAlignment="Top" RenderTransformOrigin="-5.152,-1.551" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,114,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,398,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.216,6.778" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,373,0,0" VerticalAlignment="Top" RenderTransformOrigin="-5.39,7.017" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,347,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,316,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="17,290,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="38"/>
+
     </Grid>
 </Window>
