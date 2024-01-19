@@ -19,19 +19,15 @@ namespace PL
     {
         static readonly IEnumerable<BO.Roles> s_enums =
         (Enum.GetValues(typeof(BO.Roles)) as IEnumerable<BO.Roles>)!;
-       //.Concat(new BO.Roles[] { BO.Roles.None });
 
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
 
+    internal class StatusCollection : IEnumerable
+    {
+        static readonly IEnumerable<BO.Status> s_enums =
+        (Enum.GetValues(typeof(BO.Status)) as IEnumerable<BO.Status>)!;
 
-    //internal class StatusCollection : IEnumerable
-    //{
-    //    static readonly IEnumerable<BO.Status> s_enums =
-    //(Enum.GetValues(typeof(BO.Status)) as IEnumerable<BO.Status>)!;
-
-    //    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
-    //}
-
-
+        public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+    }
 }

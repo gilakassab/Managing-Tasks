@@ -85,7 +85,6 @@ internal class EngineerImplementation : IEngineer
                 select boEngineer).Where(filter1).ToList();
     }
 
-
     // פונקציה Update: עדכון מהנדס במסד הנתונים
     public void Update(BO.Engineer boEngineer)
     {

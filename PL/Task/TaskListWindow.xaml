@@ -28,10 +28,10 @@
             </Grid.ColumnDefinitions>
             <Label Content="EngineerExperience" Grid.Column="0" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}"  SelectedValue="{Binding EngExperience, Mode=TwoWay}"
-Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbEngineerExperience_SelectionChanged"/>
+Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"/>
             <Label Content="Roles" Grid.Column="2" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"  SelectedValue="{Binding Role, Mode=TwoWay}"
-Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbRoles_SelectionChanged"/>
+Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"/>
         </Grid>
         <ListView Grid.Row="1" ItemsSource="{Binding Path=TaskList}">
             <ListView.View>
@@ -40,7 +40,7 @@ Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Select
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAdd_Click"/>
 
     </Grid>
 </Window>
