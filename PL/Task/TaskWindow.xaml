@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="640" Width="800"
+        Title="TaskWindow" Height="825" Width="1190"
         DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Window.Resources>
         <Style TargetType="FrameworkElement">
@@ -51,21 +51,21 @@
             <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
             <Label Content="EnginId:"/>
-            <TextBox Text="{Binding EnginId, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
             <Label Content="EngineerName:"/>
-            <TextBox Text="{Binding EngineerName, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <TextBox Text="{Binding Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="Choose An Engineer"/>
+            <!--<Label Content="Choose An Engineer"/>
             <ComboBox ItemsSource="{Binding EngineersList}" DisplayMemberPath="EngineerName" SelectedValuePath="EnginId"
-              SelectedValue="{Binding SelectedEngineerId, Mode=TwoWay}" IsEnabled="True"/>
+              SelectedValue="{Binding SelectedEngineerId, Mode=TwoWay}" IsEnabled="True"/>-->
         </StackPanel>
 
         <!-- Labels and Inputs - עמודה שנייה -->
         <StackPanel Grid.Column="1" Margin="5">
             <Label Content="Level:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}" 
-SelectedValue="{Binding EngExperience, Mode=TwoWay, NotifyOnValidationError=true, 
+SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}"/>
 
             <Label Content="Role:"/>
@@ -75,7 +75,7 @@ ValidatesOnExceptions=true}"/>
 
             <Label Content="Status:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
-SelectedValue="{Binding State, Mode=TwoWay, NotifyOnValidationError=true, 
+SelectedValue="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}" IsEnabled="False"/>
 
             <Label Content="ForecastDate:"/>
@@ -102,10 +102,10 @@ ValidatesOnExceptions=true}"/>
         <!-- Labels and Inputs - עמודה שלישית -->
         <StackPanel Grid.Column="2" Margin="5">
             <Label Content="MilestoneId:"/>
-            <TextBox Text="{Binding MilestoneId, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <TextBox Text="{Binding Milestone.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
             <Label Content="MilestoneAlias:"/>
-            <TextBox Text="{Binding MilestoneAlias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <TextBox Text="{Binding Milestone.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
             <Label Content="Dependencies:"/>
             <ListBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
@@ -113,10 +113,10 @@ ValidatesOnExceptions=true}"/>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBox Text="{Binding DepId, Mode=TwoWay,  ValidatesOnExceptions=true}" IsEnabled="False"/>
-                            <TextBox Text="{Binding DepDescription, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
-                            <TextBox Text="{Binding DepAlias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
-                            <TextBox Text="{Binding DepStatus, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Dependencies.id, Mode=TwoWay,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Dependencies.description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Dependencies.alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Text="{Binding dependencies.status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -132,8 +132,8 @@ ValidatesOnExceptions=true}"/>
             <Button Grid.Row="9" Grid.Column="0" 
 Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
 HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" Padding="5"  />
-<!--Click="btnAddUpdate_Click"-->
-               
+ Click="btnAddUpdate_Click"
+
 
         </StackPanel>
     </Grid>

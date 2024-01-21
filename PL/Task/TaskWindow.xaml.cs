@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -34,19 +35,30 @@ namespace PL.Task
         public BO.EngineerExperience EngExperience { get; set; } = BO.EngineerExperience.None;
         public BO.Roles Role { get; set; } = BO.Roles.None;
         public BO.Status State { get; set; } = BO.Status.None;
+        private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
         public TaskWindow(int id = 0)
         {
             InitializeComponent();
-            //try
-            //{
-                var temp = s_bl?.Task.Read(id);
-                Task = temp == null ? new() : temp!;
-            //}catch (Exception ex)
-            //{
-            //    Task = new();
-
-            //}
+            var temp = s_bl?.Task.Read(id);
+            Task = temp == null ? new() : temp!;
+           if(id == 0)
+            {
+                Task = new BO.Task();
+            }
+            else
+            {
+                try
+                {
+                    Task = s_bl!.Task.Read(id)!;
+                }
+                catch (BlFailedToRead ex) {
+                    throw new BlFailedToRead($"failed to read id ={id}", ex);
+                }
+            }
         
         }
     }
