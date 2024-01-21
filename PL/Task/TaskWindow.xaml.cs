@@ -45,7 +45,7 @@ namespace PL.Task
             InitializeComponent();
             var temp = s_bl?.Task.Read(id);
             Task = temp == null ? new() : temp!;
-           if(id == 0)
+            if (id == 0)
             {
                 Task = new BO.Task();
             }
@@ -55,11 +55,12 @@ namespace PL.Task
                 {
                     Task = s_bl!.Task.Read(id)!;
                 }
-                catch (BlFailedToRead ex) {
+                catch (BlFailedToRead ex)
+                {
                     throw new BlFailedToRead($"failed to read id ={id}", ex);
                 }
             }
-        
+
         }
     }
 }

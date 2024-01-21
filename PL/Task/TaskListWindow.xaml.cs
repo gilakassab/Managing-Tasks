@@ -68,5 +68,11 @@ namespace PL.Task
             var temp = s_bl?.Task.ReadAll();
             TaskList = temp == null ? new() : new(temp!);
         }
+
+        private void gridUpdate_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
+            new TaskWindow(task.Id).Show();
+        }
     }
 }
