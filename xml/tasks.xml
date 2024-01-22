@@ -61,21 +61,6 @@
     <EngineerId>982485477</EngineerId>
   </Task>
   <Task>
-    <Id>5</Id>
-    <Description>Decide on the shape of the feature</Description>
-    <Alias>Alias5</Alias>
-    <Milestone>false</Milestone>
-    <CreateAt>2024-01-01T00:00:00</CreateAt>
-    <RequiredEffortTime>P2D</RequiredEffortTime>
-    <Level>AdvancedBeginner</Level>
-    <Role>TeamLeader</Role>
-    <Start xsi:nil="true" />
-    <ForecastDate xsi:nil="true" />
-    <Deadline xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <EngineerId>982485477</EngineerId>
-  </Task>
-  <Task>
     <Id>6</Id>
     <Description>Work on the design</Description>
     <Alias>Alias6</Alias>
@@ -299,5 +284,20 @@
     <Deadline xsi:nil="true" />
     <Complete xsi:nil="true" />
     <EngineerId>113634844</EngineerId>
+  </Task>
+  <Task>
+    <Id>5</Id>
+    <Description />
+    <Alias>Alias5</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P2D</RequiredEffortTime>
+    <Level>AdvancedBeginner</Level>
+    <Role>TeamLeader</Role>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
+    <EngineerId>982485477</EngineerId>
   </Task>
 </ArrayOfTask>
