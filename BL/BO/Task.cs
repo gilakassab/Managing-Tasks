@@ -42,7 +42,9 @@ public class Task
     public EngineerInTask? Engineer { get; set; } = null;
 
     // תכונה שמייצגת את רמת הניסיון של המהנדס במשימה.
-    public EngineerExperience? Level { get; set; } = null;
+    public EngineerExperience? Level { get; set; } = null; 
+    // תכונה שמייצגת את תפקיד המהנדס במשימה.
+    public Roles? Role { get; set; } = null;
 
     // תכונה שמייצגת את הסטטוס של המשימה.
     public Status? Status { get; set; } = null;

@@ -62,8 +62,7 @@ internal class MilestoneImplementation : IMilestone
                     $"a milestone with Id: {milestoneAlias}",
                     $"M{milestoneAlias}",
                     true,
-                    DateTime.Now,
-                    null, null, null, null, null, null, null, null, null);
+                    DateTime.Now);
                 try
                 {
                     int milestoneId = _dal.Task.Create(doTask);
@@ -109,8 +108,7 @@ internal class MilestoneImplementation : IMilestone
                $"a milestone with Id: {0}",
                $"Start",
                true,
-               DateTime.Now,
-               null, null, null, null, null, null, null, null, null);
+               DateTime.Now);
 
         //משימות ששום משימה לא תלויה בהן
         var independentTasks = _dal.Task.ReadAll(t => !t.Milestone)
@@ -123,8 +121,7 @@ internal class MilestoneImplementation : IMilestone
                $"a milestone with Id: {milestoneAlias}",
                $"End",
                true,
-               DateTime.Now,
-               null, null, null, null, null, null, null, null, null);
+               DateTime.Now);
 
         //מחיקת כל התלויות הקודמות
         _dal.Dependency.ReadAll().ToList().ForEach(d => _dal.Dependency.Delete(d!.Id));
@@ -236,7 +233,7 @@ internal class MilestoneImplementation : IMilestone
             // קריאת אבן בדרך הקיים מהמסד
             DO.Task oldDoTask = _dal.Task.Read(t => t.Id == item.Id)!;
             // בנייה של משימה חדשה לפי המודל המקודם והמודל החדש
-            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, true, item.CreateAt, null, null, oldDoTask.Start, item.ForecastDate, item.Deadline, item.Complete, oldDoTask.Deliverables, item.Remarks, null);
+            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, true, item.CreateAt, null, null,null, oldDoTask.Start, item.ForecastDate, item.Deadline, item.Complete, oldDoTask.Deliverables, item.Remarks, null);
             _dal.Task.Update(doTask);
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -298,6 +295,7 @@ internal class MilestoneImplementation : IMilestone
                     task.CreateAt,
                     task.RequiredEffortTime,
                     task.Level,
+                    task.Role,
                     task.Start,
                     (DateTime)(date!) - (TimeSpan)(task.RequiredEffortTime!),
                     date,

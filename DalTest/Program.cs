@@ -180,7 +180,7 @@ namespace DalTest
                         taskRemarks = Console.ReadLine();
                         taskEngineerId = int.Parse(Console.ReadLine());
 
-                        s_dal.Task.Create(new DO.Task(0, taskDescription, taskAlias, taskMilestone, taskCreateAt, requiredEffortTime, taskLevel, taskStart, taskForecastDate, taskDeadline, taskComplete, taskDeliverables, taskRemarks, taskEngineerId));
+                        s_dal.Task.Create(new DO.Task(0, taskDescription, taskAlias, taskMilestone, taskCreateAt, requiredEffortTime, taskLevel,null, taskStart, taskForecastDate, taskDeadline, taskComplete, taskDeliverables, taskRemarks, taskEngineerId));
                         break;
                     case 2:
                         int id;
@@ -223,7 +223,7 @@ namespace DalTest
                         taskRemarksUpdate = Console.ReadLine();
                         taskEngineerIdUpdate = int.Parse(Console.ReadLine());
 
-                        s_dal.Task.Update(new DO.Task(idTaskUpdate, taskDescriptionUpdate, taskAliasUpdate, taskMilestoneUpdate, taskCreateAtUpdate, requiredEffortTimeUpdate, taskLevelUpdate, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate, taskDeliverablesUpdate, taskRemarksUpdate, taskEngineerIdUpdate)); break;
+                        s_dal.Task.Update(new DO.Task(idTaskUpdate, taskDescriptionUpdate, taskAliasUpdate, taskMilestoneUpdate, taskCreateAtUpdate, requiredEffortTimeUpdate, taskLevelUpdate,null, taskStartUpdate, taskForecastDateUpdate, taskDeadlineUpdate, taskCompleteUpdate, taskDeliverablesUpdate, taskRemarksUpdate, taskEngineerIdUpdate)); break;
                     case 5:
                         int idDelete;
                         Console.WriteLine("Enter id for deleting");

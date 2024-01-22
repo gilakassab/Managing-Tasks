@@ -10,7 +10,7 @@
 /// <param name="CreateAt"></param>
 /// <param name="RequiredEffortTime"></param>
 /// <param name="Level"></param>
-/// <param name="IsActive"></param>
+/// <param name="Role"></param>
 /// <param name="Start"></param>
 /// <param name="ForecastDate"></param>
 /// <param name="Deadline"></param>
@@ -27,6 +27,7 @@ public record Task
     DateTime CreateAt,
     TimeSpan? RequiredEffortTime=null,
     EngineerExperience? Level = null,
+    Roles? Role = null,
     DateTime? Start = null,
     //DateTime? ScheduledDate = null,
     //DateTime? BaselineStartDate = null,

@@ -74,7 +74,7 @@ internal class TaskImplementation : ITask
 
         string configFile = "data-config";
         XElement configElement = XMLTools.LoadListFromXMLElement(configFile);
-        configElement.Element("NextTaskId")?.SetValue("0");
+        configElement.Element("NextTaskId")?.SetValue("1");
         XMLTools.SaveListToXMLElement(configElement, configFile);
     }
 }

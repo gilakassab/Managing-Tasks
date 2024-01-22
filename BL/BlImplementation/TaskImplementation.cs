@@ -16,7 +16,7 @@ internal class TaskImplementation : ITask
 
         // יצירת אובייקט DO.Task מתוך ה-BO שהתקבל
         DO.Task doTask = new DO.Task
-        (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
+        (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, (DO.Roles)item.Role!, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
 
         try
         {
@@ -118,6 +118,13 @@ internal class TaskImplementation : ITask
             level = (EngineerExperience)doTask.Level;
         }
 
+        // המרת תפקיד המהנדס
+        Roles? Role = null;
+        if (doTask.Role != null)
+        {
+            Role = (Roles)doTask.Role;
+        }
+
         // החזרת אובייקט מסוג BO.Task עם המידע המובנה
         return new BO.Task()
         {
@@ -128,6 +135,7 @@ internal class TaskImplementation : ITask
             CreateAt = doTask.CreateAt,
             RequiredEffortTime = doTask.RequiredEffortTime,
             Level = level,
+            Role = Role,
             Start = doTask.Start,
             ForecastDate = doTask.ForecastDate,
             Deadline = doTask.Deadline,
@@ -196,9 +204,16 @@ internal class TaskImplementation : ITask
 
             // המרת רמת הניסיון של המהנדס
             EngineerExperience? level = null;
-            if (doTask.Level != null)
+            if (doTask!.Level != null)
             {
                 level = (EngineerExperience)doTask.Level;
+            }
+
+            // המרת תפקיד המהנדס
+            Roles? Role = null;
+            if (doTask.Role != null)
+            {
+                Role = (Roles)doTask.Role;
             }
 
             // הוספת המשימה לרשימה שתוחזר
@@ -210,6 +225,7 @@ internal class TaskImplementation : ITask
                 Milestone = milestone,
                 RequiredEffortTime = doTask.RequiredEffortTime,
                 Level = level,
+                Role = Role,
                 CreateAt = doTask.CreateAt,
                 Start = doTask.Start,
                 ForecastDate = doTask.ForecastDate,
@@ -256,7 +272,7 @@ internal class TaskImplementation : ITask
             }
 
             // יצירת אובייקט DO.Task מתוך ה-BO שהתקבל
-            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
+            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, (DO.Roles)item.Role, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
 
             // עדכון המשימה במסד הנתונים
             _dal.Task.Update(doTask);
