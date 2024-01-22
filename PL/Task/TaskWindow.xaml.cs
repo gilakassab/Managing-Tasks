@@ -1,4 +1,5 @@
 ﻿using BO;
+using DalTest;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,30 +38,54 @@ namespace PL.Task
         public BO.Status State { get; set; } = BO.Status.None;
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (Task.Id == 0)
+            {
+                try {  
+                    s_bl.Task.Create(Task);
+                    MessageBox.Show("addition successful", "Confirmation", MessageBoxButton.OK);
+                    this.Close();
+                }
+                catch(Exception ex)
+                { 
+                    MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+                }
+            }
+            else
+            { 
+                try
+                {
+                    s_bl.Task.Update(Task);
+                    MessageBox.Show("updation successful", "Confirmation", MessageBoxButton.OK);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+                  
+                }
+            }
         }
 
         public TaskWindow(int id = 0)
         {
             InitializeComponent();
-            var temp = s_bl?.Task.Read(id);
-            Task = temp == null ? new() : temp!;
-            if (id == 0)
-            {
-                Task = new BO.Task();
-            }
-            else
+            //var temp = s_bl?.Task.Read(id);
+            //Task = temp == null ? new() : temp!;
+            if (id != 0)
             {
                 try
                 {
                     Task = s_bl!.Task.Read(id)!;
                 }
-                catch (BlFailedToRead ex)
+                catch (Exception ex)
                 {
-                    throw new BlFailedToRead($"failed to read id ={id}", ex);
+                    throw new Exception($"{ex}");
                 }
             }
-
+            else
+            {
+                Task = new BO.Task();
+            }
         }
     }
 }
