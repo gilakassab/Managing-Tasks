@@ -3,6 +3,7 @@ using DalTest;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace PL.Task
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+
         public BO.Task Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }
@@ -32,6 +34,15 @@ namespace PL.Task
 
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
+
+        public ObservableCollection<BO.Engineer> EngineersList
+        {
+            get { return (ObservableCollection<BO.Engineer>)GetValue(EngineerListProperty); }
+            set { SetValue(EngineerListProperty, value); }
+        }
+
+        public static readonly DependencyProperty EngineerListProperty =
+            DependencyProperty.Register("EngineersList", typeof(ObservableCollection<BO.Engineer>), typeof(TaskListWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience EngExperience { get; set; } = BO.EngineerExperience.None;
         public BO.Roles Role { get; set; } = BO.Roles.None;
@@ -69,8 +80,8 @@ namespace PL.Task
         public TaskWindow(int id = 0)
         {
             InitializeComponent();
-            //var temp = s_bl?.Task.Read(id);
-            //Task = temp == null ? new() : temp!;
+            var temp = s_bl?.Engineer.ReadAll();
+            EngineersList = temp == null ? new() : new(temp!);
             if (id != 0)
             {
                 try
