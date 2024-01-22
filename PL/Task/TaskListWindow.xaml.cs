@@ -32,6 +32,7 @@ namespace PL.Task
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.Task>), typeof(TaskListWindow), new PropertyMetadata(null));
         public BO.EngineerExperience EngExperience { get; set; } = BO.EngineerExperience.None;
+        public BO.Status Status { get; set; } = BO.Status.None;
         public BO.Roles Role { get; set; } = BO.Roles.None;
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -49,10 +50,23 @@ namespace PL.Task
 
         private void cbSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var temp = (EngExperience == BO.EngineerExperience.None && Role == BO.Roles.None) ?
-              s_bl?.Task.ReadAll() : ((EngExperience != BO.EngineerExperience.None && Role != BO.Roles.None) ?
-              s_bl?.Task.ReadAll(item => item.Role == Role && item.Level == EngExperience)! : ((EngExperience == BO.EngineerExperience.None) ?
-             s_bl?.Task.ReadAll(item => item.Role == Role)! : s_bl?.Task.ReadAll(item => item.Level == EngExperience)!));
+            var temp = (IEnumerable<BO.Task>?)null;
+            if (EngExperience != BO.EngineerExperience.None && Role != BO.Roles.None && Status != BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Role == Role && item.Level == EngExperience && item.Status == Status)!;
+            if (EngExperience != BO.EngineerExperience.None && Role != BO.Roles.None && Status == BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Role == Role && item.Level == EngExperience)!;
+            if (EngExperience != BO.EngineerExperience.None && Role == BO.Roles.None && Status != BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Level == EngExperience && item.Status == Status)!;
+            if (EngExperience != BO.EngineerExperience.None && Role == BO.Roles.None && Status == BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Level == EngExperience)!;
+            if (EngExperience == BO.EngineerExperience.None && Role != BO.Roles.None && Status != BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Role == Role && item.Status == Status)!;
+            if (EngExperience == BO.EngineerExperience.None && Role != BO.Roles.None && Status == BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Role == Role)!;
+            if (EngExperience == BO.EngineerExperience.None && Role == BO.Roles.None && Status != BO.Status.None)
+                temp = s_bl?.Task.ReadAll(item => item.Status == Status)!;
+            if (EngExperience == BO.EngineerExperience.None && Role == BO.Roles.None && Status == BO.Status.None)
+                temp = s_bl?.Task.ReadAll()!;
             TaskList = temp == null ? new() : new(temp!);
         }
 
