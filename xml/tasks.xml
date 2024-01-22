@@ -151,6 +151,21 @@
     <EngineerId>165324683</EngineerId>
   </Task>
   <Task>
+    <Id>11</Id>
+    <Description>stage 4 in the programming</Description>
+    <Alias>P4</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P30D</RequiredEffortTime>
+    <Level>Advanced</Level>
+    <Role>Programmer</Role>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
+    <EngineerId>165324683</EngineerId>
+  </Task>
+  <Task>
     <Id>12</Id>
     <Description>stage 5 in the programming</Description>
     <Alias>P5</Alias>
@@ -271,28 +286,13 @@
     <EngineerId>934759393</EngineerId>
   </Task>
   <Task>
-    <Id>11</Id>
-    <Description>stage 4 in the programming</Description>
-    <Alias>P4</Alias>
-    <Milestone>false</Milestone>
-    <CreateAt>2024-01-01T00:00:00</CreateAt>
-    <RequiredEffortTime>P30D</RequiredEffortTime>
-    <Level>Advanced</Level>
-    <Role>GraphicArtist</Role>
-    <Start xsi:nil="true" />
-    <ForecastDate xsi:nil="true" />
-    <Deadline xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <EngineerId>165324683</EngineerId>
-  </Task>
-  <Task>
     <Id>20</Id>
     <Description>Update all platforms</Description>
     <Alias>Alias20</Alias>
     <Milestone>false</Milestone>
     <CreateAt>2024-01-01T00:00:00</CreateAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
-    <Level>AdvancedBeginner</Level>
+    <Level>Beginner</Level>
     <Role>TeamLeader</Role>
     <Start xsi:nil="true" />
     <ForecastDate xsi:nil="true" />
