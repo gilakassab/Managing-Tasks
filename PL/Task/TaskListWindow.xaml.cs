@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace PL.Task
     public partial class TaskListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        
+
         public ObservableCollection<BO.Task> TaskList
         {
             get { return (ObservableCollection<BO.Task>)GetValue(TaskListProperty); }
@@ -36,7 +37,15 @@ namespace PL.Task
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            new TaskWindow().Show();
+            try
+            {
+                new TaskWindow().Show();
+            }
+            catch(Exception ex) {
+                MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+                
+            }
+
         }
 
         private void cbSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,11 +91,28 @@ namespace PL.Task
             var temp = s_bl?.Task.ReadAll();
             TaskList = temp == null ? new() : new(temp!);
         }
+        private void UpdateListAfterTaskWindowClosed()
+        {
+            var temp = s_bl?.Task.ReadAll();
+            TaskList = temp == null ? new() : new(temp!);
 
+        }
         private void gridUpdate_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
-            new TaskWindow(task.Id).Show();
+            try
+            {
+                BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
+                var taskWindow = new TaskWindow(task.Id);
+                taskWindow.Closed += (sender, e) => UpdateListAfterTaskWindowClosed();
+                taskWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+
+            }
+
         }
+      
     }
 }

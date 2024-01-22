@@ -15,11 +15,13 @@ internal class TaskImplementation : ITask
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         // יצירת אובייקט DO.Task מתוך ה-BO שהתקבל
-        DO.Task doTask = new DO.Task
-        (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, (DO.Roles)item.Role!, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
+      
 
         try
         {
+            DO.Task doTask = new DO.Task
+      (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, (DO.Roles)item.Role!, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
+
             // יצירת רשימת תלות על פי התלות שהוגדרו ב-BO
             var dependenciesToCreate = item.Dependencies!
                 .Select(task => new DO.Dependency
