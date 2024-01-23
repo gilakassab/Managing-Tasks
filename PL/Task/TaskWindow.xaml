@@ -64,20 +64,19 @@
             <ComboBox ItemsSource="{Binding EngineersList}" 
           DisplayMemberPath="Name" 
           SelectedValuePath="Id"
-          SelectedValue="{Binding Task.Engineer.Id, Mode=TwoWay}" 
-          IsEnabled="True"/>
+          SelectedValue="{Binding SelectedEngineer, Mode=TwoWay}" />
         </StackPanel>
 
         <!-- Labels and Inputs - עמודה שנייה -->
         <StackPanel Grid.Column="1" Margin="5">
             <Label Content="Level:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}" 
-SelectedValue="{Binding Task.Level, Mode=TwoWay, NotifyOnValidationError=true, 
+SelectedValue="{Binding TaskExperience, Mode=TwoWay, NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}"/>
 
             <Label Content="Role:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
-SelectedValue="{Binding Task.Role, Mode=TwoWay, NotifyOnValidationError=true, 
+SelectedValue="{Binding TaskRole, Mode=TwoWay, NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}"/>
 
             <Label Content="Status:"/>

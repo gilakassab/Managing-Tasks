@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>1</Id>
-    <Description>Decide what is the next project</Description>
-    <Alias>Alias1</Alias>
-    <Milestone>false</Milestone>
-    <CreateAt>2024-01-01T00:00:00</CreateAt>
-    <RequiredEffortTime>P10D</RequiredEffortTime>
-    <Level>Expert</Level>
-    <Role>TeamLeader</Role>
-    <Start xsi:nil="true" />
-    <ForecastDate xsi:nil="true" />
-    <Deadline xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <EngineerId>248728764</EngineerId>
-  </Task>
-  <Task>
     <Id>2</Id>
     <Description>Check the requirements</Description>
     <Alias>Alias2</Alias>
@@ -138,21 +123,6 @@
   <Task>
     <Id>13</Id>
     <Description>stage 6 in the programming</Description>
-    <Alias>P6</Alias>
-    <Milestone>false</Milestone>
-    <CreateAt>2024-01-01T00:00:00</CreateAt>
-    <RequiredEffortTime>P30D</RequiredEffortTime>
-    <Level>Advanced</Level>
-    <Role>Programmer</Role>
-    <Start xsi:nil="true" />
-    <ForecastDate xsi:nil="true" />
-    <Deadline xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <EngineerId>165324683</EngineerId>
-  </Task>
-  <Task>
-    <Id>14</Id>
-    <Description>stage 7 in the programming</Description>
     <Alias>P6</Alias>
     <Milestone>false</Milestone>
     <CreateAt>2024-01-01T00:00:00</CreateAt>
@@ -300,6 +270,36 @@
     <Complete xsi:nil="true" />
     <Deliverables>newwwwwwwwwww</Deliverables>
     <Remarks>newwwwwwwwwwwwww</Remarks>
+    <EngineerId>165324683</EngineerId>
+  </Task>
+  <Task>
+    <Id>1</Id>
+    <Description>Decide what is the next project</Description>
+    <Alias>Alias12</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P10D</RequiredEffortTime>
+    <Level>AdvancedBeginner</Level>
+    <Role>TeamLeader</Role>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
+    <EngineerId>248728764</EngineerId>
+  </Task>
+  <Task>
+    <Id>14</Id>
+    <Description>stage 7 in the programming</Description>
+    <Alias>P6</Alias>
+    <Milestone>false</Milestone>
+    <CreateAt>2024-01-01T00:00:00</CreateAt>
+    <RequiredEffortTime>P30D</RequiredEffortTime>
+    <Level>Advanced</Level>
+    <Role>Programmer</Role>
+    <Start xsi:nil="true" />
+    <ForecastDate xsi:nil="true" />
+    <Deadline xsi:nil="true" />
+    <Complete xsi:nil="true" />
     <EngineerId>165324683</EngineerId>
   </Task>
 </ArrayOfTask>

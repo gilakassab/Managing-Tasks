@@ -48,6 +48,28 @@ namespace PL.Task
 
         }
 
+        private void UpdateListAfterTaskWindowClosed()
+        {
+            var temp = s_bl?.Task.ReadAll();
+            TaskList = temp == null ? new() : new(temp!);
+
+        }
+
+        private void gridUpdate_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
+                var taskWindow = new TaskWindow(task.Id);
+                taskWindow.Closed += (sender, e) => UpdateListAfterTaskWindowClosed();
+                taskWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+            }
+        }
+
         private void cbSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var temp = (IEnumerable<BO.Task>?)null;
@@ -70,46 +92,11 @@ namespace PL.Task
             TaskList = temp == null ? new() : new(temp!);
         }
 
-        //private void cbEngineerExperience_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    Role = BO.Roles.None;
-        //    var temp = (EngExperience == BO.EngineerExperience.None) ?
-        //        s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Level == EngExperience)!;
-        //    TaskList = temp == null ? new() : new(temp!);
-        //}
-
-        //private void cbRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var temp = (Role == BO.Roles.None) ?
-        //        s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Role == Role)!;
-        //    TaskList = temp == null ? new() : new(temp!);
-        //}
-
         public TaskListWindow()
         {
             InitializeComponent();
             var temp = s_bl?.Task.ReadAll();
             TaskList = temp == null ? new() : new(temp!);
-        }
-        private void UpdateListAfterTaskWindowClosed()
-        {
-            var temp = s_bl?.Task.ReadAll();
-            TaskList = temp == null ? new() : new(temp!);
-
-        }
-        private void gridUpdate_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
-                var taskWindow = new TaskWindow(task.Id);
-                taskWindow.Closed += (sender, e) => UpdateListAfterTaskWindowClosed();
-                taskWindow.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
-            }
         }
     }
 }
