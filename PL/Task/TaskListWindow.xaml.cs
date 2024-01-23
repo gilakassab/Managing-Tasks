@@ -109,10 +109,7 @@ namespace PL.Task
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
-
             }
-
         }
-      
     }
 }
