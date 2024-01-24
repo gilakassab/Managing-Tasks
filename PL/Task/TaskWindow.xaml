@@ -33,32 +33,32 @@
                 </Style>
             </StackPanel.Resources>
 
-            <Label Content="Id:"/>
-            <TextBox Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <Label Content="Id:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="Description:"/>
-            <TextBox Text="{Binding Task.Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label Content="Description:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-            <Label Content="Alias:"/>
-            <TextBox Text="{Binding Task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label Content="Alias:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-            <Label Content="Deliverables:"/>
-            <TextBox Text="{Binding Task.Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label Content="Deliverables:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-            <Label Content="Remarks:"/>
-            <TextBox Text="{Binding Task.Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label Content="Remarks:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-            <Label Content="Create At:"/>
+            <Label Content="Create At:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <DatePicker SelectedDate="{Binding Task.CreateAt, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
 
-            <Label Content="Required Effort Time:"/>
-            <TextBox Text="{Binding Task.RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label Content="Required Effort Time:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-            <Label Content="EnginId:"/>
-            <TextBox Text="{Binding Task.Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label Content="EnginId:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="EngineerName:"/>
-            <TextBox Text="{Binding Task.Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <Label  Foreground="Indigo" FontWeight="Bold" FontSize="18" Content="EngineerName:"/>
+            <TextBox Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David" Text="{Binding Task.Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
             <Label Content="Choose An Engineer"/>
             <ComboBox ItemsSource="{Binding EngineersList}" 
@@ -70,37 +70,37 @@
 
         <!-- Labels and Inputs - עמודה שנייה -->
         <StackPanel Grid.Column="1" Margin="5">
-            <Label Content="Level:"/>
+            <Label Content="Level:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}" 
           SelectedItem="{Binding EngExperience, Mode=TwoWay}" 
           SelectionChanged="ComboBoxEngExperience_SelectionChanged"/>
 
-            <Label Content="Role:"/>
+            <Label Content="Role:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
 SelectedValue="{Binding Role, Mode=TwoWay}"
                       SelectionChanged="ComboBoxRole_SelectionChanged" />
 
-            <Label Content="Status:"/>
+            <Label Content="Status:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
 SelectedValue="{Binding Task.Status, Mode=TwoWay, NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="ForecastDate:"/>
+            <Label Content="ForecastDate:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <DatePicker SelectedDate="{Binding Task.ForecastDate,Mode=TwoWay, 
                 NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="Start:"/>
+            <Label Content="Start:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <DatePicker SelectedDate="{Binding Task.Start, Mode=TwoWay, 
                 NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}"/>
 
-            <Label Content="Deadline:"/>
+            <Label Content="Deadline:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <DatePicker SelectedDate="{Binding Task.Deadline, Mode=TwoWay,
                 NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="Complete:"/>
+            <Label Content="Complete:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <DatePicker SelectedDate="{Binding Task.Complete, Mode=TwoWay,
                 NotifyOnValidationError=true, 
 ValidatesOnExceptions=true}"/>
@@ -108,22 +108,22 @@ ValidatesOnExceptions=true}"/>
 
         <!-- Labels and Inputs - עמודה שלישית -->
         <StackPanel Grid.Column="2" Margin="5">
-            <Label Content="MilestoneId:"/>
+            <Label Content="MilestoneId:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <TextBox Text="{Binding Task.Milestone.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="MilestoneAlias:"/>
+            <Label Content="MilestoneAlias:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <TextBox Text="{Binding Task.Milestone.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-            <Label Content="Dependencies:"/>
+            <Label Content="Dependencies:" Foreground="Indigo" FontWeight="Bold" FontSize="18"/>
             <ListBox ItemsSource="{Binding Task.Dependencies, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
          SelectionMode="Single" MouseDoubleClick="DependenciesListBox_MouseDoubleClick">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBox Text="{Binding Id}" IsEnabled="False"/>
-                            <TextBox Text="{Binding Description}" IsEnabled="False"/>
-                            <TextBox Text="{Binding Alias}" IsEnabled="False"/>
-                            <TextBox Text="{Binding Status}" IsEnabled="False"/>
+                            <TextBox Foreground="Indigo"  FontSize="14" Text="{Binding Id, Mode=TwoWay,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Foreground="Indigo"  FontSize="14" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Foreground="Indigo"  FontSize="14" Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Foreground="Indigo"  FontSize="14" Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
