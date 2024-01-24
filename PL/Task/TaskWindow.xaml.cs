@@ -1,7 +1,12 @@
 ﻿using BO;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+
 namespace PL.Task;
 
 /// <summary>
@@ -20,6 +25,11 @@ public partial class TaskWindow : Window
     public static readonly DependencyProperty TaskProperty =
         DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
 
+
+    public BO.EngineerExperience EngExperience { get; set; }/* = BO.EngineerExperience.None;*/
+    public int Engineer { get; set; } = 0;
+    public int DepTask { get; set; } = 0;
+    public BO.Roles Role { get; set; } /*= BO.Roles.None;*/
     public ObservableCollection<BO.Engineer> EngineersList
     {
         get { return (ObservableCollection<BO.Engineer>)GetValue(EngineerListProperty); }
@@ -29,31 +39,15 @@ public partial class TaskWindow : Window
     public static readonly DependencyProperty EngineerListProperty =
         DependencyProperty.Register("EngineersList", typeof(ObservableCollection<BO.Engineer>), typeof(TaskWindow), new PropertyMetadata(null));
 
-    public BO.EngineerExperience TaskExperience
+    public ObservableCollection<BO.TaskInList> TasksList
     {
-        get { return (BO.EngineerExperience)GetValue(TaskExperienceProperty); }
-        set
-        {
-            SetValue(TaskExperienceProperty, value);
-            LevelChanged(value);
-        }
+        get { return (ObservableCollection<BO.TaskInList>)GetValue(TasksListProperty); }
+        set { SetValue(TasksListProperty, value); }
     }
 
-    public static readonly DependencyProperty TaskExperienceProperty =
-      DependencyProperty.Register("TaskExperience", typeof(BO.EngineerExperience), typeof(TaskWindow), new PropertyMetadata(null));
+    public static readonly DependencyProperty TasksListProperty =
+        DependencyProperty.Register("TasksList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
 
-    public BO.Roles TaskRole
-    {
-        get { return (BO.Roles)GetValue(TaskRoleProperty); }
-        set
-        {
-            SetValue(TaskRoleProperty, value);
-            RoleChanged(value);
-        }
-    }
-
-    public static readonly DependencyProperty TaskRoleProperty =
-      DependencyProperty.Register("TaskRole", typeof(BO.Roles), typeof(TaskWindow), new PropertyMetadata(null));
 
     public int SelectedEngineer
     {
@@ -80,13 +74,81 @@ public partial class TaskWindow : Window
     public static readonly DependencyProperty SelectedEngineerProperty =
       DependencyProperty.Register("SelectedEngineer", typeof(int), typeof(TaskWindow), new PropertyMetadata(null));
 
+    private void ComboBoxEngExperience_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (Task != null && Task.Level != null)
+        {
+            Task.Level = EngExperience;
+            LevelChanged(EngExperience);
+        }
+    }
+    private void ComboBoxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (Task != null && Task.Role != null)
+        {
+            Task.Role = Role;
+            RoleChanged(Role);
+        }
+    }
+    private void ComboBoxEngineer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            if (Engineer != 0)
+            {
+                Engineer eng = s_bl.Engineer.Read(Engineer)!;
+                Task.Engineer = new BO.EngineerInTask() { Id = eng.Id, Name = eng.Name };
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+        }
+    }
+    private void ComboBoxDepTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            if (DepTask != 0)
+            {
+                BO.Task dep = s_bl.Task.Read(DepTask)!;
+                Task.Dependencies.Add(new BO.TaskInList()
+                {
+                    Id = dep.Id,
+                    Alias = dep.Alias,
+                    Description = dep.Description,
+                    Status = dep.Status
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+        }
+    }
+
+    private void DependenciesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is ListBox listBox && listBox.SelectedItem != null)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete the selected item?", "Confirmation", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Task.Dependencies!.Remove((BO.TaskInList)listBox.SelectedItem);
+            }
+
+            listBox.SelectedItem = null;
+        }
+    }
+
     private void RoleChanged(Roles value)
     {
         if (value == Roles.None)
             Task.Role = null; 
         else
             Task.Role = value;
-        //FindEngineers();
+        FindEngineers();
     }
 
     private void LevelChanged(EngineerExperience value)
@@ -146,8 +208,17 @@ public partial class TaskWindow : Window
             try
             {
                 Task = s_bl!.Task.Read(id)!;
-                TaskRole = Task.Role == null ? Roles.None : Task.Role.Value;
-                TaskExperience = Task.Level == null ? EngineerExperience.None : Task.Level.Value;
+                var temp = s_bl?.Task.ReadAll().Select(t => new BO.TaskInList()
+                {
+                    Id = t.Id,
+                    Alias = t.Alias,
+                    Description = t.Description,
+                    Status = t.Status
+                }).ToList();
+                TasksList = temp == null ? new() : new(temp!);
+                MessageBox.Show($"{TasksList[1]}", "Confirmation", MessageBoxButton.YesNo);
+                Role = Task.Role == null ? Roles.None : Task.Role.Value;
+                EngExperience = Task.Level == null ? EngineerExperience.None : Task.Level.Value;
             }
             catch (Exception ex)
             {
@@ -159,8 +230,16 @@ public partial class TaskWindow : Window
             try
             {
                 Task = new BO.Task();
-                TaskRole = Roles.None;
-                TaskExperience = EngineerExperience.None;
+                var temp = s_bl?.Task.ReadAll().Select(t => new BO.TaskInList()
+                {
+                    Id = t.Id,
+                    Alias = t.Alias,
+                    Description = t.Description,
+                    Status = t.Status
+                }).ToList();
+                TasksList = temp == null ? new() : new(temp!);
+                Role = Roles.None;
+                EngExperience = EngineerExperience.None;
             }
             catch (Exception ex)
             {

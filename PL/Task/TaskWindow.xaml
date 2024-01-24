@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskWindow" Height="825" Width="1190"
-        DataContext="{Binding RelativeSource={RelativeSource Self}, Mode=TwoWay, Path=.}"> 
+        DataContext="{Binding RelativeSource={RelativeSource Self}, Mode=TwoWay, Path=.}">
     <!--DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}"-->
     <!--<Window.DataContext>
         <local:TaskViewModel/>
@@ -55,29 +55,30 @@
             <TextBox Text="{Binding Task.RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
             <Label Content="EnginId:"/>
-            <TextBox Text="{Binding Task.Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <TextBox Text="{Binding Task.Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
             <Label Content="EngineerName:"/>
-            <TextBox Text="{Binding Task.Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+            <TextBox Text="{Binding Task.Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
             <Label Content="Choose An Engineer"/>
             <ComboBox ItemsSource="{Binding EngineersList}" 
           DisplayMemberPath="Name" 
           SelectedValuePath="Id"
-          SelectedValue="{Binding SelectedEngineer, Mode=TwoWay}" />
+          SelectedValue="{Binding Engineer, Mode=TwoWay}" 
+          SelectionChanged="ComboBoxEngineer_SelectionChanged"/>
         </StackPanel>
 
         <!-- Labels and Inputs - עמודה שנייה -->
         <StackPanel Grid.Column="1" Margin="5">
             <Label Content="Level:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}" 
-SelectedValue="{Binding TaskExperience, Mode=TwoWay, NotifyOnValidationError=true, 
-ValidatesOnExceptions=true}"/>
+          SelectedItem="{Binding EngExperience, Mode=TwoWay}" 
+          SelectionChanged="ComboBoxEngExperience_SelectionChanged"/>
 
             <Label Content="Role:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
-SelectedValue="{Binding TaskRole, Mode=TwoWay, NotifyOnValidationError=true, 
-ValidatesOnExceptions=true}"/>
+SelectedValue="{Binding Role, Mode=TwoWay}"
+                      SelectionChanged="ComboBoxRole_SelectionChanged" />
 
             <Label Content="Status:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
@@ -115,20 +116,26 @@ ValidatesOnExceptions=true}"/>
 
             <Label Content="Dependencies:"/>
             <ListBox ItemsSource="{Binding Task.Dependencies, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-         SelectionMode="Multiple">
-                    <ListBox.ItemTemplate>
+         SelectionMode="Single" MouseDoubleClick="DependenciesListBox_MouseDoubleClick">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBox Text="{Binding Id, Mode=TwoWay,  ValidatesOnExceptions=true}" IsEnabled="False"/>
-                            <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
-                            <TextBox Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
-                            <TextBox Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Id}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Description}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Alias}" IsEnabled="False"/>
+                            <TextBox Text="{Binding Status}" IsEnabled="False"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Add Dependency" Width="120"/>
-            <Button Content="Remove Dependency" Width="120"/>
+
+            <Label Content="Choose more dependencies"/>
+            <ComboBox ItemsSource="{Binding TasksList}" 
+DisplayMemberPath="Name" 
+SelectedValuePath="Id"
+SelectedValue="{Binding DepTask, Mode=TwoWay}" 
+SelectionChanged="ComboBoxDepTasks_SelectionChanged"/>
+
         </StackPanel>
 
         <!-- Buttons -->
@@ -136,8 +143,8 @@ ValidatesOnExceptions=true}"/>
             <Button Grid.Row="9" Grid.Column="0" 
 Content="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
 HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" Padding="5"   Click="btnAddUpdate_Click"/>
-            
-            
+
+
         </StackPanel>
     </Grid>
 </Window>
