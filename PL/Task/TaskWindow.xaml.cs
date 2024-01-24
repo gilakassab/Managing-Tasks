@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -216,7 +217,6 @@ public partial class TaskWindow : Window
                     Status = t.Status
                 }).ToList();
                 TasksList = temp == null ? new() : new(temp!);
-                MessageBox.Show($"{TasksList[1]}", "Confirmation", MessageBoxButton.YesNo);
                 Role = Task.Role == null ? Roles.None : Task.Role.Value;
                 EngExperience = Task.Level == null ? EngineerExperience.None : Task.Level.Value;
             }
