@@ -72,7 +72,7 @@ Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Select
         </DataTemplate>
     </Window.Resources>-->
 
-   
+
     <Grid>
         <!-- External Grid -->
         <Grid.RowDefinitions>
@@ -93,25 +93,44 @@ Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Select
             </Grid.ColumnDefinitions>
 
             <!-- EngineerExperience ComboBox -->
-            <Label Content="EngineerExperience" Grid.Column="0" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="EngineerExperience" Grid.Column="0" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" FontWeight="Bold"  Foreground="Indigo" FontSize="18"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}"  
                       SelectedValue="{Binding EngExperience, Mode=TwoWay}"
-                      Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"/>
+                      Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"  Foreground="Indigo"  FontWeight="Bold" FontSize="18" />
 
             <!-- Roles ComboBox -->
-            <Label Content="Roles" Grid.Column="2" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="Roles" Grid.Column="2" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Indigo" FontSize="18"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"  
                       SelectedValue="{Binding Role, Mode=TwoWay}"
-                      Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"/>
+                      Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"  Foreground="Indigo"  FontWeight="Bold" FontSize="18"/>
 
             <!-- Status ComboBox -->
-            <Label Content="Status" Grid.Column="4" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="Status" Grid.Column="4" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Indigo" FontSize="18"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"  
                       SelectedValue="{Binding Status, Mode=TwoWay}"
-                      Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"/>
+                      Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbSelector_SelectionChanged"
+                       FontWeight="Bold" FontSize="18"
+                      Foreground="Indigo"/>
+
+
         </Grid>
-        <ListView>
-            <ListView.ItemTemplate ="{StaticResource MyDataTemplate}">
-                <DataTemplate x:Key="MyDataTemplate" DataType="local:TaskList"  >
-                    <StackPanel>
-                            <TextBlock Grid.Row="1" Text="{Binding Path=Description}" />
+        <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding TaskList}" MouseDoubleClick="gridUpdate_DoubleClick" Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="{Binding Description}" FontWeight="Bold" Foreground="Indigo" TextDecorations="Underline" FontSize="16" />
+                        <TextBlock Text="{Binding Id}"  FontSize="16" />
+                        <TextBlock Text="{Binding Alias}"  FontSize="16" />
+                        <TextBlock Text="{Binding Status}"  FontSize="16" />
+                        <!--<TextBlock Text="{Binding Start}"  FontSize="14" />
+                        <TextBlock Text="{Binding Deadline}"  FontSize="14" />-->
+                        <!--<TextBlock Text="{Binding Engineer.Id}"  FontSize="14" />-->
+                        <TextBlock Text="{Binding Engineer.Name}"   FontSize="16" />
+                        <TextBlock Text="{Binding Role}"  FontSize="16" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAdd_Click" Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David"/>
+    </Grid>
+    </Window>
