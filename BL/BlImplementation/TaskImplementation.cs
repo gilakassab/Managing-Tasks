@@ -15,24 +15,37 @@ internal class TaskImplementation : ITask
         Tools.ValidateNonEmptyString(item.Alias, nameof(item.Alias));
 
         // יצירת אובייקט DO.Task מתוך ה-BO שהתקבל
-      
-
         try
         {
-            DO.Task doTask = new DO.Task
-      (item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level!, (DO.Roles)item.Role!, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer!.Id);
+            DO.Task doTask = new DO.Task(
+                item.Id, item.Description,
+                item.Alias,
+                false,
+                item.CreateAt,
+                item.RequiredEffortTime,
+                item.Level != null ? (DO.EngineerExperience)item.Level : null,
+                item.Role != null ? (DO.Roles)item.Role : null,
+                item.Start,
+                item.ForecastDate,
+                item.Deadline,
+                item.Complete,
+                item.Deliverables,
+                item.Remarks,
+                (item.Engineer != null ? item.Engineer.Id : null));
 
             // יצירת רשימת תלות על פי התלות שהוגדרו ב-BO
-            var dependenciesToCreate = item.Dependencies!
+            var dependenciesToCreate = item.Dependencies != null ? item.Dependencies
                 .Select(task => new DO.Dependency
                 {
                     DependentTask = item.Id,
                     DependsOnTask = task.Id
                 })
-                .ToList();
-
+                .ToList() : (List<DO.Dependency>?)null;
             // יצירת כל תלות המשימה באמצעות ה-Dependency ב-DAL
-            dependenciesToCreate.ForEach(dependency => _dal.Dependency.Create(dependency));
+            if (dependenciesToCreate != null)
+            {
+                dependenciesToCreate.ForEach(dependency => _dal.Dependency.Create(dependency));
+            }
 
             // יצירת המשימה ב-DAL והחזרת המזהה החדש שנוצר
             int newId = _dal.Task.Create(doTask);
@@ -274,7 +287,22 @@ internal class TaskImplementation : ITask
             }
 
             // יצירת אובייקט DO.Task מתוך ה-BO שהתקבל
-            DO.Task doTask = new DO.Task(item.Id, item.Description, item.Alias, false, item.CreateAt, item.RequiredEffortTime, (DO.EngineerExperience)item.Level, (DO.Roles)item.Role, item.Start, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.Engineer.Id);
+            DO.Task doTask = new DO.Task(
+               item.Id, 
+               item.Description,
+               item.Alias,
+               false,
+               item.CreateAt,
+               item.RequiredEffortTime,
+               item.Level != null ? (DO.EngineerExperience)item.Level : null,
+               item.Role != null ? (DO.Roles)item.Role : null,
+               item.Start,
+               item.ForecastDate,
+               item.Deadline,
+               item.Complete,
+               item.Deliverables,
+               item.Remarks,
+               (item.Engineer != null ? item.Engineer.Id : null));
 
             // עדכון המשימה במסד הנתונים
             _dal.Task.Update(doTask);
