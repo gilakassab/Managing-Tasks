@@ -7,18 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="0,0,10,-16">
-        <!-- goes to TaskListWindow-->
-        <Button Content="Handle Tasks" HorizontalAlignment="Left" Width="190" Click="btnTaskList_Click" Margin="116,191,0,193" RenderTransformOrigin="0.5,0.5" Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.065"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <!-- initialize the project-->
-        <Button Content="Handle Initialization" HorizontalAlignment="Left" Width="189" Click="btnInitialization_Click" Margin="116,284,0,102" Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David"/>
+        <!-- goes to ManagerWindow-->
+        <Button Content="Handle Maneger" HorizontalAlignment="Left" Width="190" Click="BtnManeger_Click" Margin="116,191,0,193" RenderTransformOrigin="0.5,0.5" Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David"/>
+        <!-- goes to EngineerWindow-->
+        <Button Content="Handle Engineer" HorizontalAlignment="Left" Width="189" Click="BtnEngineer_Click" Margin="116,284,0,102" Background="Aqua" Foreground="Indigo" FontWeight="Bold" FontSize="16" FontFamily="David"/>
     </Grid>
 </Window>
