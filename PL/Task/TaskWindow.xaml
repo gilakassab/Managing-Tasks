@@ -18,12 +18,10 @@ DataContext="{Binding RelativeSource={RelativeSource Self}}">
             <Setter Property="FontFamily" Value="David"/>
             <Setter Property="Background" Value="Aqua"/>
             <Setter Property="Foreground" Value="Indigo"/>
-            <Setter Property="IsEnabled" Value="False"/>
         </Style>
         <Style TargetType="DatePicker">
             <Setter Property="Background" Value="Aqua"/>
             <Setter Property="Foreground" Value="Indigo"/>
-            <Setter Property="IsEnabled" Value="False"/>
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="Aqua"/>

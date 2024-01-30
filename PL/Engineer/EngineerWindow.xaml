@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-    Title="EngineerWindow" Height="825" Width="1190"
-DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        Title="EngineerWindow" Height="825" Width="1190"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -18,7 +18,6 @@ DataContext="{Binding RelativeSource={RelativeSource Self}}">
             <Setter Property="FontFamily" Value="David"/>
             <Setter Property="Background" Value="Aqua"/>
             <Setter Property="Foreground" Value="Indigo"/>
-            <Setter Property="IsEnabled" Value="False"/>
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="Aqua"/>
@@ -36,47 +35,60 @@ DataContext="{Binding RelativeSource={RelativeSource Self}}">
         </Style>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <!-- הוסף רשומות נוספות ככל שנדרש -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <!-- הוסף עמודות נוספות ככל שנדרש -->
+        </Grid.ColumnDefinitions>
+
         <Label Content="Id:" />
-        <TextBox  Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False"/>
+        <TextBox  Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="False"/>
 
-        <Label Content="Description:"/>
-        <TextBox Text="{Binding Task.Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <Label Content="Name:" />
+        <TextBox Text="{Binding Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Content="Alias:"/>
-        <TextBox  Text="{Binding Task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <Label Content="Email:"/>
+        <TextBox Text="{Binding Engineer.Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
 
-        <Label Content="Deliverables:"/>
-        <TextBox  Text="{Binding Task.Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <Label Content="Cost:"/>
+        <TextBox  Text="{Binding Engineer.Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
 
-        <Label Content="Remarks:" />
-        <TextBox  Text="{Binding Task.Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <Label Content="Task Id:"/>
+        <TextBox  Text="{Binding Engineer.Task.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
 
-        <Label Content="Create At:" />
-        <DatePicker SelectedDate="{Binding Task.CreateAt, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
-
-        <Label Content="Required Effort Time:" />
-        <TextBox  Text="{Binding Task.RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
-
-        <Label Content="Engineer Id:" />
-        <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
-IsEnabled="False"/>
-
-        <Label Content="Engineer Name:" />
-        <TextBox Text="{Binding Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
-IsEnabled="False"/>
+        <Label Content="Task Alias:" />
+        <TextBox  Text="{Binding Engineer.Task.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
 
         <Label Content="Level:" />
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}" 
-          SelectedItem="{Binding EngExperience, Mode=TwoWay}" 
-          SelectionChanged="ComboBoxEngExperience_SelectionChanged"/>
+          SelectedItem="{Binding EngExperience, Mode=TwoWay}" />
+          <!--SelectionChanged="ComboBoxEngExperience_SelectionChanged"-->
 
         <Label Content="Role:"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
-SelectedValue="{Binding Role, Mode=TwoWay}"
-                      SelectionChanged="ComboBoxRole_SelectionChanged" />
+        SelectedValue="{Binding Role, Mode=TwoWay}"/> <!--SelectionChanged="ComboBoxRole_SelectionChanged"-->
 
-            <Button Grid.Row="9" Grid.Column="0" 
-Content="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
-HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" Padding="5"   Click="BtnAddUpdate_Click"/>
+        <Button Grid.Row="9" Grid.Column="0" Content="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+        HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" Padding="5" />  <!--Click="BtnAddUpdate_Click"-->
     </Grid>
 </Window>
