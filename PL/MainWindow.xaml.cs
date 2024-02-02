@@ -22,7 +22,7 @@ public partial class MainWindow : Window
 
     private void BtnEngineer_Click(object sender, RoutedEventArgs e)
     {
-        string userInput = Microsoft.VisualBasic.Interaction.InputBox("Please enter your Id:", "Enter Id", "");
+        string userInput = Microsoft.VisualBasic.Interaction.InputBox("Please enter your Id:", "Enter Id", "165324683");
 
         if (!string.IsNullOrEmpty(userInput))
         {

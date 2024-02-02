@@ -14,13 +14,13 @@ public class Engineer
     public string Email { get; set; }
 
     // תכונה שמכילה את רמת הניסיון של המהנדס.
-    public EngineerExperience Level { get; init; }
+    public EngineerExperience Level { get; set; }
 
     // תכונה שמכילה את עלות המהנדס לשעה.
     public double Cost { get; set; }
 
     // תכונה שמכילה את התפקיד של המהנדס.
-    public Roles Role { get; init; }
+    public Roles Role { get; set; }
 
     // תכונה שמכילה משימה שהוא אחראי עליה (אם יש).
     public TaskInEngineer? Task { get; set; } = null;
