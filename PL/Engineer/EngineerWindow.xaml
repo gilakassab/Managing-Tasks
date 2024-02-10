@@ -60,7 +60,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Id:" Margin="64,53,0,272" Grid.RowSpan="9" Grid.Column="1" Grid.ColumnSpan="3" />
-        <TextBox  Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="False" Margin="31,56,736,269" Grid.RowSpan="9" Grid.Column="9"/>
+        <TextBox  Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="31,56,736,269" Grid.RowSpan="9" Grid.Column="9"/>
 
         <Label Content="Name:" Margin="50,117,1,202" Grid.RowSpan="9" Grid.Column="1" Grid.ColumnSpan="3" />
         <TextBox Text="{Binding Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="31,117,736,212" Grid.RowSpan="9" Grid.Column="9" />
@@ -83,20 +83,26 @@
             </TextBox.RenderTransform>
         </TextBox>
 
-        <Label Content="Task Alias:" Margin="34,380,893,-54" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="9" />
-        <TextBox  Text="{Binding Engineer.Task.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" RenderTransformOrigin="0.618,5.111" Margin="31,385,686,-59" Grid.Row="8" Grid.Column="9" IsEnabled="False"/>
+        <Label Content="Task Description:" Margin="34,380,893,-54" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="9" />
+        <TextBox  Text="{Binding Engineer.Task.Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" RenderTransformOrigin="0.618,5.111" Margin="31,385,686,-59" Grid.Row="8" Grid.Column="9" IsEnabled="False"/>
 
         <Label Content="Level:" Grid.Column="1" Margin="55,444,0,-112" Grid.Row="8" Grid.ColumnSpan="8" />
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExperiencesCollectionKey}}" 
-          SelectedItem="{Binding EngExperience, Mode=TwoWay}" Grid.Column="9" Margin="31,446,675,-122" Grid.Row="8"         SelectionChanged="ComboBoxEngExperience_SelectionChanged"
-/>
+          SelectedItem="{Binding EngExperience, Mode=TwoWay}" Grid.Column="9" Margin="31,446,675,-122" Grid.Row="8"    
+                  SelectionChanged="ComboBoxEngExperience_SelectionChanged"/>
+
 
         <Label Content="Role:" Grid.Column="1" Margin="55,487,7,-153" Grid.Row="8"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
-        SelectedValue="{Binding Role, Mode=TwoWay}" Margin="31,506,685,-180" Grid.Row="8" Grid.Column="9"        SelectionChanged="ComboBoxRole_SelectionChanged"
-/>
+        SelectedValue="{Binding Role, Mode=TwoWay}" Margin="31,506,685,-180" Grid.Row="8" Grid.Column="9"       
+                  SelectionChanged="ComboBoxRole_SelectionChanged"/>
 
-        <Button Grid.Column="9" Content="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Margin="702,253,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"         Click="BtnAddUpdate_Click"
-/>
+
+        <Button Grid.Column="9" Content="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Margin="614,173,0,0" Padding="5" Height="80" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"         Click="BtnAddUpdate_Click"/>
+        <Button Grid.Column="9" Content="לרשימת המשימות" Margin="614,286,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"        
+        Click="BtnTaskListWindow_List"/>
+        <Button Grid.Column="9" Content="לפרטי המשימה" Margin="614,398,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"        
+        Click="BtnTaskWindow_List"/>
+
     </Grid>
 </Window>

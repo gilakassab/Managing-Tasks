@@ -128,7 +128,7 @@ internal class EngineerImplementation : IEngineer
             taskInEngineer = new BO.TaskInEngineer
             {
                 Id = doTasks.Id,
-                Alias = doTasks.Alias
+                Description = doTasks.Description
             };
         }
 

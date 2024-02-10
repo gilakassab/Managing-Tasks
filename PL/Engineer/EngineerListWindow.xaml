@@ -76,9 +76,6 @@
                         <TextBlock Text="{Binding Name}"  FontSize="16" />
                         <TextBlock Text="{Binding Email}"  FontSize="16" />
                         <TextBlock Text="{Binding Level}"  FontSize="16" />
-                        <!--<TextBlock Text="{Binding Start}"  FontSize="14" />
-                        <TextBlock Text="{Binding Deadline}"  FontSize="14" />-->
-                        <!--<TextBlock Text="{Binding Engineer.Id}"  FontSize="14" />-->
                         <TextBlock Text="{Binding Cost}"   FontSize="16" />
                         <TextBlock Text="{Binding Role}"  FontSize="16" />
                     </StackPanel>

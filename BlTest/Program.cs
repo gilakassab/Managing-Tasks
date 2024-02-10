@@ -137,7 +137,7 @@ namespace BlTest
                                 Task = new BO.TaskInEngineer()
                                 {
                                     Id = idTask,
-                                    Alias = s_bl.Task.Read(idTask)!.Alias
+                                    Description = s_bl.Task.Read(idTask)!.Description
                                 }
                             };
                             s_bl.Engineer.Create(newEng);
