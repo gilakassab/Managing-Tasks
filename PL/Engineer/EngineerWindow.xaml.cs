@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Intrinsics.Arm;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PL.Engineer;
 /// <summary>
@@ -17,7 +19,7 @@ public partial class EngineerWindow : Window
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     bool isAdding = false;
-    
+
 
     // מאפיינים של המהנדס
     public BO.Engineer Engineer
@@ -25,11 +27,11 @@ public partial class EngineerWindow : Window
         get { return (BO.Engineer)GetValue(EngineerProperty); }
         set { SetValue(EngineerProperty, value); }
     }
-     
+
 
     public static readonly DependencyProperty EngineerProperty =
         DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-    
+
     public ObservableCollection<BO.TaskInList> EngineerTasks
     {
         get { return (ObservableCollection<BO.TaskInList>)GetValue(EngineerTasksProperty); }
@@ -54,23 +56,18 @@ public partial class EngineerWindow : Window
     }
 
     private void BtnTaskWindow_List(object sender, RoutedEventArgs e)
-       {
-   
+    {
+
         try
         {
             var taskWindow = new TaskWindow(Engineer.Task!.Id);
-            
+
             taskWindow.Show();
         }
         catch (Exception ex)
         {
             MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
         }
-    }
-
-    private void BtnTaskListWindow_List(object sender, RoutedEventArgs e)
-    {
-       
     }
 
     private void BtnAddUpdate_Click(object sender, RoutedEventArgs e)
@@ -109,12 +106,12 @@ public partial class EngineerWindow : Window
             }
             EngExperience = Engineer.Level;
             Role = Engineer.Role;
-            var temp = s_bl?.Task.ReadAll().Select(t => new BO.TaskInList()
+            var temp = s_bl?.Task.ReadAll(t => t.Engineer == null ? false : t.Engineer.Id == Engineer.Id).Select(t => new BO.TaskInList()
             {
                 Id = t.Id,
                 Alias = t.Alias,
-               Description = t.Description,
-               Status = t.Status
+                Description = t.Description,
+                Status = t.Status
             }).ToList();
             EngineerTasks = temp != null ? new ObservableCollection<BO.TaskInList>(temp) : new ObservableCollection<BO.TaskInList>();
         }
@@ -125,58 +122,53 @@ public partial class EngineerWindow : Window
         InitializeComponent();
     }
 
-   
-
-    private void ComboBoxEngTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void TasksListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        /* try
+        if (sender is ListBox listBox && listBox.SelectedItem != null)
+        {
+            try
             {
-                if (DepTask != 0)
+                if (Engineer.Task != null)
                 {
-                    MessageBoxResult result = MessageBox.Show("Do you want to add the selected item?", "Confirmation", MessageBoxButton.YesNo);
-
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        BO.Task dep = s_bl.Task.Read(DepTask)!;
-                        if (Task.Dependencies == null)
-                            Task.Dependencies = new List<TaskInList>();
-
-                        Task.Dependencies.Add(new BO.TaskInList()
-                        {
-                            Id = dep.Id,
-                            Alias = dep.Alias,
-                            Description = dep.Description,
-                            Status = dep.Status
-                        });
-                        TaskDependencies = new ObservableCollection<BO.TaskInList>(Task.Dependencies);
-                    }
-                    DepTask = 0;
+                    BO.Task? task = s_bl!.Task.Read(Engineer.Task.Id);
+                    if (task != null && task.Status != BO.Status.Completed)
+                        MessageBox.Show("You can't start this task before finish the last one.", "Confirmation", MessageBoxButton.OK);
+                    else
+                        MessageBox.Show("After you will close the task window you will be able to start it.", "Confirmation", MessageBoxButton.OK);
                 }
+                else
+                    MessageBox.Show("After you will close the task window you will be able to start it.", "Confirmation", MessageBoxButton.OK);
+
+                int selectedTaskId = ((BO.TaskInList)listBox.SelectedItem).Id;
+                var taskWindow = new TaskWindow(selectedTaskId);
+                taskWindow.Closed += (sender, e) => ChangeTask(selectedTaskId);
+                taskWindow.Show();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
-            }*/
-        try
+            }
+            listBox.SelectedItem = null;
+        }
+    }
+
+    private void ChangeTask(int selectedTaskId)
+    {
+        if (Engineer.Task != null)
         {
-            
-                MessageBoxResult result = MessageBox.Show("Do you want to add the selected item?", "Confirmation", MessageBoxButton.YesNo);
+            BO.Task? currentTask = s_bl!.Task.Read(Engineer.Task.Id);
+            if (currentTask != null && currentTask.Status != BO.Status.Completed)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to start this Task?", "Confirmation", MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    var temp = s_bl.Task.ReadAll(t => t.Engineer == null ? false : t.Engineer.Id == Engineer.Id)!.Select(t => new BO.TaskInList()
-                    {
-                        Id = t.Id,
-                        Alias = t.Alias,
-                        Description = t.Description,
-                        Status = t.Status
-                    });
-                EngineerTasks = temp != null ? new ObservableCollection<BO.TaskInList>(temp) : new ObservableCollection<BO.TaskInList>();
+                    BO.Task? task = s_bl!.Task.Read(selectedTaskId);
+                    task!.Start = DateTime.Now;
+                    s_bl!.Task.Update(task!);
+                }
             }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
-        }
+
     }
 }

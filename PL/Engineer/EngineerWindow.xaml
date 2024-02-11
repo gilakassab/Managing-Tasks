@@ -96,26 +96,27 @@
         <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
         SelectedValue="{Binding Role, Mode=TwoWay}" Margin="31,506,685,-54" Grid.Row="8" Grid.Column="9"       
                   SelectionChanged="ComboBoxRole_SelectionChanged"/>
-        
-        <Label Content="Choose more dependencies" Grid.Column="9" Margin="272,0,320,450" Grid.Row="8"/>
-        <ComboBox ItemsSource="{Binding EngineerTasks}" 
-              SelectedValuePath="Id"
-              SelectedValue="{Binding Engineer.Task.Id, Mode=TwoWay}" 
-              SelectionChanged="ComboBoxEngTasks_SelectionChanged" Grid.Column="9" Margin="285,42,307,408" Grid.Row="8">
-            <ComboBox.ItemTemplate>
+
+        <Label Content="Choose new task" Grid.Column="9" Margin="272,0,320,450" Grid.Row="8"/>
+        <ListBox ItemsSource="{Binding EngineerTasks, UpdateSourceTrigger=PropertyChanged}"
+SelectionMode="Single" MouseDoubleClick="TasksListBox_MouseDoubleClick">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Alias}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Description}"/>
+                        <TextBox Text="{Binding Id, Mode=TwoWay, ValidatesOnExceptions=true}" IsEnabled="False"/>
+                        <TextBox  Text="{Binding Description, Mode=TwoWay, ValidatesOnExceptions=true}" IsEnabled="False"/>
+                        <TextBox  Text="{Binding Alias, Mode=TwoWay, ValidatesOnExceptions=true}" IsEnabled="False"/>
+                        <TextBox Text="{Binding Status, Mode=TwoWay, ValidatesOnExceptions=true}" IsEnabled="False"/>
                     </StackPanel>
                 </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-        <Button Grid.Column="9" Content="לרשימת המשימות" Margin="614,286,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"        
-        Click="BtnTaskListWindow_List"/>
-        <Button Grid.Column="9" Content="לפרטי המשימה" Margin="614,398,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"        
-        Click="BtnTaskWindow_List"/>
+        <Button Content="לפרטי המשימה" Margin="524,487,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Grid.Row="8"        
+        Click="BtnTaskWindow_List" Grid.Column="9"/>
 
+        <Button Grid.Row="8" Grid.Column="9" 
+Content="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+Margin="524,332,0,0" Padding="5" Height="79" VerticalAlignment="Top" RenderTransformOrigin="6,11.675" Width="204" Click="BtnAddUpdate_Click"/>
     </Grid>
 </Window>

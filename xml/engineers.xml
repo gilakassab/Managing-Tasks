@@ -9,14 +9,6 @@
     <Role>TeamLeader</Role>
   </Engineer>
   <Engineer>
-    <Id>982485477</Id>
-    <Name>Meir Fuks</Name>
-    <Email>meirfuks@exam.com</Email>
-    <Level>AdvancedBeginner</Level>
-    <Cost>130.5</Cost>
-    <Role>GraphicArtist</Role>
-  </Engineer>
-  <Engineer>
     <Id>934759393</Id>
     <Name>Shimmy Lipsin</Name>
     <Email>sl934759393@exam.com</Email>
@@ -39,5 +31,13 @@
     <Level>Advanced</Level>
     <Cost>140.5</Cost>
     <Role>Programmer</Role>
+  </Engineer>
+  <Engineer>
+    <Id>982485477</Id>
+    <Name>Meir Fuks</Name>
+    <Email>meirfuks@exam.com</Email>
+    <Level>AdvancedBeginner</Level>
+    <Cost>50</Cost>
+    <Role>GraphicArtist</Role>
   </Engineer>
 </ArrayOfEngineer>
