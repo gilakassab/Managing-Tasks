@@ -3,6 +3,8 @@ using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,7 +17,7 @@ public partial class EngineerWindow : Window
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     bool isAdding = false;
-    public int EngTask { get; set; } = 0;
+    
 
     // מאפיינים של המהנדס
     public BO.Engineer Engineer
@@ -23,9 +25,18 @@ public partial class EngineerWindow : Window
         get { return (BO.Engineer)GetValue(EngineerProperty); }
         set { SetValue(EngineerProperty, value); }
     }
+     
 
     public static readonly DependencyProperty EngineerProperty =
         DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
+    
+    public ObservableCollection<BO.TaskInList> EngineerTasks
+    {
+        get { return (ObservableCollection<BO.TaskInList>)GetValue(EngineerTasksProperty); }
+        set { SetValue(EngineerTasksProperty, value); }
+    }
+    public static readonly DependencyProperty EngineerTasksProperty =
+        DependencyProperty.Register("EngineerTasks", typeof(ObservableCollection<BO.TaskInList>), typeof(EngineerWindow), new PropertyMetadata(null));
 
     public BO.EngineerExperience EngExperience { get; set; }
     public BO.Roles Role { get; set; }
@@ -98,6 +109,14 @@ public partial class EngineerWindow : Window
             }
             EngExperience = Engineer.Level;
             Role = Engineer.Role;
+            var temp = s_bl?.Task.ReadAll().Select(t => new BO.TaskInList()
+            {
+                Id = t.Id,
+                Alias = t.Alias,
+               Description = t.Description,
+               Status = t.Status
+            }).ToList();
+            EngineerTasks = temp != null ? new ObservableCollection<BO.TaskInList>(temp) : new ObservableCollection<BO.TaskInList>();
         }
         catch (Exception ex)
         {
@@ -106,30 +125,53 @@ public partial class EngineerWindow : Window
         InitializeComponent();
     }
 
+   
+
     private void ComboBoxEngTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        /* try
+            {
+                if (DepTask != 0)
+                {
+                    MessageBoxResult result = MessageBox.Show("Do you want to add the selected item?", "Confirmation", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        BO.Task dep = s_bl.Task.Read(DepTask)!;
+                        if (Task.Dependencies == null)
+                            Task.Dependencies = new List<TaskInList>();
+
+                        Task.Dependencies.Add(new BO.TaskInList()
+                        {
+                            Id = dep.Id,
+                            Alias = dep.Alias,
+                            Description = dep.Description,
+                            Status = dep.Status
+                        });
+                        TaskDependencies = new ObservableCollection<BO.TaskInList>(Task.Dependencies);
+                    }
+                    DepTask = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex}", "Confirmation", MessageBoxButton.OK);
+            }*/
         try
         {
-            if (EngTask != 0)
-            {
+            
                 MessageBoxResult result = MessageBox.Show("Do you want to add the selected item?", "Confirmation", MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    BO.Task engTasks = s_bl.Task.ReadAll(Engineer.Id == BO.Task.Engineer.Id)!;
-                    if (Task.Dependencies == null)
-                        Task.Dependencies = new List<TaskInList>();
-
-                    Task.Dependencies.Add(new BO.TaskInList()
+                    var temp = s_bl.Task.ReadAll(t => t.Engineer == null ? false : t.Engineer.Id == Engineer.Id)!.Select(t => new BO.TaskInList()
                     {
-                        Id = dep.Id,
-                        Alias = dep.Alias,
-                        Description = dep.Description,
-                        Status = dep.Status
+                        Id = t.Id,
+                        Alias = t.Alias,
+                        Description = t.Description,
+                        Status = t.Status
                     });
-                    TaskDependencies = new ObservableCollection<BO.TaskInList>(Task.Dependencies);
-                }
-                DepTask = 0;
+                EngineerTasks = temp != null ? new ObservableCollection<BO.TaskInList>(temp) : new ObservableCollection<BO.TaskInList>();
             }
         }
         catch (Exception ex)

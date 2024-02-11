@@ -96,10 +96,11 @@
         <ComboBox ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}" 
         SelectedValue="{Binding Role, Mode=TwoWay}" Margin="31,506,685,-54" Grid.Row="8" Grid.Column="9"       
                   SelectionChanged="ComboBoxRole_SelectionChanged"/>
+        
         <Label Content="Choose more dependencies" Grid.Column="9" Margin="272,0,320,450" Grid.Row="8"/>
-        <ComboBox ItemsSource="{Binding Engineer.TaskInList}" 
+        <ComboBox ItemsSource="{Binding EngineerTasks}" 
               SelectedValuePath="Id"
-              SelectedValue="{Binding EngTask, Mode=TwoWay}" 
+              SelectedValue="{Binding Engineer.Task.Id, Mode=TwoWay}" 
               SelectionChanged="ComboBoxEngTasks_SelectionChanged" Grid.Column="9" Margin="285,42,307,408" Grid.Row="8">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
