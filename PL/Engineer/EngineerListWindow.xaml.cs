@@ -14,7 +14,7 @@ public partial class EngineerListWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    // רשימת המהנדסיפ המוצגת בחלון
+    // רשימת המהנדסים המוצגת בחלון
     public ObservableCollection<BO.Engineer> EngineerList
     {
         get { return (ObservableCollection<BO.Engineer>)GetValue(EngineerListProperty); }
