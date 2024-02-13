@@ -9,12 +9,12 @@
     <Role>TeamLeader</Role>
   </Engineer>
   <Engineer>
-    <Id>113634844</Id>
-    <Name>Dudi Dlin</Name>
-    <Email>dudidlin844@exam.com</Email>
-    <Level>Beginner</Level>
-    <Cost>100.5</Cost>
-    <Role>Programmer</Role>
+    <Id>982485477</Id>
+    <Name>Meir Fuks</Name>
+    <Email>meirfuks@exam.com</Email>
+    <Level>AdvancedBeginner</Level>
+    <Cost>130.5</Cost>
+    <Role>GraphicArtist</Role>
   </Engineer>
   <Engineer>
     <Id>165324683</Id>
@@ -25,17 +25,17 @@
     <Role>Programmer</Role>
   </Engineer>
   <Engineer>
-    <Id>982485477</Id>
-    <Name>Meir Fuks</Name>
-    <Email>meirfuks@exam.com</Email>
-    <Level>AdvancedBeginner</Level>
-    <Cost>50</Cost>
-    <Role>GraphicArtist</Role>
-  </Engineer>
-  <Engineer>
     <Id>934759393</Id>
     <Name>Shimmy Lipsin</Name>
     <Email>sl934759393@exam.com</Email>
+    <Level>Beginner</Level>
+    <Cost>100.5</Cost>
+    <Role>Programmer</Role>
+  </Engineer>
+  <Engineer>
+    <Id>113634844</Id>
+    <Name>Dudi Dlin</Name>
+    <Email>dudidlin844@exam.com</Email>
     <Level>Beginner</Level>
     <Cost>100.5</Cost>
     <Role>Programmer</Role>
